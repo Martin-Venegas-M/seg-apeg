@@ -22,7 +22,7 @@ pacman::p_load(
 
 # 2. Load data ------------------------------------------------------------
 
-elsoc_original <- haven::read_stata("input/data/original/ELSOC_Wide_2016_2022_v1.00.dta")
+elsoc_original <- haven::read_stata("input/data/original/ELSOC_Wide_2016_2022.dta")
 
 # 3. Select relevant variables --------------------------------------------
 elsoc <- elsoc_original %>%
