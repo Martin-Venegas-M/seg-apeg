@@ -13,8 +13,8 @@
 
 	* Open ELSOC database (download here: https://dataverse.harvard.edu/file.xhtml?fileId=7245114&datasetVersionId=347941)
 		clear
-		cd "G:\Mi unidad\projets chili\SEG_APEG\data\elsoc"
-		use ELSOC_Wide_2016_2022.dta
+		cd "C:\Work\Github\seg-apeg\input\data\proc"
+		use elsoc_vars_selected.dta
 
 	* Select respondents who belong to the original sampling (n=2,928)
 		keep if muestra==1
@@ -29,26 +29,26 @@
 		keep if region_cod_w04==13 & region_cod_w06==13 
 
 	* Select relevant variables
-		keep idencuesta ola* ///
-			 c32_01* c32_02* /// 1. Sense of belonging and identification
-			 r15* /// 2. Number of friemds
-			 r13_nredes* /// 3. Intimate network size 
-			 c02* /// 4. Generalized trust
-			 c06_04* c06_05* c06_06* /// 5. Trust in social minorities
-			 c05_01* c05_02* c05_05* c05_07* /// 6. Trust in major institutions
-			 c13* /// 7. Interest in political affairs
-			 c01* /// 8. Satisfaction with democracy
-			 c12_01* c12_03* c12_04* c12_05* /// 9. Conventional political participation
-			 c08_01* c08_02* c08_03* /// 10. Unconventional political participation
-			 d02_01* d02_02* d02_03* /// 11. Egalitarianism
-			 c18_02* c18_03* /// 12. Altruistic disposition
-			 c07_04* c07_05* /// 13. Pro-social behavior
-			 c25* /// 14. Support for democracy
-			 f05_01* f05_02* f05_03* /// 15. Justificacion of violence
-			 m0_sexo* m0_edad* m01* m02* ciuo88_m03* ciuo08_m03* ciuo88_m22* ciuo08_m22* m19* m21* m29* m33* m34* m36* m37* /// control variables
-			 fact_exp02* segmento* // other variables
+		*keep idencuesta ola* ///
+			 *c32_01* c32_02* /// 1. Sense of belonging and identification
+			 *r15* /// 2. Number of friemds
+			 *r13_nredes* /// 3. Intimate network size 
+			 *c02* /// 4. Generalized trust
+			 *c06_04* c06_05* c06_06* /// 5. Trust in social minorities
+			 *c05_01* c05_02* c05_05* c05_07* /// 6. Trust in major institutions
+			 *c13* /// 7. Interest in political affairs
+			 *c01* /// 8. Satisfaction with democracy
+			 *c12_01* c12_03* c12_04* c12_05* /// 9. Conventional political participation
+			 *c08_01* c08_02* c08_03* /// 10. Unconventional political participation
+			 *d02_01* d02_02* d02_03* /// 11. Egalitarianism
+			 *c18_02* c18_03* /// 12. Altruistic disposition
+			 *c07_04* c07_05* /// 13. Pro-social behavior
+			 *c25* /// 14. Support for democracy
+			 *f05_01* f05_02* f05_03* /// 15. Justificacion of violence
+			 *m0_sexo* m0_edad* m01* m02* ciuo88_m03* ciuo08_m03* ciuo88_m22* ciuo08_m22* m19* m21* m29* m33* m34* m36* m37* /// control variables
+			 *fact_exp02* segmento* // other variables
 		
-			drop m33_otro* m36_otro*
+			*drop m33_otro* m36_otro*
 			
 	* Convert NS/NR as missing values for every dependent variables
 		foreach var of varlist 	c32_01* c32_02* r15* r13_nredes* c02* c06_04* c06_05* c06_06* c05_01* c05_02* c05_05* c05_07* ///
@@ -315,6 +315,7 @@
 		replace c07_05_w06 = c07_05_w04 if c07_05_w06==.
 
 	* Check that there is no missing values for dependent variables
+	* ssc install mdesc
 	mdesc r15_w01 r13_nredes_w01 c32_01_w01 c32_02_w01  c02_w01 c06_04_w01 c06_05_w01 c06_06_w01 c05_01_w01 c05_02_w01 c05_05_w01 c05_07_w01 c13_w01 c01_w01 c12_01_w01 c12_03_w01 c12_04_w01 c12_05_w01 c08_01_w01 c08_02_w01 c08_03_w01 d02_01_w01 d02_02_w01 d02_03_w01 c18_02_w01 c18_03_w01 c07_04_w01 c07_05_w01 c25_w01 f05_01_w01 f05_02_w01 f05_03_w01 r15_w04 r13_nredes_w04 c32_01_w04 c32_02_w04  c02_w04  c05_01_w04 c05_02_w04 c05_05_w04 c05_07_w04 c13_w04 c01_w04 c08_01_w04 c08_02_w04 c08_03_w04 d02_01_w04 d02_02_w04 d02_03_w04 c18_02_w04 c18_03_w04 c07_04_w04 c07_05_w04 c25_w04 f05_01_w04 f05_02_w04 f05_03_w04 c06_04_w04 c06_05_w04 c06_06_w04 c12_01_w04 c12_03_w04 c12_04_w04 c12_05_w04 r15_w06 r13_nredes_w06 c32_01_w06 c32_02_w06  c02_w06  c05_01_w06 c05_02_w06 c05_05_w06 c05_07_w06 c13_w06 c01_w06 c08_01_w06 c08_02_w06 c08_03_w06 d02_01_w06 d02_02_w06 d02_03_w06 c25_w06 f05_01_w06 f05_02_w06 f05_03_w06 c06_04_w06 c06_05_w06 c06_06_w06 c12_01_w06 c12_03_w06 c12_04_w06 c12_05_w06 c18_02_w06 c18_03_w06 c07_04_w06 c07_05_w06
 
 *------------------------------------------------------------*
