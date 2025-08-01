@@ -11,11 +11,11 @@
 		
 	* Open file
 		clear
-		cd "G:\Mi unidad\projets chili\SEG_APEG\code"	
+		cd "C:\Work\Github\seg-apeg\docs\stata"	
 		do "2. individual level variable creation.do"
 
 	* Merge with variable on neighborhood NSE
-		merge m:1 geocodigo year using "G:\Mi unidad\projets chili\SEG_APEG\data\variables barrios\nse_barrio_vf.dta"
+		merge m:1 geocodigo year using "C:\Work\Github\seg-apeg\input\data\original\nse_barrio_vf.dta"
 		drop _merge		
 		destring idencuesta, replace
 		
@@ -42,6 +42,9 @@
 		label val max_married2 max_married2
 		drop married married2
 		rename max_married2 married
+	
+	* Save final df
+		save "C:\Work\Github\seg-apeg\input\data\proc\elsoc_proc.dta", replace
 	
 *-------------------------------------------*
 *-----      Descriptive statistics     -----*

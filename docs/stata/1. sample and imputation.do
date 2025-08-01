@@ -1819,7 +1819,7 @@ rename ciuo88_m03_w01 ciuo08_m03_w01
 		
 	* Merge with geocodigo (census tract if)
 		tostring idencuesta, replace
-		merge 1:1 idencuesta using "G:\Mi unidad\projets chili\SEG_APEG\data\elsoc\zona censal muestra inicial.dta"
+		merge 1:1 idencuesta using "C:\Work\Github\seg-apeg\input\data\original\zona censal muestra inicial.dta"
 		keep if _merge==3
 		drop _merge
 

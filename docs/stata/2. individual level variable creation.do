@@ -13,7 +13,7 @@
 *--------------------------------------------------------------------*
 
 	clear
-	cd "G:\Mi unidad\projets chili\SEG_APEG\code"	
+	cd "C:\Work\Github\seg-apeg\docs\stata"	
 	do "1. sample and imputation.do"	
 	
 *--------------------------------------------------------------------*
@@ -46,7 +46,7 @@
 
 ***** Cultural dimension
 	* Var 1: Sense of identification
-		bys idenc year : gen identification = (c32_01 + c32_02)/2
+		bys idencuesta year : gen identification = (c32_01 + c32_02)/2
 
 ***** Relational dimension 
 	* Var 2: Number of friends
@@ -137,7 +137,7 @@
 		egen quint_inc = xtile(avg_income), nq(5)
 		
 	* Create social class (Oesch Scheme based on Isco 08)
-		cd "G:\Mi unidad\projets chili\SEG_APEG\code"
+		cd "C:\Work\Github\seg-apeg\docs\stata"
 		rename ciuo08_m03 isco
 		replace isco=2151	if idencuesta==	"13131014"
 		replace isco=3313	if idencuesta==	"13201011"
@@ -227,8 +227,8 @@
 		predict pc1, score
 
 	* Individual plot 
-		scoreplot
-		screeplot
+		* scoreplot
+		* screeplot
 		*scatter mca2 mca1, msize(.5) xline(0) yline(0) 
 
 	* Generate inverse score for mca1
