@@ -4,7 +4,7 @@
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
 
-# Executive Summary: This script contains the code to modify the original database in order to re-run the .do files
+# Executive Summary: This script contains the code to transform de processed database from .dta to .rds
 # Date: July 31, 2025
 
 rm(list = ls())
