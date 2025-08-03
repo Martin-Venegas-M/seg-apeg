@@ -1,0 +1,314 @@
+---
+title: |
+  ![](../../input/images/logo_coes.png){width=25% height=25%}  
+  Analysis for resuming dependent variables
+author: 
+  - Techinical assistant
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+    bookdown::html_document2:
+          theme: yeti
+          toc: yes
+          toc_float: yes
+          toc_collapsed: yes
+          number_sections: yes
+          
+          
+    
+linkcolor: black
+urlcolor: blue
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style type="text/css">
+
+h1, {
+  font-size: 38px;
+  text-align: center;
+}
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  text-align: center;
+}
+</style>
+```
+```{r include=FALSE}
+## Load packages
+
+if (!require("pacman")) {
+    install.packages("pacman")
+} # si falta pacman, instalar
+
+pacman::p_load(
+    tidyverse,
+    haven,
+    data.table,
+    sjmisc,
+    knitr,
+    lavaan,
+    kableExtra,
+    effectsize,
+    psych
+) # librerias
+```
+
+```{r}
+# Load data
+elsoc <- readRDS("../../input/data/proc/elsoc_proc.RDS")
+
+# Create dataframes with dependent variables
+
+z_varsdep <- elsoc %>% dplyr::select(starts_with("z_")) # Normalized
+varsdep <- elsoc %>% dplyr::select(identification:justif_violence) # Normal
+
+varsdep_rounded <- varsdep %>% mutate(
+  across(names(varsdep), ~ round(.)),
+  across(names(varsdep), ~ if_else(. == 0, . + 1, .))
+) # Rounded (for LCA and MCA)
+
+varsdep_rounded_factor <- varsdep_rounded %>%
+  mutate(across(everything(), as.factor)) # Factors (for LCA)
+
+```
+
+```{r}
+
+correlation <- function(data, labs, coef.size = 0.6){
+  
+  # Insumos
+  cor.mtest <- function(mat, ...) {
+    mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat<- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    for (i in 1:(n - 1)) {
+        for (j in (i + 1):n) {
+            tmp <- cor.test(mat[, i], mat[, j], ...)
+            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+        }
+    }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+  
+  M <- cor(data)
+  colnames(M) <- labs
+  rownames(M) <- labs
+
+  p.mat <- cor.mtest(data)
+  colnames(p.mat) <- labs
+  rownames(p.mat) <- labs
+
+  col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+  corrplot::corrplot(M, 
+                   method="color", 
+                   col=col(200),
+                   type="upper",
+                   addCoef.col = "#141414",
+                   tl.col="#141414", 
+                   tl.srt=45,
+                   p.mat = p.mat, 
+                   sig.level = 0.05, 
+                   insig = "blank",
+                   diag = TRUE,
+                   number.cex = coef.size,
+                   mar = c(0, 0, 1, 0),
+                   number.digits = 2,
+                   number.font = 1
+                   )
+
+}
+
+labels <- c(
+  "C - Ident.",
+  "R - Amigos",
+  "R - Tamaño red",
+  "R - Conf. gen.",
+  "R - Conf. min.",
+  "R - Conf. inst.",
+  "P - Int. pol.",
+  "P - Satis. demo",
+  "P - Part. conv.",
+  "P - Part. no conv.",
+  "P - Igualitarismo.",
+  "P - Altruismo.",
+  "P - Cond. prosoc.",
+  "N - Apoyo demo.",
+  "N - Just. viol."
+)
+
+C <- labels[1]
+R <- labels[2:6]
+P <- labels[7:13]
+N <- labels[14:15]
+
+# Function for columns spec
+
+specific_col <- function(kbl, data, n){
+      kableExtra::column_spec(kbl, n, 
+                  color = dplyr::case_when(
+                  as.matrix(data[,n]) > 0.2 ~ "darkblue",
+                  as.matrix(data[,n]) < -0.2 ~ "darkred",
+                  TRUE ~ "lightgrey"
+                  )
+                )
+}
+```
+
+```{r}
+
+pca_loads_tab <- function(data, automatic.scale = FALSE, title) {
+    pca <- prcomp(data, scale = automatic.scale)
+
+    # Check loadings
+    loads <- as.data.frame(unclass(pca$rotation)) %>%
+        dplyr::mutate(
+            across(everything(), ~ round(., 2)),
+            vars = labels
+        ) %>%
+        dplyr::select(vars, 1:4)
+
+    rownames(loads) <- 1:15
+
+
+    loads %>%
+        kable(caption = title) %>%
+        kableExtra::kable_styling(
+            bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+            full_width = T
+        ) %>%
+        row_spec(c(0, 1, 6, 13, 15), extra_css = "border-bottom: 2px solid gray;") %>%
+        specific_col(data = loads, n = 2) %>%
+        specific_col(data = loads, n = 3) %>%
+        specific_col(data = loads, n = 4) %>%
+        specific_col(data = loads, n = 5)
+}
+
+
+pca_var_tab <- function(data, automatic.scale, title){
+  pca <- prcomp(data, scale = automatic.scale)
+  
+  var <- summary(pca)$importance %>% 
+    as.data.frame() %>% 
+    mutate(
+      across(everything(), ~ round(., 2)),
+      Statistic = rownames(.)
+      ) %>% 
+    dplyr::select(Statistic, 1:4)
+  
+  rownames(var) <- 1:3
+  
+  var %>%
+        kable(caption = title) %>%
+        kableExtra::kable_styling(
+            bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+            full_width = T
+        )
+}
+
+```
+
+# Introduction
+
+This document contains the Principal Component Analysis (PCA) (and others) analysis in order to reduce the amount of dependent variables. First, we do a PCA with the normalized dependent variables. Second, we do a Exploratory Factor Analysis (EFA) in order to compare the results with the former analysis. Then, we do two analysis assuming qualitative variables: Laten Class Analysis (LCA) and Multiple Correspondance Analysis (MCA).
+
+Results and assumptsions for every case are discussed. A final recomendaation is made considering all the background
+
+# Analysis
+
+## Exploration
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep, labels)
+```
+
+El gráfico de correlaciones muestra que la mayoría de las correlaciones son bajas. La correlación más alta se da entre indicadores de dimensiones distintos: confianza institucional (relacional) y satisfacción con la democracia (política) con un coeficiente positivo de 0.44. Lo mismo ocurre con la relación entre la confianza en minorías y el interés en política (r = 0.34) o la participación no convencional (r = 0.34). Las correlaciones más altas dentro de la misma dimensión se dan en la política, con 0.38 entre interés en política y participación no convencional, asi como entre participación convencional y participación no convencional con 0.32. Sin considerar los resultados anteriores, destaca que las correlaciones intradimensión no demuestran una medición consistente de cada una.
+
+::: panel-tabset
+# Relational Dimention
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep[, 2:6], R, 1)
+```
+
+# Political Dimention
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep[, 7:13], P, 1.2)
+```
+
+# Normative Dimention
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep[, 14:15], N, 1.5)
+```
+:::
+
+Sí observamos los gráficos de correlación divididos por dimensión, es más notorio que los indicadores no correlacionan lo suficiente entre sí para aseverar que miden consistentemente un mismo constructo.
+
+## PCA
+
+```{r}
+#scree(z_varsdep)
+```
+
+El gráfico de sedimentación da cuenta de que el primer componente explica más del doble de varianza que un indicador por si solo. Los siguientes tres factores también cumplen con el criterio de Kaiser (eigenvalue \> 1), sin embargo, explican considerablemente menos que el primer componente. Estos resultados dan cuenta de que la solución escogida para reducir dimensionalidad debe estar entre 1 y 4 componentes, dependiendo del sentido conceptual que tenga cada solución.
+
+```{r}
+fa.parallel(z_varsdep, fa = "pc")
+```
+
+El gráfico paralelo compara los datos observados con un set de datos aleatorios. Al hacer esta comparación, se confirma que la solución idonea está entre 1 y 4 componentes.
+
+::: panel-tabset
+# PCA Loadings (without normalization)
+
+```{r}
+pca_loads_tab(varsdep, FALSE, "PCA Loadings (without normalization)")
+pca_var_tab(varsdep, FALSE, "Explained variance (PCA without normalization)")
+```
+
+# PCA Loadings (manual normalization)
+
+```{r}
+pca_loads_tab(z_varsdep, FALSE, "PCA Loadings (manual normalization)")
+pca_var_tab(z_varsdep, FALSE, "Explained variance (manual normalization)")
+```
+
+# PCA Loadings (R's normalization)
+
+```{r}
+pca_loads_tab(varsdep, TRUE, "PCA Loadings (R's normalization)")
+pca_var_tab(varsdep, TRUE, "Explained variance (R's normalization)")
+```
+:::
+
+La tabla con PCA con las variables normalizadas (desde R) da cuenta que una solución de cuatro componentes captura poco más del 40% de la varianza, donde el primer componente captura solo el 17% de la varianza y los demás aproximadamente el 10%. Este resultado da cuenta de indicadores poco correlacionados entre sí, generando dificultades para reducir dimensionalidad. Este resultado va en concordancia con los análisis de correlación, donde no se observaban grandes correlaciones dentro de las dimensiones.
+
+De todos modos, la distribución de las cargas de los componentes da cuenta de ciertos patrones en la varianza que puede ser relevante de considerar:
+
+1.  **Compromiso político activo vs apoyo institucional pasivo:** el primer componente se caracteriza por valores negativos en gran parte de los indicadores de la dimensión relacional y política, y cargas positivas en la dimensión de normatividad (más acentuado en apoyo a la democracia). Este resultado da cuenta de un patrón de gente poco involucrada en la política y en sus pares, pero con un fuerte compromiso normativo a la democracia (y viceversa).
+2.  **Progresismo tradicional individualizado**: el segundo componente se caracteriza por cargas fuertes en confianza institucional, satisfacción a la democracia e igualitarismo. Este patrón denota un fuerte compromiso por los valores tradicionales de un estado de derecho, junto con baja participación no convenconal y tamaños de red (y viceversa).
+3.  **Altruismo individualizado**: el tercer componente se caracteriza por una carga particularmente fuerte en actitudes altruistas, un rechazo a la violencia y un menor tamaño de red (y viceversa).
+4.  **Sociable prosocial relativista:** el cuarto componente se caracteriza por fuertes cargas en el indicador cultural y los indicadores de la dimensión relacional, así también en el comportamiento prosocial. Sin embargo, también destaca una carga positiva en la justificación de la violencia, lo que denota un relativismo al momento de evaluar situaciones de conflicto.
+
+# Synthesis

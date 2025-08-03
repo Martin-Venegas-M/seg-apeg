@@ -21,23 +21,26 @@ pacman::p_load(
   rlang,
   sjlabelled,
   corrr,
+  FactoMineR,
   factoextra,
   sjPlot,
-  psych
+  psych,
+  poLCA
 )
 
 # 2. Load data ------------------------------------------------------------
 elsoc <- readRDS("input/data/proc/elsoc_proc.RDS")
 
 # 3. PCA Analysis ---------------------------------------------------------
-z_varsdep <- elsoc %>% select(starts_with("z_"))
+z_varsdep <- elsoc %>% dplyr::select(starts_with("z_"))
+varsdep <- elsoc %>% dplyr::select(identification:justif_violence)
 
 # 3.1 Pre-exploratios -----------------------------------------------------
 
-# Correlation table 
-sjPlot::tab_corr(z_varsdep) #! Doesn't look to good. Most correlations are between .1 and .3.
+# Correlation table
+sjPlot::tab_corr(z_varsdep) # ! Doesn't look to good. Most correlations are between .1 and .3.
 
-# Screeplot 
+# Screeplot
 scree(z_varsdep) #* One factor and four components above the 1 eigen value
 
 # Parallel analysis
@@ -65,11 +68,50 @@ fviz_cos2(pca_z_varsdep, choice = "var", axes = 1:2)
 
 # Check both
 
-fviz_pca_var(pca_z_varsdep, col.var = "cos2",
-            gradient.cols = c("gray", "lightblue", "darkblue"),
-            repel = TRUE)
+fviz_pca_var(pca_z_varsdep,
+  col.var = "cos2",
+  gradient.cols = c("gray", "lightblue", "darkblue"),
+  repel = TRUE
+)
 
 # 3.3 Run EFA ------------------------------------------------------------
 
 efa_z_varsdep <- factanal(z_varsdep, 4, rotation = "varimax")
 efa_z_varsdep
+
+# 3.4 Run LCA ------------------------------------------------------------
+
+varsdep_rounded <- varsdep %>% mutate(
+  across(names(varsdep), ~ round(.)),
+  across(names(varsdep), ~ if_else(. == 0, . + 1, .))
+)
+
+f <- cbind(
+  identification, friends, size_network,
+  gen_trust, trust_minorities, trust_inst,
+  interest_pol, satisf_demo, conv_particip,
+  unconv_particip, egalitarianism, altruistic,
+  prosoc_behave, democracy_support, justif_violence
+) ~ 1
+
+lca_varsdep <- poLCA(f, varsdep_rounded, nclass = 2)
+
+# 3.5 Run MCA ------------------------------------------------------------
+
+varsdep_rounded_factor <- varsdep_rounded %>%
+  mutate(across(everything(), as.factor))
+
+
+mca_varsdep <- FactoMineR::MCA(varsdep_rounded_factor, ncp = 4, graph = TRUE)
+
+fviz_mca_var(mca_varsdep, 
+            repel = TRUE,
+            ggtheme = theme_minimal())
+
+summary(mca_varsdep)
+
+factoextra::fviz_screeplot(mca_varsdep, addlabels = TRUE, ylim = c(0, 45))
+
+
+fviz_contrib(mca_varsdep, choice = "var", axes = 1)
+fviz_contrib(mca_varsdep, choice = "var", axes = 2)
