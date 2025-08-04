@@ -1,0 +1,211 @@
+---
+title: |
+  ![](https://coes.cl/wp-content/uploads/COES_Logo_sello1.png){width=25% height=25%}  
+  Exploratory analysis - DV's
+author: 
+  - Techinical assistant
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+    bookdown::html_document2:
+          theme: yeti
+          toc: yes
+          toc_float: yes
+          toc_collapsed: yes
+          number_sections: yes
+          
+          
+    
+linkcolor: black
+urlcolor: blue
+execute:
+  echo: false
+  warning: false
+---
+
+```{r}
+## Load packages
+
+if (!require("pacman")) {
+    install.packages("pacman")
+} # si falta pacman, instalar
+
+pacman::p_load(
+    tidyverse,
+    haven,
+    sjmisc,
+    knitr,
+    kableExtra
+) # librerias
+```
+
+```{r}
+# Load data
+elsoc <- readRDS("../../input/data/proc/elsoc_proc.RDS")
+
+# Create dataframes with dependent variables
+
+z_varsdep <- elsoc %>% dplyr::select(starts_with("z_"), nse_barrio, avg_isei, avg_educ, avg_income) # Normalized
+varsdep <- elsoc %>% dplyr::select(identification:justif_violence, nse_barrio, avg_isei, avg_educ, avg_income) # Normal
+```
+
+```{r}
+correlation <- function(data, labs, coef.size = 0.6){
+  
+  # Insumos
+  cor.mtest <- function(mat, ...) {
+    mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat<- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    for (i in 1:(n - 1)) {
+        for (j in (i + 1):n) {
+            tmp <- cor.test(mat[, i], mat[, j], ...)
+            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+        }
+    }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+  
+  M <- cor(data)
+  colnames(M) <- labs
+  rownames(M) <- labs
+
+  p.mat <- cor.mtest(data)
+  colnames(p.mat) <- labs
+  rownames(p.mat) <- labs
+
+  col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+  corrplot::corrplot(M, 
+                   method="color", 
+                   col=col(200),
+                   type="upper",
+                   addCoef.col = "#141414",
+                   tl.col="#141414", 
+                   tl.srt=45,
+                   p.mat = p.mat, 
+                   sig.level = 0.05, 
+                   insig = "blank",
+                   diag = TRUE,
+                   number.cex = coef.size,
+                   mar = c(0, 0, 1, 0),
+                   number.digits = 2,
+                   number.font = 1
+                   )
+
+}
+
+labels <- c(
+  "C - Ident.",
+  "R - Amigos",
+  "R - Tamaño red",
+  "R - Conf. gen.",
+  "R - Conf. min.",
+  "R - Conf. inst.",
+  "P - Int. pol.",
+  "P - Satis. demo",
+  "P - Part. conv.",
+  "P - Part. no conv.",
+  "P - Igualitarismo.",
+  "P - Altruismo.",
+  "P - Cond. prosoc.",
+  "N - Apoyo demo.",
+  "N - Just. viol."
+)
+
+C <- labels[1]
+R <- labels[2:6]
+P <- labels[7:13]
+N <- labels[14:15]
+```
+
+# Introduction
+
+This document present the descriptive analysis for the article about residential segregation and attachment to society.
+
+# Analysis
+
+```{r}
+# sjmisc::frq(elsoc$friends)
+# sjmisc::frq(elsoc$size_network)
+# sjmisc::frq(elsoc$gen_trust)
+# sjmisc::frq(elsoc$trust_minorities)
+# sjmisc::frq(elsoc$trust_inst)
+# sjmisc::frq(elsoc$interest_pol)
+# sjmisc::frq(elsoc$satisf_demo)
+# sjmisc::frq(elsoc$conv_particip)
+# sjmisc::frq(elsoc$unconv_particip)
+# sjmisc::frq(elsoc$egalitarianism)
+# sjmisc::frq(elsoc$altruistic)
+# sjmisc::frq(elsoc$prosoc_behave)
+# sjmisc::frq(elsoc$democracy_support)
+# sjmisc::frq(elsoc$justif_violence)
+
+```
+
+## Main variables - Correlations
+
+```{r results='asis'}
+summarytools::dfSummary(varsdep, plain.ascii  = FALSE, 
+          style        = "grid", 
+          graph.magnif = 0.82, 
+          varnumbers   = FALSE,
+          valid.col    = FALSE)
+```
+
+::: panel-tabset
+# Cultural Dimension
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep %>% select(1, nse_barrio, avg_isei, avg_educ, avg_income), c(C, "NSE Barrio", "Avg ISEI", "Avg educ", "Avg income"), 1)
+```
+
+# Relational Dimension
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep %>% select(2:6, nse_barrio, avg_isei, avg_educ, avg_income), c(R, "NSE Barrio", "Avg ISEI", "Avg educ", "Avg income"), 1)
+```
+
+# Political Dimension
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep %>% select(7:13, nse_barrio, avg_isei, avg_educ, avg_income), c(P, "NSE Barrio", "Avg ISEI", "Avg educ", "Avg income"), 1.2)
+
+```
+
+# Normative Dimension
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+
+correlation(z_varsdep %>% select(14:15, nse_barrio, avg_isei, avg_educ, avg_income), c(N, "NSE Barrio", "Avg ISEI", "Avg educ", "Avg income"), 1.5)
+```
+:::
+
+In the cultural dimension, it is noteworthy that all correlations between identification with society and the independent socioeconomic variables are weak and negative. For example, as the socioeconomic level of the neighborhood increases, identification with society decreases (r = -.11). This result provides evidence contrary to H1.
+
+In the relational dimension, most of the coefficients between the independent variables of socioeconomic status and the dependent variables are positive and weak. Regarding the socioeconomic status of the neighborhood, the largest coefficient is found with trust in social minorities (r = .24). This means that the correlation coefficients show evidence in favor of H1 for trust in social minorities, as well as for the number of friends, network size, and institutional trust. The only indicator that goes against the proposed hypothesis is that of generalized trust, where the higher the socioeconomic level of the neighborhood, the lower the generalized trust of the people (r = -.08).
+
+In the political dimension, all statistically significant coefficients show a positive and mild to moderate relationship with the indicators. In terms of the socioeconomic level of the neighborhood, the largest coefficient is found with interest in politics (r = .29). In other words, interest in politics, satisfaction with democracy, conventional participation, unconventional participation, and prosocial behaviors all provide evidence for H1. The coefficients of neighborhood SES with egalitarianism and altruism are not statistically significant.
+
+Finally, in the normative dimension, it is noteworthy that statistically significant relationships are found mainly between support for democracy and the independent variables of socioeconomic status, but not with the justification of violence. Considering that the scale of support for democracy is inverted, the relationship between the socioeconomic status of the neighborhood and support for democracy shows that the higher the SES, the lower the support for non-democratic regimes. Therefore, providing evidence for H1.
+
+**METHODOLOGICAL NOTHES**:
+
+-   Generlized trust must be recodified, the inermediate category is on 3 and not on 2. This indicator must be recoded.
+
+-   Democracy support is inverted. The greater number (4) represents less support for democracy (4 = None). This indicator must be inverted.
+
+-   Egalitarianism is inverted. The sentences in the questionarie are unjust situation, so a bigger degree of agreement it means less egalitarian. This indicador must be inverted.
+
+-   Justification of violence is inverted. The greater number (5) represents more justification towards the violence situation. This indicator must be inverted.
