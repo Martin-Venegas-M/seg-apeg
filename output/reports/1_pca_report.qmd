@@ -1,6 +1,6 @@
 ---
 title: |
-  ![](../../input/images/logo_coes.png){width=25% height=25%}  
+  ![](https://coes.cl/wp-content/uploads/COES_Logo_sello1.png){width=25% height=25%}  
   Analysis for resuming dependent variables
 author: 
   - Techinical assistant
@@ -151,11 +151,11 @@ N <- labels[14:15]
 
 # Function for columns spec
 
-specific_col <- function(kbl, data, n){
+specific_col <- function(kbl, data, n, umbrale = 0.2){
       kableExtra::column_spec(kbl, n, 
                   color = dplyr::case_when(
-                  as.matrix(data[,n]) > 0.2 ~ "darkblue",
-                  as.matrix(data[,n]) < -0.2 ~ "darkred",
+                  as.matrix(data[,n]) > umbrale ~ "darkblue",
+                  as.matrix(data[,n]) < -umbrale ~ "darkred",
                   TRUE ~ "lightgrey"
                   )
                 )
@@ -268,7 +268,7 @@ Sí observamos los gráficos de correlación divididos por dimensión, es más n
 ## PCA
 
 ```{r}
-#scree(z_varsdep)
+scree(z_varsdep)
 ```
 
 El gráfico de sedimentación da cuenta de que el primer componente explica más del doble de varianza que un indicador por si solo. Los siguientes tres factores también cumplen con el criterio de Kaiser (eigenvalue \> 1), sin embargo, explican considerablemente menos que el primer componente. Estos resultados dan cuenta de que la solución escogida para reducir dimensionalidad debe estar entre 1 y 4 componentes, dependiendo del sentido conceptual que tenga cada solución.
@@ -310,5 +310,73 @@ De todos modos, la distribución de las cargas de los componentes da cuenta de c
 2.  **Progresismo tradicional individualizado**: el segundo componente se caracteriza por cargas fuertes en confianza institucional, satisfacción a la democracia e igualitarismo. Este patrón denota un fuerte compromiso por los valores tradicionales de un estado de derecho, junto con baja participación no convenconal y tamaños de red (y viceversa).
 3.  **Altruismo individualizado**: el tercer componente se caracteriza por una carga particularmente fuerte en actitudes altruistas, un rechazo a la violencia y un menor tamaño de red (y viceversa).
 4.  **Sociable prosocial relativista:** el cuarto componente se caracteriza por fuertes cargas en el indicador cultural y los indicadores de la dimensión relacional, así también en el comportamiento prosocial. Sin embargo, también destaca una carga positiva en la justificación de la violencia, lo que denota un relativismo al momento de evaluar situaciones de conflicto.
+
+## EFA
+
+```{r}
+fa.parallel(z_varsdep, fa = "fa")
+```
+
+El análisis paralelo que una solución de 6 factores representa mejor la estructura latente de las variables, en comparación a un set de datos simulados. Sin embargo, es importante notar que solo la solución de 1 factor cuenta con los eigenvalues necesarios por criterio de Kaiser. Se exploran soluciones de 1 y 4 factores, esta última a raíz de la propuesta conceptual detrás de la medición de apego a la sociedad.
+
+```{r}
+KMO(z_varsdep)
+cortest.bartlett(z_varsdep)
+```
+
+Según los critetios de KMO y test de esfericidad de Bartlett, los datos cumplen los requisitos minimos para probar un análisis factorial.
+
+::: panel-tabset
+# 1 factor solution
+
+```{r}
+f1 <- factanal(z_varsdep, factors = 1, rotation = "varimax")$loadings %>% 
+  unclass(.) %>% 
+  as.data.frame(.) %>% 
+  mutate(across(everything(), ~round(., 2)), var = labels) %>% 
+  select(var, everything())
+
+rownames(f1) <- 1:15
+
+f1  %>%
+        kable(caption = "ola") %>%
+        kableExtra::kable_styling(
+            bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+            full_width = T
+        ) %>%
+        row_spec(c(0, 1, 6, 13, 15), extra_css = "border-bottom: 2px solid gray;") %>%
+        specific_col(data = f1, n = 2, 0.4)
+```
+
+# 4 factor solution
+
+```{r}
+f4 <- factanal(z_varsdep, factors = 4, rotation = "varimax")$loadings %>% 
+  unclass(.) %>% 
+  as.data.frame(.) %>% 
+  mutate(across(everything(), ~round(., 2)), var = labels) %>% 
+  select(var, everything())
+
+rownames(f4) <- 1:15
+
+
+f4  %>%
+        kable(caption = "ola") %>%
+        kableExtra::kable_styling(
+            bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+            full_width = T
+        ) %>%
+        row_spec(c(0, 1, 6, 13, 15), extra_css = "border-bottom: 2px solid gray;") %>%
+        specific_col(data = f4, n = 2, 0.4) %>%
+        specific_col(data = f4, n = 3, 0.4) %>% 
+        specific_col(data = f4, n = 4, 0.4) %>% 
+        specific_col(data = f4, n = 5, 0.4)
+
+```
+:::
+
+La solución de 1 factor entrega resultados bastantes similares al PCA, dónde el apego a la sociedad se caracteriza por cargas en parte de los indicadores de la dimensión relacional y la dimensión política. En concreto, se refleja en indicadores relacionados al involucramiento político de distinto tipo y la confianza. Este factor explica aproximadamente el 12% de la varianza, lo cuál es considerablemente bajo.
+
+En tanto, la solución de 4 factores también sigue una lógica más o menos similar al PCA, dónde el primer factor representa una dimensión del apego a la sociedad relacioanda al compromiso político no convencional y la socialbilidad. La segunda dimensión caracterizada por valores políticos republicanos. La tercera dimensión más relacionada a las actitudes prosociales y la cuarta al indicador cultural. De todos modos, es importante recordar que del 2do factor en adelante estos explican menos que un indicador por si solo.
 
 # Synthesis
