@@ -1,7 +1,7 @@
 ---
 title: |
   ![](https://coes.cl/wp-content/uploads/COES_Logo_sello1.png){width=25% height=25%}  
-  Analysis for resuming dependent variables
+  Exploratory analysis - DV's
 author: 
   - Techinical assistant
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
@@ -55,7 +55,8 @@ pacman::p_load(
     lavaan,
     kableExtra,
     effectsize,
-    psych
+    psych,
+    poLCA
 ) # librerias
 ```
 
@@ -217,9 +218,9 @@ pca_var_tab <- function(data, automatic.scale, title){
 
 # Introduction
 
-This document contains the Principal Component Analysis (PCA) (and others) analysis in order to reduce the amount of dependent variables. First, we do a PCA with the normalized dependent variables. Second, we do a Exploratory Factor Analysis (EFA) in order to compare the results with the former analysis. Then, we do two analysis assuming qualitative variables: Laten Class Analysis (LCA) and Multiple Correspondance Analysis (MCA).
+This document contains a Principal Component Analysis (PCA) to reduce the number of dependent variables. First, we perform a PCA using the normalized dependent variables. Second, we perform an Exploratory Factor Analysis (EFA) to compare the results with those of the previous analysis. Then, we perform two analyses assuming qualitative variables: LCA and MCA.
 
-Results and assumptsions for every case are discussed. A final recomendaation is made considering all the background
+The results and assumptions for each case are discussed. Finally, a recommendation is made based on all the background information.
 
 # Analysis
 
@@ -232,7 +233,7 @@ Results and assumptsions for every case are discussed. A final recomendaation is
 correlation(z_varsdep, labels)
 ```
 
-El gráfico de correlaciones muestra que la mayoría de las correlaciones son bajas. La correlación más alta se da entre indicadores de dimensiones distintos: confianza institucional (relacional) y satisfacción con la democracia (política) con un coeficiente positivo de 0.44. Lo mismo ocurre con la relación entre la confianza en minorías y el interés en política (r = 0.34) o la participación no convencional (r = 0.34). Las correlaciones más altas dentro de la misma dimensión se dan en la política, con 0.38 entre interés en política y participación no convencional, asi como entre participación convencional y participación no convencional con 0.32. Sin considerar los resultados anteriores, destaca que las correlaciones intradimensión no demuestran una medición consistente de cada una.
+The correlation chart shows that most correlations are low. The highest correlation, with a positive coefficient of 0.44, occurs between indicators of different dimensions: institutional trust (relational) and satisfaction with democracy (political). The same is true of the relationship between trust in minorities and interest in politics or unconventional participation, both with a positive coefficient of 0.34. The highest correlations within the same dimension are in politics: 0.38 between interest in politics and unconventional participation and 0.32 between conventional and unconventional participation. Notably, the intradimensional correlations do not demonstrate consistent measurements.
 
 ::: panel-tabset
 # Relational Dimention
@@ -271,20 +272,21 @@ Sí observamos los gráficos de correlación divididos por dimensión, es más n
 scree(z_varsdep)
 ```
 
-El gráfico de sedimentación da cuenta de que el primer componente explica más del doble de varianza que un indicador por si solo. Los siguientes tres factores también cumplen con el criterio de Kaiser (eigenvalue \> 1), sin embargo, explican considerablemente menos que el primer componente. Estos resultados dan cuenta de que la solución escogida para reducir dimensionalidad debe estar entre 1 y 4 componentes, dependiendo del sentido conceptual que tenga cada solución.
+The sedimentation graph shows that the first component explains more than twice the variance of an indicator alone. The following three factors meet Kaiser's criterion (eigenvalue \> 1) but explain considerably less variance. These results suggest that the optimal solution for reducing dimensionality is between one and four components, depending on the conceptual meaning of each solution.
 
 ```{r}
 fa.parallel(z_varsdep, fa = "pc")
 ```
 
-El gráfico paralelo compara los datos observados con un set de datos aleatorios. Al hacer esta comparación, se confirma que la solución idonea está entre 1 y 4 componentes.
+The parallel graph compares the observed data with a random dataset. This comparison confirms that the optimal solution lies between one and four components.
 
 ::: panel-tabset
-# PCA Loadings (without normalization)
+
+# PCA Loadings (R's normalization)
 
 ```{r}
-pca_loads_tab(varsdep, FALSE, "PCA Loadings (without normalization)")
-pca_var_tab(varsdep, FALSE, "Explained variance (PCA without normalization)")
+pca_loads_tab(varsdep, TRUE, "PCA Loadings (R's normalization)")
+pca_var_tab(varsdep, TRUE, "Explained variance (R's normalization)")
 ```
 
 # PCA Loadings (manual normalization)
@@ -294,22 +296,20 @@ pca_loads_tab(z_varsdep, FALSE, "PCA Loadings (manual normalization)")
 pca_var_tab(z_varsdep, FALSE, "Explained variance (manual normalization)")
 ```
 
-# PCA Loadings (R's normalization)
+# PCA Loadings (without normalization)
 
 ```{r}
-pca_loads_tab(varsdep, TRUE, "PCA Loadings (R's normalization)")
-pca_var_tab(varsdep, TRUE, "Explained variance (R's normalization)")
+pca_loads_tab(varsdep, FALSE, "PCA Loadings (without normalization)")
+pca_var_tab(varsdep, FALSE, "Explained variance (PCA without normalization)")
 ```
 :::
 
-La tabla con PCA con las variables normalizadas (desde R) da cuenta que una solución de cuatro componentes captura poco más del 40% de la varianza, donde el primer componente captura solo el 17% de la varianza y los demás aproximadamente el 10%. Este resultado da cuenta de indicadores poco correlacionados entre sí, generando dificultades para reducir dimensionalidad. Este resultado va en concordancia con los análisis de correlación, donde no se observaban grandes correlaciones dentro de las dimensiones.
+The PCA table with normalized variables from R shows that a four-component solution captures just over 40% of the variance. The first component captures only 17%, while the others capture approximately 10% each. These results indicate that the variables are poorly correlated with each other, making it difficult to reduce dimensionality. This finding is consistent with the correlation analyses, which revealed no significant correlations within the dimensions.
 
-De todos modos, la distribución de las cargas de los componentes da cuenta de ciertos patrones en la varianza que puede ser relevante de considerar:
-
-1.  **Compromiso político activo vs apoyo institucional pasivo:** el primer componente se caracteriza por valores negativos en gran parte de los indicadores de la dimensión relacional y política, y cargas positivas en la dimensión de normatividad (más acentuado en apoyo a la democracia). Este resultado da cuenta de un patrón de gente poco involucrada en la política y en sus pares, pero con un fuerte compromiso normativo a la democracia (y viceversa).
-2.  **Progresismo tradicional individualizado**: el segundo componente se caracteriza por cargas fuertes en confianza institucional, satisfacción a la democracia e igualitarismo. Este patrón denota un fuerte compromiso por los valores tradicionales de un estado de derecho, junto con baja participación no convenconal y tamaños de red (y viceversa).
-3.  **Altruismo individualizado**: el tercer componente se caracteriza por una carga particularmente fuerte en actitudes altruistas, un rechazo a la violencia y un menor tamaño de red (y viceversa).
-4.  **Sociable prosocial relativista:** el cuarto componente se caracteriza por fuertes cargas en el indicador cultural y los indicadores de la dimensión relacional, así también en el comportamiento prosocial. Sin embargo, también destaca una carga positiva en la justificación de la violencia, lo que denota un relativismo al momento de evaluar situaciones de conflicto.
+1.  **Active Political Engagement vs. Passive Institutional Support:** the first component is characterized by negative values in most indicators of the relational and political dimensions and positive values in the normative dimension, which is more pronounced in support of democracy. This reflects a pattern of people who are not very involved in politics or with their peers but who have a strong commitment to democratic norms (and vice versa).
+2.  **Individualized traditional progressivism:** the second component is characterized by strong loads in institutional trust, satisfaction with democracy, and egalitarianism. This pattern denotes a strong commitment to traditional values of the rule of law, along with low nonconventional participation and network sizes (and vice versa).
+3.  **Individualized altruism:** the third component is characterized by a strong emphasis on altruistic attitudes, rejection of violence and smaller network sizes (and vice versa).
+4.  **Relativistic prosocial sociability:** the fourth component is characterized by strong loads on cultural and relational indicators, as well as prosocial behavior. However, it also highlights a positive association with justifying violence, indicating relativism when evaluating conflict situations.
 
 ## EFA
 
@@ -317,14 +317,14 @@ De todos modos, la distribución de las cargas de los componentes da cuenta de c
 fa.parallel(z_varsdep, fa = "fa")
 ```
 
-El análisis paralelo que una solución de 6 factores representa mejor la estructura latente de las variables, en comparación a un set de datos simulados. Sin embargo, es importante notar que solo la solución de 1 factor cuenta con los eigenvalues necesarios por criterio de Kaiser. Se exploran soluciones de 1 y 4 factores, esta última a raíz de la propuesta conceptual detrás de la medición de apego a la sociedad.
+The parallel analysis shows that a six-factor solution better represents the latent structure of the variables than a simulated dataset. However, it is important to note that, according to Kaiser's criterion, only the one-factor solution has the necessary eigenvalues. We explored solutions with one and four factors, the latter of which is based on the conceptual proposal behind measuring attachment to society.
 
 ```{r}
 KMO(z_varsdep)
 cortest.bartlett(z_varsdep)
 ```
 
-Según los critetios de KMO y test de esfericidad de Bartlett, los datos cumplen los requisitos minimos para probar un análisis factorial.
+According to the KMO criteria and Bartlett's sphericity test, the data meet the minimum requirements for testing a factor analysis.
 
 ::: panel-tabset
 # 1 factor solution
@@ -333,13 +333,13 @@ Según los critetios de KMO y test de esfericidad de Bartlett, los datos cumplen
 f1 <- factanal(z_varsdep, factors = 1, rotation = "varimax")$loadings %>% 
   unclass(.) %>% 
   as.data.frame(.) %>% 
-  mutate(across(everything(), ~round(., 2)), var = labels) %>% 
-  select(var, everything())
+  dplyr::mutate(across(everything(), ~round(., 2)), var = labels) %>% 
+  dplyr::select(var, everything())
 
 rownames(f1) <- 1:15
 
 f1  %>%
-        kable(caption = "ola") %>%
+        kable(caption = "EFA Loadings - 1 factor solution") %>%
         kableExtra::kable_styling(
             bootstrap_options = c("striped", "hover", "condensed", "responsive"),
             full_width = T
@@ -354,14 +354,14 @@ f1  %>%
 f4 <- factanal(z_varsdep, factors = 4, rotation = "varimax")$loadings %>% 
   unclass(.) %>% 
   as.data.frame(.) %>% 
-  mutate(across(everything(), ~round(., 2)), var = labels) %>% 
-  select(var, everything())
+  dplyr::mutate(across(everything(), ~round(., 2)), var = labels) %>% 
+  dplyr::select(var, everything())
 
 rownames(f4) <- 1:15
 
 
 f4  %>%
-        kable(caption = "ola") %>%
+        kable(caption = "EFA Loadings - 4 factor solution") %>%
         kableExtra::kable_styling(
             bootstrap_options = c("striped", "hover", "condensed", "responsive"),
             full_width = T
@@ -375,8 +375,92 @@ f4  %>%
 ```
 :::
 
-La solución de 1 factor entrega resultados bastantes similares al PCA, dónde el apego a la sociedad se caracteriza por cargas en parte de los indicadores de la dimensión relacional y la dimensión política. En concreto, se refleja en indicadores relacionados al involucramiento político de distinto tipo y la confianza. Este factor explica aproximadamente el 12% de la varianza, lo cuál es considerablemente bajo.
+The 1-factor solution delivers results quite similar to PCA, where attachment to society is characterized by loadings on some of the indicators of the relational dimension and the political dimension. Specifically, this is reflected in indicators related to different types of political involvement and trust. This factor explains only about 12% of the variance.
 
-En tanto, la solución de 4 factores también sigue una lógica más o menos similar al PCA, dónde el primer factor representa una dimensión del apego a la sociedad relacioanda al compromiso político no convencional y la socialbilidad. La segunda dimensión caracterizada por valores políticos republicanos. La tercera dimensión más relacionada a las actitudes prosociales y la cuarta al indicador cultural. De todos modos, es importante recordar que del 2do factor en adelante estos explican menos que un indicador por si solo.
+The 4-factor solution follows a similar logic to PCA. The first factor represents a dimension of attachment to society related to unconventional political commitment and sociability. The second dimension is characterized by republican political values. The third dimension is related to prosocial attitudes, and the fourth is related to the cultural indicator. In any case, it is important to remember that, starting with the second factor, they explain less than one indicator alone.
+
+# LCA
+
+In addition to testing quantitative variables, we examined multivariate clustering techniques for categorical variables. Specifically, we examined Latent Class Analysis (LCA), which, like EFA, investigates the latent structure underlying the indicators. The main difference between LCA and EFA is that LCA assumes these latent structures are "classes" rather than continuous factors and models the probability of belonging to different classes.
+
+We will use the variables in their original scales for LCA, most of which are ordinal. Many of these variables, however, were averaged because they considered two or more indicators of the same scale. Since the indicators used in LCA must be integers, we rounded the averages of these variables.
+
+```{r}
+varsdep_rounded <- varsdep %>% mutate(
+  across(names(varsdep), ~ round(.)),
+  across(names(varsdep), ~ if_else(. == 0, . + 1, .))
+)
+```
+
+```{r, results='asis'}
+summarytools::dfSummary(varsdep_rounded,plain.ascii  = FALSE, 
+          style        = "grid", 
+          graph.magnif = 0.82, 
+          varnumbers   = FALSE,
+          valid.col    = FALSE,
+          tmp.img.dir  = "/tmp")
+```
+
+Once the variables have been rounded, we proceed to apply LCA:
+
+```{r}
+f <- cbind(
+  identification, friends, size_network,
+  gen_trust, trust_minorities, trust_inst,
+  interest_pol, satisf_demo, conv_particip,
+  unconv_particip, egalitarianism, altruistic,
+  prosoc_behave, democracy_support, justif_violence
+) ~ 1
+
+
+lca <- poLCA(f, varsdep_rounded, nclass = 2, verbose = F)$probs %>%
+    map(., as.data.frame)
+  
+lca$gen_trust <- lca$gen_trust %>%
+    mutate("Pr(4)" = NA, "Pr(5)" = NA)
+  
+lca$conv_particip <- lca$conv_particip %>%
+    mutate("Pr(4)" = NA, "Pr(5)" = NA)
+  
+lca$prosoc_behave <- lca$prosoc_behave %>%
+    mutate("Pr(4)" = NA, "Pr(5)" = NA)
+  
+lca$democracy_support <- lca$democracy_support %>%
+    mutate("Pr(5)" = NA)
+
+lca_tab <- bind_rows(lca)
+rownames(lca_tab) <- 1:30
+
+lca_tab <- lca_tab %>% 
+  mutate(
+  across(everything(), ~round(., 2)),
+  class = rep(c("class 1", "class 2"), 15),
+  var =  rep(labels, each = 2)
+) %>% 
+  dplyr::select(var, class, everything())
+
+
+lca_tab_wide <- lca_tab %>%
+  pivot_longer(
+    cols = starts_with("Pr("),
+    names_to = "category",
+    values_to = "prob"
+  ) %>%
+  pivot_wider(
+    names_from = class,
+    values_from = prob
+  )
+
+
+lca_tab_wide %>%
+        kable(caption = "LCA Belongings - 2 classes") %>%
+        kableExtra::kable_styling(
+            bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+            full_width = T
+        ) %>%
+        row_spec(c(0, 5, 30, 65, 75), extra_css = "border-bottom: 2px solid gray;") %>%
+        specific_col(data = lca_tab_wide, n = 3, 0.4) %>%
+        specific_col(data = lca_tab_wide, n = 4, 0.4) 
+```
 
 # Synthesis

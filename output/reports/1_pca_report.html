@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Techinical assistant">
-<meta name="dcterms.date" content="2025-03-08">
+<meta name="dcterms.date" content="2025-04-08">
 
-<title> Analysis for resuming dependent variables</title>
+<title> Exploratory analysis - DV’s</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,7 +51,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><p><img src="https://coes.cl/wp-content/uploads/COES_Logo_sello1.png" style="width:25.0%;height:25.0%"> Analysis for resuming dependent variables</p></h1>
+<h1 class="title"><p><img src="https://coes.cl/wp-content/uploads/COES_Logo_sello1.png" style="width:25.0%;height:25.0%"> Exploratory analysis - DV’s</p></h1>
 </div>
 
 
@@ -68,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 8, 2025</p>
+      <p class="date">April 8, 2025</p>
     </div>
   </div>
   
@@ -97,8 +97,8 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 </style>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This document contains the Principal Component Analysis (PCA) (and others) analysis in order to reduce the amount of dependent variables. First, we do a PCA with the normalized dependent variables. Second, we do a Exploratory Factor Analysis (EFA) in order to compare the results with the former analysis. Then, we do two analysis assuming qualitative variables: Laten Class Analysis (LCA) and Multiple Correspondance Analysis (MCA).</p>
-<p>Results and assumptsions for every case are discussed. A final recomendaation is made considering all the background</p>
+<p>This document contains a Principal Component Analysis (PCA) to reduce the number of dependent variables. First, we perform a PCA using the normalized dependent variables. Second, we perform an Exploratory Factor Analysis (EFA) to compare the results with those of the previous analysis. Then, we perform two analyses assuming qualitative variables: LCA and MCA.</p>
+<p>The results and assumptions for each case are discussed. Finally, a recommendation is made based on all the background information.</p>
 </section>
 <section id="analysis" class="level1">
 <h1>Analysis</h1>
@@ -113,7 +113,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 </div>
 </div>
 </div>
-<p>El gráfico de correlaciones muestra que la mayoría de las correlaciones son bajas. La correlación más alta se da entre indicadores de dimensiones distintos: confianza institucional (relacional) y satisfacción con la democracia (política) con un coeficiente positivo de 0.44. Lo mismo ocurre con la relación entre la confianza en minorías y el interés en política (r = 0.34) o la participación no convencional (r = 0.34). Las correlaciones más altas dentro de la misma dimensión se dan en la política, con 0.38 entre interés en política y participación no convencional, asi como entre participación convencional y participación no convencional con 0.32. Sin considerar los resultados anteriores, destaca que las correlaciones intradimensión no demuestran una medición consistente de cada una.</p>
+<p>The correlation chart shows that most correlations are low. The highest correlation, with a positive coefficient of 0.44, occurs between indicators of different dimensions: institutional trust (relational) and satisfaction with democracy (political). The same is true of the relationship between trust in minorities and interest in politics or unconventional participation, both with a positive coefficient of 0.34. The highest correlations within the same dimension are in politics: 0.38 between interest in politics and unconventional participation and 0.32 between conventional and unconventional participation. Notably, the intradimensional correlations do not demonstrate consistent measurements.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Relational Dimention</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Political Dimention</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Normative Dimention</a></li></ul>
 <div class="tab-content">
@@ -165,7 +165,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 </div>
 </div>
 </div>
-<p>El gráfico de sedimentación da cuenta de que el primer componente explica más del doble de varianza que un indicador por si solo. Los siguientes tres factores también cumplen con el criterio de Kaiser (eigenvalue &gt; 1), sin embargo, explican considerablemente menos que el primer componente. Estos resultados dan cuenta de que la solución escogida para reducir dimensionalidad debe estar entre 1 y 4 componentes, dependiendo del sentido conceptual que tenga cada solución.</p>
+<p>The sedimentation graph shows that the first component explains more than twice the variance of an indicator alone. The following three factors meet Kaiser’s criterion (eigenvalue &gt; 1) but explain considerably less variance. These results suggest that the optimal solution for reducing dimensionality is between one and four components, depending on the conceptual meaning of each solution.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -178,16 +178,16 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <pre><code>Parallel analysis suggests that the number of factors =  NA  and the number of components =  4 </code></pre>
 </div>
 </div>
-<p>El gráfico paralelo compara los datos observados con un set de datos aleatorios. Al hacer esta comparación, se confirma que la solución idonea está entre 1 y 4 componentes.</p>
+<p>The parallel graph compares the observed data with a random dataset. This comparison confirms that the optimal solution lies between one and four components.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">PCA Loadings (without normalization)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">PCA Loadings (manual normalization)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">PCA Loadings (R’s normalization)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">PCA Loadings (R’s normalization)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">PCA Loadings (manual normalization)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">PCA Loadings (without normalization)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>PCA Loadings (without normalization)</caption>
+<caption>PCA Loadings (R's normalization)</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">vars</th>
@@ -200,108 +200,108 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <tbody>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">C - Ident.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.04</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.22</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.10</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.41</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.50</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">R - Amigos</td>
-<td style="text-align: right; color: darkred !important;">-0.25</td>
-<td style="text-align: right; color: darkred !important;">-0.33</td>
-<td style="text-align: right; color: darkred !important;">-0.24</td>
-<td style="text-align: right; color: darkred !important;">-0.87</td>
+<td style="text-align: right; color: darkred !important;">-0.26</td>
+<td style="text-align: right; color: lightgrey !important;">-0.06</td>
+<td style="text-align: right; color: lightgrey !important;">-0.12</td>
+<td style="text-align: right; color: darkblue !important;">0.22</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">R - Tamaño red</td>
-<td style="text-align: right; color: darkred !important;">-0.90</td>
-<td style="text-align: right; color: darkblue !important;">0.35</td>
-<td style="text-align: right; color: lightgrey !important;">0.19</td>
-<td style="text-align: right; color: lightgrey !important;">0.09</td>
+<td style="text-align: right; color: lightgrey !important;">-0.14</td>
+<td style="text-align: right; color: darkred !important;">-0.33</td>
+<td style="text-align: right; color: darkred !important;">-0.23</td>
+<td style="text-align: right; color: darkblue !important;">0.42</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: right; color: lightgrey !important;">0.18</td>
 <td style="text-align: right; color: lightgrey !important;">0.01</td>
-<td style="text-align: right; color: lightgrey !important;">0.05</td>
-<td style="text-align: right; color: lightgrey !important;">0.01</td>
-<td style="text-align: right; color: lightgrey !important;">-0.03</td>
+<td style="text-align: right; color: lightgrey !important;">0.09</td>
+<td style="text-align: right; color: darkblue !important;">0.40</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">R - Conf. min.</td>
-<td style="text-align: right; color: lightgrey !important;">-0.19</td>
-<td style="text-align: right; color: darkred !important;">-0.29</td>
-<td style="text-align: right; color: lightgrey !important;">-0.02</td>
-<td style="text-align: right; color: lightgrey !important;">0.05</td>
+<td style="text-align: right; color: darkred !important;">-0.38</td>
+<td style="text-align: right; color: lightgrey !important;">-0.05</td>
+<td style="text-align: right; color: lightgrey !important;">-0.07</td>
+<td style="text-align: right; color: lightgrey !important;">-0.05</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; border-bottom: 2px solid gray;">R - Conf. inst.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.02</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.23</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.29</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.30</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.48</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.00</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Int. pol.</td>
-<td style="text-align: right; color: darkred !important;">-0.23</td>
-<td style="text-align: right; color: darkred !important;">-0.61</td>
-<td style="text-align: right; color: darkred !important;">-0.25</td>
-<td style="text-align: right; color: darkblue !important;">0.42</td>
+<td style="text-align: right; color: darkred !important;">-0.43</td>
+<td style="text-align: right; color: lightgrey !important;">-0.01</td>
+<td style="text-align: right; color: lightgrey !important;">-0.11</td>
+<td style="text-align: right; color: lightgrey !important;">-0.16</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Satis. demo</td>
-<td style="text-align: right; color: lightgrey !important;">0.05</td>
-<td style="text-align: right; color: darkred !important;">-0.31</td>
-<td style="text-align: right; color: darkblue !important;">0.83</td>
-<td style="text-align: right; color: lightgrey !important;">-0.09</td>
+<td style="text-align: right; color: lightgrey !important;">-0.17</td>
+<td style="text-align: right; color: darkblue !important;">0.55</td>
+<td style="text-align: right; color: lightgrey !important;">0.11</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: right; color: darkred !important;">-0.32</td>
 <td style="text-align: right; color: lightgrey !important;">-0.03</td>
-<td style="text-align: right; color: lightgrey !important;">-0.05</td>
-<td style="text-align: right; color: lightgrey !important;">0.00</td>
-<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">-0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.13</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Part. no conv.</td>
-<td style="text-align: right; color: lightgrey !important;">-0.14</td>
-<td style="text-align: right; color: lightgrey !important;">-0.12</td>
-<td style="text-align: right; color: lightgrey !important;">-0.12</td>
-<td style="text-align: right; color: lightgrey !important;">0.09</td>
+<td style="text-align: right; color: darkred !important;">-0.38</td>
+<td style="text-align: right; color: darkred !important;">-0.32</td>
+<td style="text-align: right; color: lightgrey !important;">-0.13</td>
+<td style="text-align: right; color: lightgrey !important;">0.08</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Igualitarismo.</td>
-<td style="text-align: right; color: lightgrey !important;">0.04</td>
-<td style="text-align: right; color: lightgrey !important;">-0.04</td>
-<td style="text-align: right; color: lightgrey !important;">0.09</td>
-<td style="text-align: right; color: lightgrey !important;">-0.08</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+<td style="text-align: right; color: darkblue !important;">0.37</td>
+<td style="text-align: right; color: darkred !important;">-0.47</td>
+<td style="text-align: right; color: lightgrey !important;">0.07</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Altruismo.</td>
-<td style="text-align: right; color: lightgrey !important;">-0.01</td>
-<td style="text-align: right; color: lightgrey !important;">-0.06</td>
-<td style="text-align: right; color: lightgrey !important;">-0.06</td>
-<td style="text-align: right; color: lightgrey !important;">-0.01</td>
+<td style="text-align: right; color: lightgrey !important;">-0.14</td>
+<td style="text-align: right; color: lightgrey !important;">-0.16</td>
+<td style="text-align: right; color: darkblue !important;">0.60</td>
+<td style="text-align: right; color: lightgrey !important;">-0.07</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">P - Cond. prosoc.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.06</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.09</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.25</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.02</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.19</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.37</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">N - Apoyo demo.</td>
-<td style="text-align: right; color: lightgrey !important;">0.06</td>
-<td style="text-align: right; color: darkblue !important;">0.35</td>
-<td style="text-align: right; color: lightgrey !important;">-0.02</td>
-<td style="text-align: right; color: lightgrey !important;">-0.13</td>
+<td style="text-align: right; color: darkblue !important;">0.29</td>
+<td style="text-align: right; color: lightgrey !important;">-0.14</td>
+<td style="text-align: right; color: lightgrey !important;">-0.08</td>
+<td style="text-align: right; color: lightgrey !important;">0.17</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">N - Just. viol.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.01</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.10</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.07</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.11</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.13</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.09</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.30</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.37</td>
 </tr>
 </tbody>
 </table>
@@ -312,7 +312,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>Explained variance (PCA without normalization)</caption>
+<caption>Explained variance (R's normalization)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
@@ -325,24 +325,24 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Standard deviation</td>
-<td style="text-align: right;">1.78</td>
-<td style="text-align: right;">1.52</td>
-<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">1.62</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">1.11</td>
 <td style="text-align: right;">1.10</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Proportion of Variance</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.08</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Cumulative Proportion</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.45</td>
 </tr>
 </tbody>
 </table>
@@ -527,7 +527,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>PCA Loadings (R's normalization)</caption>
+<caption>PCA Loadings (without normalization)</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">vars</th>
@@ -540,108 +540,108 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <tbody>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">C - Ident.</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.04</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.22</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.41</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.50</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.10</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">R - Amigos</td>
-<td style="text-align: right; color: darkred !important;">-0.26</td>
-<td style="text-align: right; color: lightgrey !important;">-0.06</td>
-<td style="text-align: right; color: lightgrey !important;">-0.12</td>
-<td style="text-align: right; color: darkblue !important;">0.22</td>
+<td style="text-align: right; color: darkred !important;">-0.25</td>
+<td style="text-align: right; color: darkred !important;">-0.33</td>
+<td style="text-align: right; color: darkred !important;">-0.24</td>
+<td style="text-align: right; color: darkred !important;">-0.87</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">R - Tamaño red</td>
-<td style="text-align: right; color: lightgrey !important;">-0.14</td>
-<td style="text-align: right; color: darkred !important;">-0.33</td>
-<td style="text-align: right; color: darkred !important;">-0.23</td>
-<td style="text-align: right; color: darkblue !important;">0.42</td>
+<td style="text-align: right; color: darkred !important;">-0.90</td>
+<td style="text-align: right; color: darkblue !important;">0.35</td>
+<td style="text-align: right; color: lightgrey !important;">0.19</td>
+<td style="text-align: right; color: lightgrey !important;">0.09</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">R - Conf. gen.</td>
-<td style="text-align: right; color: lightgrey !important;">0.18</td>
 <td style="text-align: right; color: lightgrey !important;">0.01</td>
-<td style="text-align: right; color: lightgrey !important;">0.09</td>
-<td style="text-align: right; color: darkblue !important;">0.40</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; color: lightgrey !important;">-0.03</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">R - Conf. min.</td>
-<td style="text-align: right; color: darkred !important;">-0.38</td>
-<td style="text-align: right; color: lightgrey !important;">-0.05</td>
-<td style="text-align: right; color: lightgrey !important;">-0.07</td>
-<td style="text-align: right; color: lightgrey !important;">-0.05</td>
+<td style="text-align: right; color: lightgrey !important;">-0.19</td>
+<td style="text-align: right; color: darkred !important;">-0.29</td>
+<td style="text-align: right; color: lightgrey !important;">-0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; border-bottom: 2px solid gray;">R - Conf. inst.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.30</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.48</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.02</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.23</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.29</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Int. pol.</td>
-<td style="text-align: right; color: darkred !important;">-0.43</td>
-<td style="text-align: right; color: lightgrey !important;">-0.01</td>
-<td style="text-align: right; color: lightgrey !important;">-0.11</td>
-<td style="text-align: right; color: lightgrey !important;">-0.16</td>
+<td style="text-align: right; color: darkred !important;">-0.23</td>
+<td style="text-align: right; color: darkred !important;">-0.61</td>
+<td style="text-align: right; color: darkred !important;">-0.25</td>
+<td style="text-align: right; color: darkblue !important;">0.42</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Satis. demo</td>
-<td style="text-align: right; color: lightgrey !important;">-0.17</td>
-<td style="text-align: right; color: darkblue !important;">0.55</td>
-<td style="text-align: right; color: lightgrey !important;">0.11</td>
-<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+<td style="text-align: right; color: darkred !important;">-0.31</td>
+<td style="text-align: right; color: darkblue !important;">0.83</td>
+<td style="text-align: right; color: lightgrey !important;">-0.09</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Part. conv.</td>
-<td style="text-align: right; color: darkred !important;">-0.32</td>
 <td style="text-align: right; color: lightgrey !important;">-0.03</td>
-<td style="text-align: right; color: lightgrey !important;">-0.02</td>
-<td style="text-align: right; color: lightgrey !important;">0.13</td>
+<td style="text-align: right; color: lightgrey !important;">-0.05</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Part. no conv.</td>
-<td style="text-align: right; color: darkred !important;">-0.38</td>
-<td style="text-align: right; color: darkred !important;">-0.32</td>
-<td style="text-align: right; color: lightgrey !important;">-0.13</td>
-<td style="text-align: right; color: lightgrey !important;">0.08</td>
+<td style="text-align: right; color: lightgrey !important;">-0.14</td>
+<td style="text-align: right; color: lightgrey !important;">-0.12</td>
+<td style="text-align: right; color: lightgrey !important;">-0.12</td>
+<td style="text-align: right; color: lightgrey !important;">0.09</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P - Igualitarismo.</td>
-<td style="text-align: right; color: lightgrey !important;">0.03</td>
-<td style="text-align: right; color: darkblue !important;">0.37</td>
-<td style="text-align: right; color: darkred !important;">-0.47</td>
-<td style="text-align: right; color: lightgrey !important;">0.07</td>
+<td style="text-align: right; color: lightgrey !important;">0.04</td>
+<td style="text-align: right; color: lightgrey !important;">-0.04</td>
+<td style="text-align: right; color: lightgrey !important;">0.09</td>
+<td style="text-align: right; color: lightgrey !important;">-0.08</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P - Altruismo.</td>
-<td style="text-align: right; color: lightgrey !important;">-0.14</td>
-<td style="text-align: right; color: lightgrey !important;">-0.16</td>
-<td style="text-align: right; color: darkblue !important;">0.60</td>
-<td style="text-align: right; color: lightgrey !important;">-0.07</td>
+<td style="text-align: right; color: lightgrey !important;">-0.01</td>
+<td style="text-align: right; color: lightgrey !important;">-0.06</td>
+<td style="text-align: right; color: lightgrey !important;">-0.06</td>
+<td style="text-align: right; color: lightgrey !important;">-0.01</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">P - Cond. prosoc.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.25</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.06</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.09</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.02</td>
 <td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.02</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.19</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.37</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">N - Apoyo demo.</td>
-<td style="text-align: right; color: darkblue !important;">0.29</td>
-<td style="text-align: right; color: lightgrey !important;">-0.14</td>
-<td style="text-align: right; color: lightgrey !important;">-0.08</td>
-<td style="text-align: right; color: lightgrey !important;">0.17</td>
+<td style="text-align: right; color: lightgrey !important;">0.06</td>
+<td style="text-align: right; color: darkblue !important;">0.35</td>
+<td style="text-align: right; color: lightgrey !important;">-0.02</td>
+<td style="text-align: right; color: lightgrey !important;">-0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid gray;">N - Just. viol.</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.13</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.09</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkred !important;">-0.30</td>
-<td style="text-align: right; border-bottom: 2px solid gray; color: darkblue !important;">0.37</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.10</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.07</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">-0.11</td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +652,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>Explained variance (R's normalization)</caption>
+<caption>Explained variance (PCA without normalization)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
@@ -665,24 +665,24 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Standard deviation</td>
-<td style="text-align: right;">1.62</td>
-<td style="text-align: right;">1.27</td>
-<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">1.78</td>
+<td style="text-align: right;">1.52</td>
+<td style="text-align: right;">1.12</td>
 <td style="text-align: right;">1.10</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Proportion of Variance</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.09</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Cumulative Proportion</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.28</td>
-<td style="text-align: right;">0.36</td>
-<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">0.62</td>
 </tr>
 </tbody>
 </table>
@@ -694,13 +694,12 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 </div>
 </div>
 </div>
-<p>La tabla con PCA con las variables normalizadas (desde R) da cuenta que una solución de cuatro componentes captura poco más del 40% de la varianza, donde el primer componente captura solo el 17% de la varianza y los demás aproximadamente el 10%. Este resultado da cuenta de indicadores poco correlacionados entre sí, generando dificultades para reducir dimensionalidad. Este resultado va en concordancia con los análisis de correlación, donde no se observaban grandes correlaciones dentro de las dimensiones.</p>
-<p>De todos modos, la distribución de las cargas de los componentes da cuenta de ciertos patrones en la varianza que puede ser relevante de considerar:</p>
+<p>The PCA table with normalized variables from R shows that a four-component solution captures just over 40% of the variance. The first component captures only 17%, while the others capture approximately 10% each. These results indicate that the variables are poorly correlated with each other, making it difficult to reduce dimensionality. This finding is consistent with the correlation analyses, which revealed no significant correlations within the dimensions.</p>
 <ol type="1">
-<li><strong>Compromiso político activo vs apoyo institucional pasivo:</strong> el primer componente se caracteriza por valores negativos en gran parte de los indicadores de la dimensión relacional y política, y cargas positivas en la dimensión de normatividad (más acentuado en apoyo a la democracia). Este resultado da cuenta de un patrón de gente poco involucrada en la política y en sus pares, pero con un fuerte compromiso normativo a la democracia (y viceversa).</li>
-<li><strong>Progresismo tradicional individualizado</strong>: el segundo componente se caracteriza por cargas fuertes en confianza institucional, satisfacción a la democracia e igualitarismo. Este patrón denota un fuerte compromiso por los valores tradicionales de un estado de derecho, junto con baja participación no convenconal y tamaños de red (y viceversa).</li>
-<li><strong>Altruismo individualizado</strong>: el tercer componente se caracteriza por una carga particularmente fuerte en actitudes altruistas, un rechazo a la violencia y un menor tamaño de red (y viceversa).</li>
-<li><strong>Sociable prosocial relativista:</strong> el cuarto componente se caracteriza por fuertes cargas en el indicador cultural y los indicadores de la dimensión relacional, así también en el comportamiento prosocial. Sin embargo, también destaca una carga positiva en la justificación de la violencia, lo que denota un relativismo al momento de evaluar situaciones de conflicto.</li>
+<li><strong>Active Political Engagement vs.&nbsp;Passive Institutional Support:</strong> the first component is characterized by negative values in most indicators of the relational and political dimensions and positive values in the normative dimension, which is more pronounced in support of democracy. This reflects a pattern of people who are not very involved in politics or with their peers but who have a strong commitment to democratic norms (and vice versa).</li>
+<li><strong>Individualized traditional progressivism:</strong> the second component is characterized by strong loads in institutional trust, satisfaction with democracy, and egalitarianism. This pattern denotes a strong commitment to traditional values of the rule of law, along with low nonconventional participation and network sizes (and vice versa).</li>
+<li><strong>Individualized altruism:</strong> the third component is characterized by a strong emphasis on altruistic attitudes, rejection of violence and smaller network sizes (and vice versa).</li>
+<li><strong>Relativistic prosocial sociability:</strong> the fourth component is characterized by strong loads on cultural and relational indicators, as well as prosocial behavior. However, it also highlights a positive association with justifying violence, indicating relativism when evaluating conflict situations.</li>
 </ol>
 </section>
 <section id="efa" class="level2">
@@ -717,7 +716,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <pre><code>Parallel analysis suggests that the number of factors =  6  and the number of components =  NA </code></pre>
 </div>
 </div>
-<p>El análisis paralelo que una solución de 6 factores representa mejor la estructura latente de las variables, en comparación a un set de datos simulados. Sin embargo, es importante notar que solo la solución de 1 factor cuenta con los eigenvalues necesarios por criterio de Kaiser. Se exploran soluciones de 1 y 4 factores, esta última a raíz de la propuesta conceptual detrás de la medición de apego a la sociedad.</p>
+<p>The parallel analysis shows that a six-factor solution better represents the latent structure of the variables than a simulated dataset. However, it is important to note that, according to Kaiser’s criterion, only the one-factor solution has the necessary eigenvalues. We explored solutions with one and four factors, the latter of which is based on the conceptual proposal behind measuring attachment to society.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Kaiser-Meyer-Olkin factor adequacy
@@ -744,7 +743,7 @@ $df
 [1] 105</code></pre>
 </div>
 </div>
-<p>Según los critetios de KMO y test de esfericidad de Bartlett, los datos cumplen los requisitos minimos para probar un análisis factorial.</p>
+<p>According to the KMO criteria and Bartlett’s sphericity test, the data meet the minimum requirements for testing a factor analysis.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">1 factor solution</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">4 factor solution</a></li></ul>
 <div class="tab-content">
@@ -753,7 +752,7 @@ $df
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>ola</caption>
+<caption>EFA Loadings - 1 factor solution</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">var</th>
@@ -834,7 +833,7 @@ $df
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
-<caption>ola</caption>
+<caption>EFA Loadings - 4 factor solution</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">var</th>
@@ -960,8 +959,746 @@ $df
 </div>
 </div>
 </div>
-<p>La solución de 1 factor entrega resultados bastantes similares al PCA, dónde el apego a la sociedad se caracteriza por cargas en parte de los indicadores de la dimensión relacional y la dimensión política. En concreto, se refleja en indicadores relacionados al involucramiento político de distinto tipo y la confianza. Este factor explica aproximadamente el 12% de la varianza, lo cuál es considerablemente bajo.</p>
-<p>En tanto, la solución de 4 factores también sigue una lógica más o menos similar al PCA, dónde el primer factor representa una dimensión del apego a la sociedad relacioanda al compromiso político no convencional y la socialbilidad. La segunda dimensión caracterizada por valores políticos republicanos. La tercera dimensión más relacionada a las actitudes prosociales y la cuarta al indicador cultural. De todos modos, es importante recordar que del 2do factor en adelante estos explican menos que un indicador por si solo.</p>
+<p>The 1-factor solution delivers results quite similar to PCA, where attachment to society is characterized by loadings on some of the indicators of the relational dimension and the political dimension. Specifically, this is reflected in indicators related to different types of political involvement and trust. This factor explains only about 12% of the variance.</p>
+<p>The 4-factor solution follows a similar logic to PCA. The first factor represents a dimension of attachment to society related to unconventional political commitment and sociability. The second dimension is characterized by republican political values. The third dimension is related to prosocial attitudes, and the fourth is related to the cultural indicator. In any case, it is important to remember that, starting with the second factor, they explain less than one indicator alone.</p>
+</section>
+</section>
+<section id="lca" class="level1">
+<h1>LCA</h1>
+<p>In addition to testing quantitative variables, we examined multivariate clustering techniques for categorical variables. Specifically, we examined Latent Class Analysis (LCA), which, like EFA, investigates the latent structure underlying the indicators. The main difference between LCA and EFA is that LCA assumes these latent structures are “classes” rather than continuous factors and models the probability of belonging to different classes.</p>
+<p>We will use the variables in their original scales for LCA, most of which are ordinal. Many of these variables, however, were averaged because they considered two or more indicators of the same scale. Since the indicators used in LCA must be integers, we rounded the averages of these variables.</p>
+<section id="data-frame-summary" class="level3">
+<h3 class="anchored" data-anchor-id="data-frame-summary">Data Frame Summary</h3>
+<section id="varsdep_rounded" class="level4">
+<h4 class="anchored" data-anchor-id="varsdep_rounded">varsdep_rounded</h4>
+<p><strong>Dimensions:</strong> 1386 x 15<br>
+<strong>Duplicates:</strong> 1</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 24%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Stats / Values</th>
+<th>Freqs (% of Valid)</th>
+<th>Graph</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>identification<br>
+[numeric]</td>
+<td>Mean (sd) : 4.1 (0.8)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 4 &lt; 5<br>
+IQR (CV) : 1 (0.2)</td>
+<td>1 : 29 ( 2.1%)<br>
+2 : 44 ( 3.2%)<br>
+3 : 86 ( 6.2%)<br>
+4 : 867 (62.6%)<br>
+5 : 360 (26.0%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>friends<br>
+[numeric]</td>
+<td>Mean (sd) : 2.7 (1.2)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 3 &lt; 5<br>
+IQR (CV) : 1 (0.4)</td>
+<td>1 : 267 (19.3%)<br>
+2 : 346 (25.0%)<br>
+3 : 454 (32.8%)<br>
+4 : 192 (13.9%)<br>
+5 : 127 ( 9.2%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>size_network<br>
+[numeric]</td>
+<td>Mean (sd) : 2.6 (1.5)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 3 (0.6)</td>
+<td>1 : 497 (35.9%)<br>
+2 : 247 (17.8%)<br>
+3 : 239 (17.2%)<br>
+4 : 130 ( 9.4%)<br>
+5 : 273 (19.7%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>gen_trust<br>
+[numeric]</td>
+<td>Mean (sd) : 1.9 (0.4)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 3<br>
+IQR (CV) : 0 (0.2)</td>
+<td>1 : 156 (11.3%)<br>
+2 : 1164 (84.0%)<br>
+3 : 66 ( 4.8%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>trust_minorities<br>
+[numeric]</td>
+<td>Mean (sd) : 2.9 (1)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 3 &lt; 5<br>
+IQR (CV) : 2 (0.3)</td>
+<td>1 : 112 ( 8.1%)<br>
+2 : 403 (29.1%)<br>
+3 : 496 (35.8%)<br>
+4 : 326 (23.5%)<br>
+5 : 49 ( 3.5%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>trust_inst<br>
+[numeric]</td>
+<td>Mean (sd) : 1.7 (0.7)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 1 (0.4)</td>
+<td>1 : 555 (40.0%)<br>
+2 : 671 (48.4%)<br>
+3 : 124 ( 8.9%)<br>
+4 : 35 ( 2.5%)<br>
+5 : 1 ( 0.1%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>interest_pol<br>
+[numeric]</td>
+<td>Mean (sd) : 2.1 (1.2)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 2 (0.6)</td>
+<td>1 : 669 (48.3%)<br>
+2 : 263 (19.0%)<br>
+3 : 236 (17.0%)<br>
+4 : 141 (10.2%)<br>
+5 : 77 ( 5.6%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>satisf_demo<br>
+[numeric]</td>
+<td>Mean (sd) : 2.1 (1.1)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 2 (0.5)</td>
+<td>1 : 540 (39.0%)<br>
+2 : 395 (28.5%)<br>
+3 : 287 (20.7%)<br>
+4 : 124 ( 8.9%)<br>
+5 : 40 ( 2.9%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>conv_particip<br>
+[numeric]</td>
+<td>Mean (sd) : 1.2 (0.4)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 1 &lt; 3<br>
+IQR (CV) : 0 (0.3)</td>
+<td>1 : 1049 (75.7%)<br>
+2 : 334 (24.1%)<br>
+3 : 3 ( 0.2%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>unconv_particip<br>
+[numeric]</td>
+<td>Mean (sd) : 1.4 (0.7)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 1 &lt; 5<br>
+IQR (CV) : 1 (0.5)</td>
+<td>1 : 983 (70.9%)<br>
+2 : 306 (22.1%)<br>
+3 : 78 ( 5.6%)<br>
+4 : 16 ( 1.2%)<br>
+5 : 3 ( 0.2%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>egalitarianism<br>
+[numeric]</td>
+<td>Mean (sd) : 2 (0.8)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 1 (0.4)</td>
+<td>1 : 350 (25.3%)<br>
+2 : 746 (53.8%)<br>
+3 : 233 (16.8%)<br>
+4 : 51 ( 3.7%)<br>
+5 : 6 ( 0.4%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>altruistic<br>
+[numeric]</td>
+<td>Mean (sd) : 4.2 (0.6)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 4 &lt; 5<br>
+IQR (CV) : 1 (0.1)</td>
+<td>1 : 5 ( 0.4%)<br>
+2 : 16 ( 1.2%)<br>
+3 : 55 ( 4.0%)<br>
+4 : 941 (67.9%)<br>
+5 : 369 (26.6%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>prosoc_behave<br>
+[numeric]</td>
+<td>Mean (sd) : 1.8 (0.6)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 3<br>
+IQR (CV) : 1 (0.3)</td>
+<td>1 : 389 (28.1%)<br>
+2 : 865 (62.4%)<br>
+3 : 132 ( 9.5%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="even">
+<td>democracy_support<br>
+[numeric]</td>
+<td>Mean (sd) : 1.7 (1)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 1 &lt; 4<br>
+IQR (CV) : 2 (0.6)</td>
+<td>1 : 837 (60.4%)<br>
+2 : 174 (12.6%)<br>
+3 : 292 (21.1%)<br>
+4 : 83 ( 6.0%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+<tr class="odd">
+<td>justif_violence<br>
+[numeric]</td>
+<td>Mean (sd) : 2 (0.9)<br>
+min &lt; med &lt; max:<br>
+1 &lt; 2 &lt; 5<br>
+IQR (CV) : 1 (0.4)</td>
+<td>1 : 473 (34.1%)<br>
+2 : 576 (41.6%)<br>
+3 : 257 (18.5%)<br>
+4 : 74 ( 5.3%)<br>
+5 : 6 ( 0.4%)</td>
+<td><img src=".\tmp/ds10000.png" class="img-fluid"></td>
+<td>0<br>
+(0.0%)</td>
+</tr>
+</tbody>
+</table>
+<p>Once the variables have been rounded, we proceed to apply LCA:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>LCA Belongings - 2 classes</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">var</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2px solid gray;">category</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2px solid gray;">class 1</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2px solid gray;">class 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C - Ident.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C - Ident.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C - Ident.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.04</td>
+<td style="text-align: right; color: lightgrey !important;">0.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C - Ident.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: darkblue !important;">0.66</td>
+<td style="text-align: right; color: darkblue !important;">0.56</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2px solid gray;">C - Ident.</td>
+<td style="text-align: left; border-bottom: 2px solid gray;">Pr(5)</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.27</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Amigos</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.26</td>
+<td style="text-align: right; color: lightgrey !important;">0.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Amigos</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.30</td>
+<td style="text-align: right; color: lightgrey !important;">0.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Amigos</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.27</td>
+<td style="text-align: right; color: darkblue !important;">0.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Amigos</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.11</td>
+<td style="text-align: right; color: lightgrey !important;">0.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Amigos</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.07</td>
+<td style="text-align: right; color: lightgrey !important;">0.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Tamaño red</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.40</td>
+<td style="text-align: right; color: lightgrey !important;">0.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Tamaño red</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.20</td>
+<td style="text-align: right; color: lightgrey !important;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Tamaño red</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.16</td>
+<td style="text-align: right; color: lightgrey !important;">0.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Tamaño red</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.08</td>
+<td style="text-align: right; color: lightgrey !important;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Tamaño red</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.16</td>
+<td style="text-align: right; color: lightgrey !important;">0.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.04</td>
+<td style="text-align: right; color: lightgrey !important;">0.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: darkblue !important;">0.93</td>
+<td style="text-align: right; color: darkblue !important;">0.65</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+<td style="text-align: right; color: lightgrey !important;">0.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. gen.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. min.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.12</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. min.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.39</td>
+<td style="text-align: right; color: lightgrey !important;">0.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. min.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.36</td>
+<td style="text-align: right; color: lightgrey !important;">0.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. min.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.13</td>
+<td style="text-align: right; color: darkblue !important;">0.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. min.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; color: lightgrey !important;">0.09</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. inst.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.47</td>
+<td style="text-align: right; color: lightgrey !important;">0.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. inst.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: darkblue !important;">0.46</td>
+<td style="text-align: right; color: darkblue !important;">0.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R - Conf. inst.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+<td style="text-align: right; color: lightgrey !important;">0.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R - Conf. inst.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; color: lightgrey !important;">0.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2px solid gray;">R - Conf. inst.</td>
+<td style="text-align: left; border-bottom: 2px solid gray;">Pr(5)</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Int. pol.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.65</td>
+<td style="text-align: right; color: lightgrey !important;">0.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Int. pol.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.19</td>
+<td style="text-align: right; color: lightgrey !important;">0.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Int. pol.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.11</td>
+<td style="text-align: right; color: lightgrey !important;">0.31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Int. pol.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.04</td>
+<td style="text-align: right; color: lightgrey !important;">0.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Int. pol.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; color: lightgrey !important;">0.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Satis. demo</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.43</td>
+<td style="text-align: right; color: lightgrey !important;">0.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Satis. demo</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.28</td>
+<td style="text-align: right; color: lightgrey !important;">0.29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Satis. demo</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.19</td>
+<td style="text-align: right; color: lightgrey !important;">0.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Satis. demo</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.07</td>
+<td style="text-align: right; color: lightgrey !important;">0.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Satis. demo</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.83</td>
+<td style="text-align: right; color: darkblue !important;">0.61</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.17</td>
+<td style="text-align: right; color: lightgrey !important;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Part. conv.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Part. no conv.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.84</td>
+<td style="text-align: right; color: darkblue !important;">0.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Part. no conv.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.14</td>
+<td style="text-align: right; color: lightgrey !important;">0.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Part. no conv.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Part. no conv.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Part. no conv.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Igualitarismo.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.24</td>
+<td style="text-align: right; color: lightgrey !important;">0.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Igualitarismo.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: darkblue !important;">0.55</td>
+<td style="text-align: right; color: darkblue !important;">0.52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Igualitarismo.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.17</td>
+<td style="text-align: right; color: lightgrey !important;">0.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Igualitarismo.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.04</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Igualitarismo.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Altruismo.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Altruismo.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+<td style="text-align: right; color: lightgrey !important;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Altruismo.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+<td style="text-align: right; color: lightgrey !important;">0.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Altruismo.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: darkblue !important;">0.70</td>
+<td style="text-align: right; color: darkblue !important;">0.64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Altruismo.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">0.23</td>
+<td style="text-align: right; color: lightgrey !important;">0.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Cond. prosoc.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.34</td>
+<td style="text-align: right; color: lightgrey !important;">0.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Cond. prosoc.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: darkblue !important;">0.60</td>
+<td style="text-align: right; color: darkblue !important;">0.68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P - Cond. prosoc.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.06</td>
+<td style="text-align: right; color: lightgrey !important;">0.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P - Cond. prosoc.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2px solid gray;">P - Cond. prosoc.</td>
+<td style="text-align: left; border-bottom: 2px solid gray;">Pr(5)</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">NA</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N - Apoyo demo.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: darkblue !important;">0.47</td>
+<td style="text-align: right; color: darkblue !important;">0.91</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N - Apoyo demo.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: lightgrey !important;">0.16</td>
+<td style="text-align: right; color: lightgrey !important;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N - Apoyo demo.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.30</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N - Apoyo demo.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.08</td>
+<td style="text-align: right; color: lightgrey !important;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N - Apoyo demo.</td>
+<td style="text-align: left;">Pr(5)</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+<td style="text-align: right; color: lightgrey !important;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N - Just. viol.</td>
+<td style="text-align: left;">Pr(1)</td>
+<td style="text-align: right; color: lightgrey !important;">0.30</td>
+<td style="text-align: right; color: darkblue !important;">0.43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N - Just. viol.</td>
+<td style="text-align: left;">Pr(2)</td>
+<td style="text-align: right; color: darkblue !important;">0.42</td>
+<td style="text-align: right; color: darkblue !important;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N - Just. viol.</td>
+<td style="text-align: left;">Pr(3)</td>
+<td style="text-align: right; color: lightgrey !important;">0.21</td>
+<td style="text-align: right; color: lightgrey !important;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N - Just. viol.</td>
+<td style="text-align: left;">Pr(4)</td>
+<td style="text-align: right; color: lightgrey !important;">0.07</td>
+<td style="text-align: right; color: lightgrey !important;">0.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2px solid gray;">N - Just. viol.</td>
+<td style="text-align: left; border-bottom: 2px solid gray;">Pr(5)</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.01</td>
+<td style="text-align: right; border-bottom: 2px solid gray; color: lightgrey !important;">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</section>
 </section>
 </section>
 <section id="synthesis" class="level1">
