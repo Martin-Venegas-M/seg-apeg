@@ -1,6 +1,3 @@
-library(dplyr)
-library(rlang)
-
 impute_waves <- function(data, base_var, waves = c("w02", "w03", "w04", "w05", "w06")) {
     # Create variable names
     vars_to_impute <- paste0(base_var, "_", waves)
@@ -22,32 +19,31 @@ impute_waves <- function(data, base_var, waves = c("w02", "w03", "w04", "w05", "
         )
 }
 
-# Checking the function
-check <- function(var) {
+# # Checking the function
+# check <- function(var) {
 
-    # Id's that have a NA in w01
-    nas <- elsoc %>%
-        filter(is.na(!!sym(paste0(var, "_w01")))) %>%
-        pull(idencuesta)
+#     # Id's that have a NA in w01
+#     nas <- elsoc %>%
+#         filter(is.na(!!sym(paste0(var, "_w01")))) %>%
+#         pull(idencuesta)
 
-    # Data before doing the imputation
-    test1 <- elsoc %>%
-        select(idencuesta, starts_with(var)) %>%
-        filter(idencuesta %in% nas)
+#     # Data before doing the imputation
+#     test1 <- elsoc %>%
+#         select(idencuesta, starts_with(var)) %>%
+#         filter(idencuesta %in% nas)
 
-    # Date after doing the imputation
-    test2 <- impute_waves(elsoc, var, waves = c("w02", "w03", "w04", "w05", "w06")) %>%
-        select(idencuesta, starts_with(var)) %>%
-        filter(idencuesta %in% nas)
+#     # Date after doing the imputation
+#     test2 <- impute_waves(elsoc, var, waves = c("w02", "w03", "w04", "w05", "w06")) %>%
+#         select(idencuesta, starts_with(var)) %>%
+#         filter(idencuesta %in% nas)
 
-    tests <- list(
-        test1,
-        test2
-    )
-    return(tests)
-}
+#     tests <- list(
+#         test1,
+#         test2
+#     )
+#     return(tests)
+# }
 
 
-check("c32_01") #* It works!
-check("c06_04")
-
+# check("c32_01") #* It works!
+# check("c06_04")
