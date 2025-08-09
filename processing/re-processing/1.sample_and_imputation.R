@@ -402,7 +402,7 @@ elsoc <- elsoc %>%
 # Cargar archivo con geocodigo (zona censal)
 zona_censal <- read_dta("input/data/original/zona censal muestra inicial.dta")
 
-df <- elsoc %>%
+elsoc <- elsoc %>%
     # Drop useless variables from waves 2, 3 and 5
     select(-matches("_w02$|-w02$|_w03$|-w03$|_w05$|-w05$")) %>%
     # Drop other useless variables
