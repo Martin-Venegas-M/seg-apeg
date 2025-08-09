@@ -236,7 +236,7 @@ correlation(z_varsdep, labels)
 The correlation chart shows that most correlations are low. The highest correlation, with a positive coefficient of 0.44, occurs between indicators of different dimensions: institutional trust (relational) and satisfaction with democracy (political). The same is true of the relationship between trust in minorities and interest in politics or unconventional participation, both with a positive coefficient of 0.34. The highest correlations within the same dimension are in politics: 0.38 between interest in politics and unconventional participation and 0.32 between conventional and unconventional participation. Notably, the intradimensional correlations do not demonstrate consistent measurements.
 
 ::: panel-tabset
-# Relational Dimention
+# Relational Dimension
 
 ```{r}
 #| fig-height: 10
@@ -245,7 +245,7 @@ The correlation chart shows that most correlations are low. The highest correlat
 correlation(z_varsdep[, 2:6], R, 1)
 ```
 
-# Political Dimention
+# Political Dimension
 
 ```{r}
 #| fig-height: 10
@@ -254,7 +254,7 @@ correlation(z_varsdep[, 2:6], R, 1)
 correlation(z_varsdep[, 7:13], P, 1.2)
 ```
 
-# Normative Dimention
+# Normative Dimension
 
 ```{r}
 #| fig-height: 10
@@ -464,3 +464,12 @@ lca_tab_wide %>%
 ```
 
 # Synthesis
+
+- Indicators shows low correlations intra-dimension. Highest correlations are between indicators of different dimensions.
+- PCA retains 18% of variance in first component, and 40% in four components.
+- EFA and LCA are not in line with the conceptualization of attachment to society.
+
+Two possible course of action:
+
+- Re-run these analysis without certain variables.
+- Work with isolated indicators, treat them as a proxy of every dimension of atachment to society and reduce them. Recommendation: keep only the ones that explain more variance.
