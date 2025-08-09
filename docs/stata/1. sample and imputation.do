@@ -66,7 +66,7 @@
 
 		replace c32_01_w01 = c32_01_w02 if c32_01_w01==.
 		replace c32_02_w01 = c32_02_w02 if c32_02_w01==.
-		replace c02_w01 = c02_w02 if c02_w01==.
+		replace c02_w01    = c02_w02 if c02_w01==.
 		replace c06_04_w01 = c06_04_w03 if c06_04_w01==.
 		replace c06_05_w01 = c06_05_w03 if c06_05_w01==.
 		replace c06_06_w01 = c06_06_w03 if c06_06_w01==.
@@ -75,8 +75,8 @@
 		replace c05_05_w01 = c05_05_w02 if c05_05_w01==.
 		replace c05_07_w01 = c05_07_w02 if c05_07_w01==.
 		
-		replace c13_w01 = c13_w02 if c13_w01==.
-		replace c01_w01 = c01_w02 if c01_w01==.
+		replace c13_w01    = c13_w02 if c13_w01==.
+		replace c01_w01    = c01_w02 if c01_w01==.
 		replace c12_01_w01 = c12_01_w03 if c12_01_w01==.
 		replace c12_03_w01 = c12_03_w03 if c12_03_w01==.
 		replace c12_04_w01 = c12_04_w03 if c12_04_w01==.
@@ -92,15 +92,15 @@
 		replace c07_04_w01 = c07_04_w02 if c07_04_w01==.
 		
 		replace c07_05_w01 = c07_05_w02 if c07_05_w01==.
-		replace c25_w01 = c25_w02 if c25_w01==.
+		replace c25_w01    = c25_w02 if c25_w01==.
 		replace f05_01_w01 = f05_01_w02 if f05_01_w01==.
 		replace f05_02_w01 = f05_02_w02 if f05_02_w01==.
-		replace f05_03_w01=  f05_03_w02 if f05_03_w01==.
+		replace f05_03_w01 = f05_03_w02 if f05_03_w01==.
 	
 	* For some variables, there are still a few missing values for Wave 1. We imput the values of Wave 3 or Wave 6 for c06 and c12.
 		replace c32_01_w01 = c32_01_w03 if c32_01_w01==.
 		replace c32_02_w01 = c32_02_w03 if c32_02_w01==.
-		replace c02_w01 = c02_w03 if c02_w01==.
+		replace c02_w01    = c02_w03 if c02_w01==.
 		replace c06_04_w01 = c06_04_w06 if c06_04_w01==.
 		replace c06_05_w01 = c06_05_w06 if c06_05_w01==.
 		replace c06_06_w01 = c06_06_w06 if c06_06_w01==.
@@ -109,8 +109,8 @@
 		replace c05_05_w01 = c05_05_w03 if c05_05_w01==.
 		replace c05_07_w01 = c05_07_w03 if c05_07_w01==.
 		
-		replace c13_w01 = c13_w03 if c13_w01==.
-		replace c01_w01 = c01_w03 if c01_w01==.
+		replace c13_w01    = c13_w03 if c13_w01==.
+		replace c01_w01    = c01_w03 if c01_w01==.
 		replace c12_01_w01 = c12_01_w06 if c12_01_w01==.
 		replace c12_03_w01 = c12_03_w06 if c12_03_w01==.
 		replace c12_04_w01 = c12_04_w06 if c12_04_w01==.
@@ -126,15 +126,15 @@
 		replace c07_04_w01 = c07_04_w03 if c07_04_w01==.
 		
 		replace c07_05_w01 = c07_05_w03 if c07_05_w01==.
-		replace c25_w01 = c25_w03 if c25_w01==.
+		replace c25_w01    = c25_w03 if c25_w01==.
 		replace f05_01_w01 = f05_01_w03 if f05_01_w01==.
 		replace f05_02_w01 = f05_02_w03 if f05_02_w01==.
-		replace f05_03_w01=  f05_03_w03 if f05_03_w01==.
+		replace f05_03_w01 = f05_03_w03 if f05_03_w01==.
 
 	* For some variables, there are still a few missing values for Wave 1. We imput the values of Wave 4
 		replace c32_01_w01 = c32_01_w04 if c32_01_w01==.
 		replace c32_02_w01 = c32_02_w04 if c32_02_w01==.
-		replace c02_w01 = c02_w04 if c02_w01==.
+		replace c02_w01    = c02_w04 if c02_w01==.
 		replace c06_04_w01 = c06_04_w06 if c06_04_w01==.
 		replace c06_05_w01 = c06_05_w06 if c06_05_w01==.
 		replace c06_06_w01 = c06_06_w06 if c06_06_w01==.
@@ -143,8 +143,8 @@
 		replace c05_05_w01 = c05_05_w04 if c05_05_w01==.
 		replace c05_07_w01 = c05_07_w04 if c05_07_w01==.
 		
-		replace c13_w01 = c13_w04 if c13_w01==.
-		replace c01_w01 = c01_w04 if c01_w01==.
+		replace c13_w01    = c13_w04 if c13_w01==.
+		replace c01_w01    = c01_w04 if c01_w01==.
 		replace c12_01_w01 = c12_01_w06 if c12_01_w01==.
 		replace c12_03_w01 = c12_03_w06 if c12_03_w01==.
 		replace c12_04_w01 = c12_04_w06 if c12_04_w01==.
@@ -160,10 +160,10 @@
 		replace c07_04_w01 = c07_04_w04 if c07_04_w01==.
 		
 		replace c07_05_w01 = c07_05_w04 if c07_05_w01==.
-		replace c25_w01 = c25_w04 if c25_w01==.
+		replace c25_w01    = c25_w04 if c25_w01==.
 		replace f05_01_w01 = f05_01_w04 if f05_01_w01==.
 		replace f05_02_w01 = f05_02_w04 if f05_02_w01==.
-		replace f05_03_w01=  f05_03_w04 if f05_03_w01==.
+		replace f05_03_w01 = f05_03_w04 if f05_03_w01==.
 
 	* Two variables have no measurement in Wave 1 (r13_nredes_w01 and r15_w01) so we create it based on Wave 2 and Wave 4 values
 		gen r15_w01 = r15_w02
