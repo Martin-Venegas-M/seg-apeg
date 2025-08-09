@@ -16,12 +16,14 @@ if (!require("pacman")) install.packages("pacman") # if pacman es missing, insta
 pacman::p_load(
     tidyverse,
     haven,
-    tidylog
+    tidylog,
+    rlang
 )
 
 # 2. Load data ------------------------------------------------------------
 
 elsoc_original <- haven::read_stata("input/data/original/ELSOC_Wide_2016_2022.dta")
+insumo_ciuo <- readxl::read_xlsx("input/insumo_ciuo.xlsx")
 source("processing/re-processing/functions.R", encoding = "UTF-8")
 
 # 3. First sample selection -----------------------------------------------
@@ -297,4 +299,126 @@ elsoc <- elsoc %>%
         m37_w06 = m37_w01
     )
 
-#! Falta la clase
+# 9. Imputation of values for occupation ---------------------------------
+
+# ! NOTA: el código original de Stata tiene lineas de más, ya que existen múltiples outputs para un mismo input.
+# ! Por ejemplo, el código 1317 cuenta con 7 lineas de código, dónde se recodifica a 1211, 1212, 1219, 1221, 1222, 1330 y 1346.
+# ! Teoricamente, la primera linea es la que hace la recodificación y las otras 6 no aplican ninguna transformación.
+# ! Si confirmara que efectivamente no tiene ningún efecto, podría optar por una solución más simple, eliminando los duplicados en el insumo,
+# ! manteniendo solo las primeras filas y usando un left_join(). Sin embargo, por temas de replicabilidad prefiero mantener la
+# ! misma lógica de programación. Por ende, el código a continuación genera el bloque de código dinamicamente para el case_when() y lo evalúa.
+
+
+# Crear un vector de strings con las combinaciones posibles
+condiciones <- purrr::map2_chr(
+    insumo_ciuo$ciuo88, insumo_ciuo$ciuo08,
+    ~ paste0("ciuo88_m03_w01 == ", .x, " ~ ", .y)
+)
+
+cod_m03 <- paste(c(condiciones, "TRUE ~ ciuo88_m03_w01"), collapse = ", ") # Crear un objeto de texto para usar como código dentro del case_when()
+cod_m22 <- str_replace_all(cod_m03, "ciuo88_m03_w01", "ciuo88_m22_w01") # Crear el objeto idéntico, pero para la otra variable
+
+# Crear variables
+elsoc <- elsoc %>%
+    mutate(
+        ciuo08_m03_w01 = !!parse_expr(paste0("case_when(", cod_m03, ")")),
+        ciuo08_m22_w01 = !!parse_expr(paste0("case_when(", cod_m22, ")"))
+    ) %>%
+    # Generate variables for wave 4 (based on wave 3) and wave 6 (based on wave 5)
+    mutate(
+        ciuo08_m03_w04 = ciuo08_m03_w03,
+        ciuo08_m03_w06 = ciuo08_m03_w05
+    ) %>%
+    relocate(ciuo08_m03_w04, .after = ciuo08_m03_w03) %>%
+    relocate(ciuo08_m03_w06, .after = ciuo08_m03_w05) %>%
+    # Imputation for WAVE 1
+    mutate(
+        # for wave 1: inactive and unemployed
+        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 5, 15000, ciuo08_m03_w01), # retired
+        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 6, 16000, ciuo08_m03_w01), # unemployed
+
+        # for wave 1: assign household head occupation to inactive (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w01),
+
+        # for wave 1: assign individual occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w03),
+
+        # for wave 1: assign household head occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w03),
+
+        # for wave 1: assign individual occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w05),
+
+        # for wave 1: assign household head occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w05)
+    ) %>%
+    # Imputation for WAVE 4
+    mutate(
+        # Inactive and unemployed
+        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 5, 15000, ciuo08_m03_w04), # retired
+        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 6, 16000, ciuo08_m03_w04), # unemployed
+
+        # Assign household head occupation of Wave 3 to inactive
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w03),
+
+        # Assign individual occupation of wave 1
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w01),
+
+        # Assign household head occupation of wave 1
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w01),
+
+        # Assign individual occupation of wave 5
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w05),
+
+        # Assign household head occupation of wave 5
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w05)
+    ) %>%
+    # Imputation for WAVE 6
+    mutate(
+        # Inactive and unemployed
+        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 5, 15000, ciuo08_m03_w06), # retired
+        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 6, 16000, ciuo08_m03_w06), # unemployed
+        # Assign household head occupation of Wave 5
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w05),
+        # Assign individual occupation of wave 3 and 4
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w04),
+        # Assign household head occupation of wave 3
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w03),
+        # Assign individual occupation of wave 1
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w01),
+        # Assign household head occupation of wave 1
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w01)
+    ) %>%
+    # For the remaining missing values, we imput the values of 2016 (they are all unemployed or retired)
+    mutate(
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w06),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w06)
+    ) %>%
+    # We drop the individuals without occupation (n=462)
+    filter(!is.na(ciuo08_m03_w01))
+
+# 10. Final sample ----------------------------------------------------------
+
+# Cargar archivo con geocodigo (zona censal)
+zona_censal <- read_dta("input/data/original/zona censal muestra inicial.dta")
+
+df <- elsoc %>%
+    # Drop useless variables from waves 2, 3 and 5
+    select(-matches("_w02$|-w02$|_w03$|-w03$|_w05$|-w05$")) %>%
+    # Drop other useless variables
+    select(
+        -m19_w01, -m21_w01, -ciuo08_m22_w01,
+        -starts_with("m34_01"), -starts_with("m34_02"),
+        -m02_w01, -m02_w04, -m02_w06,
+        -m37_01_w01, -m37_02_w01,
+        -segmento_disenno
+    ) %>%
+    # Merge with geocodigo (census tract if)
+    mutate(idencuesta = as.character(idencuesta)) %>%
+    inner_join(
+        zona_censal %>% mutate(idencuesta = as.character(idencuesta)),
+        by = "idencuesta"
+    )
+
+# Number of cases = 462
+# Number of observation = 462*3 = 1386
