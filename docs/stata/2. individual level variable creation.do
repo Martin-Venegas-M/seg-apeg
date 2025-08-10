@@ -124,11 +124,11 @@
 		label define educ 1 "No formal educ" 2 "Primary" 3 "Secondary" 4 "Vocational" 5 "University", replace
 		label val educ educ	
 
-	* Generate average education level
-		bys idencuesta : egen avg_educ = mean(educ)
-		
 	* Generate the natural logarithm of income by year
 		bys year: gen ln_income = ln(m29)
+
+	* Generate average education level
+		bys idencuesta : egen avg_educ = mean(educ)
 	
 	* Generate average income level
 		bys idencuesta : egen avg_income = mean(ln_income)
