@@ -33,10 +33,20 @@ insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch
 
 # 3. Convert to long format ------------------------------------------------
 
+wv <- c("_w01", "_w04", "_w06")
+
+columnas <- c(
+    "ola", "segmento", "fact_exp02", "r13_nredes", "r15", "c01", "c02", "c05_01", "c05_02", "c05_05", "c05_07", "c06_04", "c06_05",
+    "c06_06", "c07_04", "c07_05", "c08_01", "c08_02", "c08_03", "c12_01", "c12_03", "c12_04", "c12_05", "c13", "c18_02", "c18_03", "c25", "c32_01", "c32_02",
+    "d02_01", "d02_02", "d02_03", "f05_01", "f05_02", "f05_03", "m0_sexo", "m0_edad", "m01", "ciuo08_m03", "m29", "m33", "m34_03", "m36", "m37", "geocodigo"
+)
+
+cols_to_pivot <- unlist(map(columnas, ~(paste0(.x, wv))))
+
 elsoc_long <- elsoc %>%
     # Convertir en panel long
     pivot_longer(
-        cols = matches("_(w\\d{2})$"),
+        cols = all_of(cols_to_pivot),
         names_to = c(".value", "wave"),
         names_pattern = "^(.*)_(w\\d{2})$"
     ) %>%
@@ -54,7 +64,8 @@ elsoc_long <- elsoc %>%
         ) %>% as.integer()
     ) %>%
     relocate(ola, .before = year) %>%
-    relocate(geocodigo, .after = year)
+    relocate(geocodigo, .after = year) %>% 
+    select(-wave)
 
 # 4. Create dependent variables ------------------------------------------------
 
@@ -313,5 +324,4 @@ elsoc_long <- elsoc_long %>%
     relocate(sex, age, yr_address, .after = ln_income) %>%
     relocate(quint_inc, nse_indiv, starts_with("class"), .after = ln_income)
 
-    rm(list = ls()[!ls() %in% c("elsoc_long")])
-
+rm(list = ls()[!ls() %in% c("elsoc_long")])
