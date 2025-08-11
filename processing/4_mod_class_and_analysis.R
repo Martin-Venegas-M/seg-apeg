@@ -90,39 +90,39 @@ elsoc <- elsoc %>%
         )
     )
 
-# Separarte dataset
-elsoc_2016 <- elsoc %>%
-    filter(year == "2016") %>%
-    filter(region_cod == 13)
-elsoc_2019 <- elsoc %>%
-    filter(year == "2019") %>%
-    filter(region_cod == 13)
-elsoc_2022 <- elsoc %>%
-    filter(year == "2022") %>%
-    filter(region_cod == 13)
+elsocs <- list(
+    "elsoc_2016" = elsoc %>%
+        filter(year == "2016") %>%
+        filter(region_cod == 13),
+    "elsoc_2019" = elsoc %>%
+        filter(year == "2019") %>%
+        filter(region_cod == 13),
+    "elsoc_2022" = elsoc %>%
+        filter(year == "2022") %>%
+        filter(region_cod == 13)
+)
 
 # 4. Analysis ------------------------------------------------------------------------------------------------------------------------------
 
-# Generar vector de variables
+# 4.1 Descriptive analysis of independent variables ----------------------------------------------------------------------------------------
+
+# Generate vector of variables
 predictores <- codebook %>%
     filter(rol == "predictor") %>%
     pull(name)
 
-# Create desc tabs per year
-elsoc_2016_desc <- elsoc_2016 %>%
-    select(all_of(predictores)) %>%
-    map_df(.f = ~ broom::tidy(summary(.x)), .id = "variable") %>%
-    rename_with(~ (paste0(.x, "_w01")))
+# Function for creating tibble with stats
+create_desc_tabs <- function(data, vars, wave) {
+    data %>%
+        select(all_of(vars)) %>%
+        map_df(.f = ~ broom::tidy(summary(.x)), .id = "variable") %>%
+        rename_with(~ (paste0(.x, wave)))
+}
 
-elsoc_2019_desc <- elsoc_2019 %>%
-    select(all_of(predictores)) %>%
-    map_df(.f = ~ broom::tidy(summary(.x)), .id = "variable") %>%
-    rename_with(~ (paste0(.x, "_w04")))
-
-elsoc_2022_desc <- elsoc_2022 %>%
-    select(all_of(predictores)) %>%
-    map_df(.f = ~ broom::tidy(summary(.x)), .id = "variable") %>%
-    rename_with(~ (paste0(.x, "_w06")))
+# Create desc tables
+elsoc_2016_desc <- create_desc_tabs(elsocs[["elsoc_2016"]], predictores, "_w01")
+elsoc_2019_desc <- create_desc_tabs(elsocs[["elsoc_2019"]], predictores, "_w04")
+elsoc_2022_desc <- create_desc_tabs(elsocs[["elsoc_2022"]], predictores, "_w06")
 
 # Create function for saving tab per stat
 save_tabs <- function(stat) {
@@ -134,10 +134,10 @@ save_tabs <- function(stat) {
 stats <- str_replace_all(names(elsoc_2016_desc), "_w01$", "")
 
 # List with stats
-desc_tabs <- map(stats, ~save_tabs(.x))
+desc_tabs <- map(stats, ~ save_tabs(.x))
 names(desc_tabs) <- stats # change names
 
-#! Let's see!
+# ! Let's see!
 desc_tabs[["minimum"]]
 desc_tabs[["q1"]]
 desc_tabs[["median"]]
@@ -145,3 +145,64 @@ desc_tabs[["mean"]]
 desc_tabs[["q3"]]
 desc_tabs[["maximum"]]
 
+# Save
+writexl::write_xlsx(desc_tabs, "output/tables/desc_tabs_indep.xlsx")
+
+# 4.2 Analysis per social calss-------------------------------------------------------------------------------------------------------------
+
+# Function for showing means of each wave per class group
+class_analysis <- function(var_group, variable) {
+    elsoc_2016 <- elsocs[["elsoc_2016"]] %>%
+        mutate(!!sym(var_group) := to_label(!!sym(var_group))) %>%
+        group_by(!!sym(var_group)) %>%
+        summarise(mean_w01 = mean(!!sym(variable), na.rm = T)) %>%
+        ungroup()
+
+    elsoc_2019 <- elsocs[["elsoc_2019"]] %>%
+        group_by(!!sym(var_group)) %>%
+        summarise(mean_w04 = mean(!!sym(variable), na.rm = T)) %>%
+        ungroup() %>%
+        select(mean_w04)
+
+    elsoc_2022 <- elsocs[["elsoc_2022"]] %>%
+        group_by(!!sym(var_group)) %>%
+        summarise(mean_w06 = mean(!!sym(variable), na.rm = T)) %>%
+        ungroup() %>%
+        select(mean_w06)
+
+    elsoc_desc <- bind_cols(
+        list(
+            elsoc_2016,
+            elsoc_2019,
+            elsoc_2022
+        )
+    )
+
+    return(
+        elsoc_desc %>% mutate(var = variable) %>% select(var, everything())
+    )
+}
+
+# Vectors to iterate
+vector_class <- c(rep("class_8", 15), rep("class_5", 15))
+varsdep <- rep(codebook %>% filter(rol == "var dependiente") %>% pull(name), 2)
+tab_names <- paste0(vector_class, "_", varsdep)
+
+# List with tabs
+class_analysis_tab <- map2(vector_class, varsdep, ~ class_analysis(.x, .y))
+names(class_analysis_tab) <- tab_names
+
+# Save!
+writexl::write_xlsx(class_analysis_tab, "output/tables/class_analysis_tab.xlsx")
+
+# 4.3 NSE barrio per social class ---------------------------------------------------------------------------------------------------------
+
+# Create tabs class x nse barrio
+nse_barrio_class <- list(
+    class_analysis("class_8", "nse_barrio"),
+    class_analysis("class_5", "nse_barrio")
+)
+names(nse_barrio_class) <- c("class_8_nse_barrio", "class_5_nse_barrio")
+
+# Save!
+writexl::write_xlsx(nse_barrio_class, "output/tables/class_analysis_nse_barrio_tab.xlsx")
