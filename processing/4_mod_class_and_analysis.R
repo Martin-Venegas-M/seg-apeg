@@ -184,16 +184,17 @@ class_analysis <- function(var_group, variable) {
 }
 
 # Vectors to iterate
-vector_class <- c(rep("class_8", 15), rep("class_5", 15))
-varsdep <- rep(codebook %>% filter(rol == "var dependiente") %>% pull(name), 2)
-tab_names <- paste0(vector_class, "_", varsdep)
+varsdep <- codebook %>%
+    filter(rol == "var dependiente") %>%
+    pull(name)
 
 # List with tabs
-class_analysis_tab <- map2(vector_class, varsdep, ~ class_analysis(.x, .y))
-names(class_analysis_tab) <- tab_names
+class_analysis_tab_class8 <- map_df(varsdep, ~ class_analysis("class_8", .x))
+class_analysis_tab_class5 <- map_df(varsdep, ~ class_analysis("class_5", .x))
 
 # Save!
-writexl::write_xlsx(class_analysis_tab, "output/tables/class_analysis_tab.xlsx")
+writexl::write_xlsx(class_analysis_tab_class8, "output/tables/class_analysis_tab_class8.xlsx")
+writexl::write_xlsx(class_analysis_tab_class5, "output/tables/class_analysis_tab_class5.xlsx")
 
 # 4.3 NSE barrio per social class ---------------------------------------------------------------------------------------------------------
 
