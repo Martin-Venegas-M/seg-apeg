@@ -196,7 +196,12 @@ class_analysis_tab_class5 <- map_df(varsdep, ~ class_analysis("class_5", .x))
 writexl::write_xlsx(class_analysis_tab_class8, "output/tables/class_analysis_tab_class8.xlsx")
 writexl::write_xlsx(class_analysis_tab_class5, "output/tables/class_analysis_tab_class5.xlsx")
 
-# 4.3 NSE barrio per social class ---------------------------------------------------------------------------------------------------------
+# 4.3 NSE barrio per varsdep --------------------------------------------------------------------------------------------------------------
+
+nse_analysis_tab <- map_df(varsdep, ~ class_analysis("quint_nse_barrio", .x))
+writexl::write_xlsx(nse_analysis_tab, "output/tables/nse_analysis_tab.xlsx")
+
+# 4.4 NSE barrio per social class ---------------------------------------------------------------------------------------------------------
 
 # Create tabs class x nse barrio
 nse_barrio_class <- list(
