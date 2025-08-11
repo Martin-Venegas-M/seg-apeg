@@ -52,7 +52,7 @@ elsoc <- elsoc_original %>%
         starts_with("m19"), starts_with("m21"), starts_with("m29"), starts_with("m33"), starts_with("m34"),
         starts_with("m36"), starts_with("m37"), # Control variables
 
-        starts_with("fact_exp02"), starts_with("segmento") # Other variables
+        starts_with("fact_exp02"), starts_with("segmento"), starts_with("region") # Other variables
     ) %>%
     select(
         -starts_with("m33_otro"),
