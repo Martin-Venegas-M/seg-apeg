@@ -15,18 +15,20 @@ rm(list = ls())
 if (!require("pacman")) install.packages("pacman") # if pacman es missing, install
 
 pacman::p_load(
-  tidyverse,
-  haven,
-  tidylog,
-  rlang
+    tidyverse,
+    haven,
+    tidylog,
+    rlang,
+    sjlabelled
 )
 
 # 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
 elsoc_original <- haven::read_stata("input/data/original/ELSOC_Wide_2016_2022.dta")
 insumo_ciuo <- readxl::read_xlsx("input/insumo_ciuo.xlsx")
+all_vars <- readxl::read_xlsx("input/all_vars.xlsx")
 
 # 3. Select variable ------------------------------------------------------------------------------------------------------------------------------------
-elsoc <- elsoc_original %>% 
+elsoc <- elsoc_original %>%
     filter(muestra == 1) %>% # Mantener casos de la muestra original
     select(
         starts_with("idencuesta"),
@@ -58,20 +60,24 @@ elsoc <- elsoc_original %>%
         -starts_with("m33_otro"),
         -starts_with("m36_otro"),
         -starts_with("idencuestador")
-    ) %>% 
+    ) %>%
     mutate(
-        across(everything(), ~if_else(. %in% c(-666, -777, -888, -999), NA, .))
+        across(everything(), ~ if_else(. %in% c(-666, -777, -888, -999), NA, .))
     )
+
+# Function for checking recodifications
+source("processing/helpers/check_recode.R", encoding = "UTF-8")
 
 # 4. Impute values --------------------------------------------------------------------------------------------------------------------------------------
 
 # 4.1 Impute full variables -----------------------------------------------------------------------------------------------------------------------------
-# Crear variables that doesnpt have measurement in Wave 4 or wave 6
+
+# Crear variables that doesn't have measurement in Wave 4 or wave 6
 elsoc <- elsoc %>% mutate(
 
     # Create network variables for w01
-    r15_w01        = coalesce(r15_w02, r15_w04),
-    r13_nredes_w01 = coalesce(r13_nredes_w02, r13_nredes_w04),
+    r15_w01 = r15_w02,
+    r13_nredes_w01 = r13_nredes_w02,
 
     # Wave 04
     c06_04_w04 = (c06_04_w03 + c06_04_w06) / 2,
@@ -110,7 +116,7 @@ elsoc <- elsoc %>% mutate(
 
 # 4.3 Automate imputations ----------------------------------------------------------------------------------------------------------------------------------
 
-# Create function 
+# Create function
 impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = c("w02", "w03", "w04", "w05", "w06")) {
     # Create variable names
     vars_to_impute <- paste0(base_var, "_", waves_source)
@@ -134,6 +140,7 @@ impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = 
 
 vars_to_imput <- c(
     "c32_01", "c32_02",
+    "r15", "r13_nredes",
     "c02", "c06_04", "c06_05", "c06_06",
     "c05_01", "c05_02", "c05_05", "c05_07",
     "c13",
@@ -149,69 +156,75 @@ vars_to_imput <- c(
 
 elsoc <- reduce(
     vars_to_imput,
-    function(df, var) {impute_waves(df, var, wave_to_impute = "w01", waves_source = c("w02", "w03", "w04", "w05", "w06"))},
+    function(df, var) {
+        impute_waves(df, var, wave_to_impute = "w01", waves_source = c("w02", "w03", "w04", "w05", "w06"))
+    },
     .init = elsoc
-) 
+)
 
 elsoc <- reduce(
     vars_to_imput,
-    function(df, var) {impute_waves(df, var, wave_to_impute = "w04", waves_source = c("w03", "w05", "w02", "w06", "w01"))},
+    function(df, var) {
+        impute_waves(df, var, wave_to_impute = "w04", waves_source = c("w03", "w05", "w02", "w06", "w01"))
+    },
     .init = elsoc
-) 
+)
 
 elsoc <- reduce(
     vars_to_imput,
-    function(df, var) {impute_waves(df, var, wave_to_impute = "w06", waves_source = c("w05", "w04", "w03", "w02", "w01"))},
+    function(df, var) {
+        impute_waves(df, var, wave_to_impute = "w06", waves_source = c("w05", "w04", "w03", "w02", "w01"))
+    },
     .init = elsoc
-) 
+)
 
 # 4.4 Manual imputations for independent variables -----------------------------------------------------------------------------------------------------------
 
-elsoc <- elsoc %>% 
+elsoc <- elsoc %>%
     mutate(
         # Assign missing values ton income=0
-    mutate(across(matches("^m29"), ~ na_if(., 0))) %>%
-    mutate(
-        m29_w01 = if_else(is.na(m29_w01), m29_w02, m29_w01),
-        m29_w01 = if_else(is.na(m29_w01), m29_w03, m29_w01),
-        m29_w01 = if_else(is.na(m29_w01) & !is.na(m29_w04) & !is.na(m29_w05), (m29_w04 + m29_w05) / 2, m29_w01),
-        m29_w01 = if_else(is.na(m29_w01) & !is.na(m29_w04) & !is.na(m29_w06), (m29_w04 + m29_w06) / 2, m29_w01),
-        m29_w01 = if_else(is.na(m29_w01), m29_w05, m29_w01),
-        m29_w04 = if_else(is.na(m29_w04) & !is.na(m29_w03) & !is.na(m29_w05), (m29_w03 + m29_w05) / 2, m29_w04),
-        m29_w04 = if_else(is.na(m29_w04), m29_w03, m29_w04),
-        m29_w04 = if_else(is.na(m29_w04), m29_w05, m29_w04),
-        m29_w04 = if_else(is.na(m29_w04), (m29_w01 + m29_w06) / 2, m29_w04),
-        m29_w06 = if_else(is.na(m29_w06), m29_w05, m29_w06),
-        m29_w06 = if_else(is.na(m29_w06), m29_w04, m29_w06)
-    ) %>%
-    # Imputation for education (m01): there is only 1 missing value at each wave
-    mutate(
-        m01_w01 = if_else(is.na(m01_w01), m01_w02, m01_w01),
-        m01_w04 = if_else(is.na(m01_w04), m01_w03, m01_w04),
-        m01_w06 = if_else(is.na(m01_w06), m01_w05, m01_w06)
-    ) %>%
-    # Imputation for housing tenure (we make it time-constant)
-    mutate(
-        m33_w04 = m33_w01,
-        m33_w06 = m33_w01
-    ) %>%
-    # Predict years at current neighborhood for waves 4 and 6 from the value of wave 1 (which has no missing value)
-    mutate(
-        m34_03_w04 = m34_03_w01 + 3,
-        m34_03_w06 = m34_03_w01 + 6
-    ) %>%
-    # Imputation for marital status (m36): there is only 1 missing value at each waves
-    mutate(
-        m36_w01 = if_else(is.na(m36_w01), m36_w03, m36_w01),
-        m36_w04 = if_else(is.na(m36_w04), m36_w03, m36_w04),
-        m36_w06 = if_else(is.na(m36_w06), m36_w05, m36_w06)
-    ) %>%
-    # Imputation for number of children (use only wave 1), it is time-constant. We sum sons and daughters
-    mutate(
-        m37_w01 = m37_01_w01 + m37_02_w01,
-        m37_w04 = m37_w01,
-        m37_w06 = m37_w01
-    )
+        mutate(across(matches("^m29"), ~ na_if(., 0))) %>%
+            mutate(
+                m29_w01 = if_else(is.na(m29_w01), m29_w02, m29_w01),
+                m29_w01 = if_else(is.na(m29_w01), m29_w03, m29_w01),
+                m29_w01 = if_else(is.na(m29_w01) & !is.na(m29_w04) & !is.na(m29_w05), (m29_w04 + m29_w05) / 2, m29_w01),
+                m29_w01 = if_else(is.na(m29_w01) & !is.na(m29_w04) & !is.na(m29_w06), (m29_w04 + m29_w06) / 2, m29_w01),
+                m29_w01 = if_else(is.na(m29_w01), m29_w05, m29_w01),
+                m29_w04 = if_else(is.na(m29_w04) & !is.na(m29_w03) & !is.na(m29_w05), (m29_w03 + m29_w05) / 2, m29_w04),
+                m29_w04 = if_else(is.na(m29_w04), m29_w03, m29_w04),
+                m29_w04 = if_else(is.na(m29_w04), m29_w05, m29_w04),
+                m29_w04 = if_else(is.na(m29_w04), (m29_w01 + m29_w06) / 2, m29_w04),
+                m29_w06 = if_else(is.na(m29_w06), m29_w05, m29_w06),
+                m29_w06 = if_else(is.na(m29_w06), m29_w04, m29_w06)
+            ) %>%
+            # Imputation for education (m01): there is only 1 missing value at each wave
+            mutate(
+                m01_w01 = if_else(is.na(m01_w01), m01_w02, m01_w01),
+                m01_w04 = if_else(is.na(m01_w04), m01_w03, m01_w04),
+                m01_w06 = if_else(is.na(m01_w06), m01_w05, m01_w06)
+            ) %>%
+            # Imputation for housing tenure (we make it time-constant)
+            mutate(
+                m33_w04 = m33_w01,
+                m33_w06 = m33_w01
+            ) %>%
+            # Predict years at current neighborhood for waves 4 and 6 from the value of wave 1 (which has no missing value)
+            mutate(
+                m34_03_w04 = m34_03_w01 + 3,
+                m34_03_w06 = m34_03_w01 + 6
+            ) %>%
+            # Imputation for marital status (m36): there is only 1 missing value at each waves
+            mutate(
+                m36_w01 = if_else(is.na(m36_w01), m36_w03, m36_w01),
+                m36_w04 = if_else(is.na(m36_w04), m36_w03, m36_w04),
+                m36_w06 = if_else(is.na(m36_w06), m36_w05, m36_w06)
+            ) %>%
+            # Imputation for number of children (use only wave 1), it is time-constant. We sum sons and daughters
+            mutate(
+                m37_w01 = m37_01_w01 + m37_02_w01,
+                m37_w04 = m37_w01,
+                m37_w06 = m37_w01
+            )
     )
 
 # 4.5 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
