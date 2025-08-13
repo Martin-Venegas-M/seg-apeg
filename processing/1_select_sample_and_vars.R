@@ -227,58 +227,19 @@ elsoc <- elsoc %>%
             )
     )
 
-# 4.5 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
+# 4.5 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------------
 
-# ! NOTA: el código original de Stata tiene lineas de más, ya que existen múltiples outputs para un mismo input.
-# ! Por ejemplo, el código 1317 cuenta con 7 lineas de código, dónde se recodifica a 1211, 1212, 1219, 1221, 1222, 1330 y 1346.
-# ! Teoricamente, la primera linea es la que hace la recodificación y las otras 6 no aplican ninguna transformación.
-# ! Si confirmara que efectivamente no tiene ningún efecto, podría optar por una solución más simple, eliminando los duplicados en el insumo,
-# ! manteniendo solo las primeras filas y usando un left_join(). Sin embargo, por temas de replicabilidad prefiero mantener la
-# ! misma lógica de programación. Por ende, el código a continuación genera el bloque de código dinamicamente para el case_when() y lo evalúa.
-
-# ? ###############################################################################################################################################
-# ? ###################################################### PRUEBA #################################################################################
-# ? ###############################################################################################################################################
-
-# ? Método 1: Replicación de stata. Código gigante con condicionales repetidos ---------------------------------------------------------------------
-
-# Crear un vector de strings con las combinaciones posibles
-condiciones <- purrr::map2_chr(
-    insumo_ciuo$ciuo88, insumo_ciuo$ciuo08,
-    ~ paste0("ciuo88_m03_w01 == ", .x, " ~ ", .y)
-)
-
-cod_m03 <- paste(c(condiciones, "TRUE ~ ciuo88_m03_w01"), collapse = ", ") # Crear un objeto de texto para usar como código dentro del case_when()
-cod_m22 <- str_replace_all(cod_m03, "ciuo88_m03_w01", "ciuo88_m22_w01") # Crear el objeto idéntico, pero para la otra variable
-
-# Crear variables
-test <- elsoc %>%
-    mutate(
-        ciuo08_m03_w01 = !!parse_expr(paste0("case_when(", cod_m03, ")")),
-        ciuo08_m22_w01 = !!parse_expr(paste0("case_when(", cod_m22, ")"))
-    )
-
-# ? Método 2: Pegar con left_join() insumo externo. ------------------------------------------------------------------------------------------------
-
-# Reducir el insumo ciuo
+# Reduce ciuo source document
 insumo_ciuo_reduced <- insumo_ciuo %>%
-    arrange(ciuo88) %>% # Ordenar ascendenetemente por ciuo88
-    distinct(ciuo88, .keep_all = T) # Mantener solo la primera fila de cada ciuo88 repetido, en caso que se repita.
-# ! Teoricamente esto equivale al código de stata ya que la primera condición es la que hace la recodificación
+    arrange(ciuo88) %>% # Sort ascending by ciuo88
+    distinct(ciuo88, .keep_all = T) # Keep only the first row of each repeated ciuo88, in case it is repeated.
 
-# Pegar variables
-test2 <- elsoc %>%
+# Join variables
+elsoc <- elsoc %>%
     left_join(insumo_ciuo_reduced %>% rename(ciuo08_m03_w01 = ciuo08), by = c("ciuo88_m03_w01" = "ciuo88")) %>%
     left_join(insumo_ciuo_reduced %>% rename(ciuo08_m22_w01 = ciuo08), by = c("ciuo88_m22_w01" = "ciuo88"))
 
-# ? COMPARAR MÉTODOS -------------------------------------------------------------------------------------------------------------------------------
-compare_methods <- data.frame(ciuo08_test = test$ciuo88_m03_w01, ciuo08_test2 = test2$ciuo88_m03_w01) %>%
-    mutate(not_equal = if_else(ciuo08_test != ciuo08_test2, 1, 0)) %>% # ¿Hay alguno distinto?
-    filter(!is.na(not_equal))
-
-sjmisc::frq(compare_methods$not_equal) #* RESULTADO: SON IGUALES. MANTENER MÉTODO MÁS PARSIMONIOSO
-
-# ? ###############################################################################################################################################
+# 4.6 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
 
 elsoc <- elsoc %>%
     # Generate variables for wave 4 (based on wave 3) and wave 6 (based on wave 5)
