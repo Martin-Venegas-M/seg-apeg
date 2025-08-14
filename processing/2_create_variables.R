@@ -250,6 +250,7 @@ all(elsocs[[3]]$class_R == elsocs[[3]]$class) # NA
 elsocs[[2]] %>%
     select(idencuesta, isco, class, class_R) %>%
     mutate(test = if_else(class_R == class, 1, 0)) %>%
+    # filter(idencuesta %in% c("13125024", "13503081")) %>%
     filter(is.na(test)) %>%
     View()
 
@@ -268,3 +269,122 @@ elsocs[["elsoc_2019"]] <- elsocs[["elsoc_2019"]] %>%
         idencuesta == "13503081" ~ 9,
         TRUE ~ class_R
     ))
+
+# Return names for class R variables
+elsocs <- map(
+    elsocs,
+    .f = function(x) {
+        x %>%
+            select(-class) %>%
+            rename(
+                class = class_R,
+                class_5 = class_5_R,
+                class_8 = class_8_R
+            )
+    }
+)
+
+# 8. Create individual-level NSE -----------------------------------------------------------------------------------------------------------------------------
+
+# Probar el PCA!
+data_for_pca <- elsocs[[1]] %>%
+    select(idencuesta, ln_income, educ, isei) %>%
+    drop_na()
+
+data_for_pca <- data_for_pca %>%
+    mutate(
+        pc1 = prcomp(data_for_pca %>% select(-idencuesta))$x[, 1], # Store scores for all individuals on mca1 and mca2)
+        # Normalize scores
+        max_pc1 = max(pc1, na.rm = TRUE),
+        min_pc1 = min(pc1, na.rm = TRUE),
+        nse_indiv = (pc1 - min_pc1) / (max_pc1 - min_pc1)
+    ) %>%
+    select(idencuesta, nse_indiv)
+
+#* prcomp(data_for_pca) %>% summary()
+
+#* Rotation (n x k) = (3 x 3):
+#*                   PC1         PC2          PC3
+#* ln_income -0.02735583  0.39428288  0.918581881
+#* educ      -0.04695259  0.91740475 -0.395175886
+#* isei      -0.99852247 -0.05394016 -0.006583768
+
+#* Importance of components:
+#*                           PC1     PC2     PC3
+#* Standard deviation     14.443 1.02037 0.65157
+#* Proportion of Variance  0.993 0.00496 0.00202
+#* Cumulative Proportion   0.993 0.99798 1.00000
+
+# ! NOTA: En elsoc 2016, el componente 1 captura el 99.3% de la varanza con una carga del componente altisima en comparación a las demás variables.
+# ! Creo que tiene poco sentido hacer un pca, es suficiente con isei. De todos modos igual lo guardaré.
+
+# Apply PCA for creating nse_indiv
+create_nse_indiv <- function(data) {
+    data_for_pca <- data %>%
+        select(idencuesta, ln_income, educ, isei) %>%
+        drop_na()
+
+    data_for_pca <- data_for_pca %>%
+        mutate(
+            pc1 = prcomp(data_for_pca %>% select(-idencuesta))$x[, 1], # Store scores for all individuals on mca1 and mca2)
+            # Normalize scores
+            max_pc1 = max(pc1, na.rm = TRUE),
+            min_pc1 = min(pc1, na.rm = TRUE),
+            nse_indiv = (pc1 - min_pc1) / (max_pc1 - min_pc1)
+        ) %>%
+        select(idencuesta, nse_indiv)
+
+    results <- data %>% left_join(data_for_pca, by = "idencuesta")
+    return(results)
+}
+
+elsocs <- map(elsocs, ~ create_nse_indiv(.x))
+rm(create_nse_indiv)
+
+# 9. Create individual-level covariates -----------------------------------------------------------------------------------------------------------------------
+
+create_indiviual_covariates <- function(data) {
+    data %>%
+        # Rename
+        rename(
+            age = m0_edad,
+            sex = m0_sexo,
+            tenure = m33,
+            yr_address = m34_03,
+            marital_status = m36,
+            children = m37
+        ) %>%
+        mutate(
+            # Generate age square
+            age_sq = age^2,
+            # Generate dummies for housing tenure and presence of children
+            homeowner = if_else(tenure <= 2, 1, 0),
+            married = if_else(marital_status %in% c(1, 3), 1, 0),
+            has_children = if_else(children >= 1, 1, 0)
+        ) %>%
+        select(-c(tenure, marital_status, children))
+}
+
+elsocs <- map(elsocs, ~ create_indiviual_covariates(.x))
+rm(create_indiviual_covariates)
+
+# 10. Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
+
+elsocs <- map(
+    elsocs,
+    .f = function(x) {
+        x %>% select(
+            idencuesta, ola, geocodigo, fact_exp02, segmento, region, region_cod, yr_address,
+            identification:justif_violence,
+            z_identification:z_justif_violence,
+            age, age_sq, sex, homeowner, married, has_children,
+            educ, ln_income, quint_inc, isco, isei, nse_indiv,
+            class, class_8, class_5
+        )
+    }
+)
+
+# 11 . Save dfs ------------------------------------------------------------------------------------------------------------------------------------------------
+saveRDS(elsocs[[1]], "input/data/pre-proc/elsoc_2016_2_created_variables.RDS")
+saveRDS(elsocs[[2]], "input/data/pre-proc/elsoc_2019_2_created_variables.RDS")
+saveRDS(elsocs[[3]], "input/data/pre-proc/elsoc_2022_2_created_variables.RDS")
