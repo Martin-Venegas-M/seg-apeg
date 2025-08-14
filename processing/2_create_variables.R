@@ -21,7 +21,8 @@ pacman::p_load(
     rlang,
     sjlabelled,
     RStata,
-    ISCO08ConveRsions
+    ISCO08ConveRsions,
+    visdat
 )
 
 # 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
@@ -334,7 +335,10 @@ create_nse_indiv <- function(data) {
         ) %>%
         select(idencuesta, nse_indiv)
 
-    results <- data %>% left_join(data_for_pca, by = "idencuesta")
+    results <- data %>%
+        left_join(data_for_pca, by = "idencuesta") %>%
+        mutate(quint_nse_indiv = ntile(nse_indiv, 5))
+
     return(results)
 }
 
@@ -368,7 +372,29 @@ create_indiviual_covariates <- function(data) {
 elsocs <- map(elsocs, ~ create_indiviual_covariates(.x))
 rm(create_indiviual_covariates)
 
-# 10. Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
+
+# 11. Join nse_barrio ------------------------------------------------------------------------------------------------------------------------------------------
+
+join_nse_barrio <- function(data, y) {
+    nse_barrio <- read_dta("input/data/original/nse_barrio_vf.dta") %>%
+        group_by(year) %>%
+        mutate(quint_nse_barrio = ntile(nse_barrio, 5)) %>%
+        ungroup()
+
+    data %>%
+        left_join(nse_barrio %>% filter(year == y), by = "geocodigo") %>%
+        select(-year)
+}
+
+elsocs <- map2(
+    elsocs,
+    c("2016", "2019", "2022"),
+    ~ join_nse_barrio(.x, .y)
+)
+
+rm(join_nse_barrio)
+
+# 11. Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
 
 elsocs <- map(
     elsocs,
@@ -378,13 +404,23 @@ elsocs <- map(
             identification:justif_violence,
             z_identification:z_justif_violence,
             age, age_sq, sex, homeowner, married, has_children,
-            educ, ln_income, quint_inc, isco, isei, nse_indiv,
+            educ, ln_income, quint_inc, isco, isei, nse_indiv, quint_nse_indiv, nse_barrio, quint_nse_barrio,
             class, class_8, class_5
         )
     }
 )
 
-# 11 . Save dfs ------------------------------------------------------------------------------------------------------------------------------------------------
-saveRDS(elsocs[[1]], "input/data/pre-proc/elsoc_2016_2_created_variables.RDS")
-saveRDS(elsocs[[2]], "input/data/pre-proc/elsoc_2019_2_created_variables.RDS")
-saveRDS(elsocs[[3]], "input/data/pre-proc/elsoc_2022_2_created_variables.RDS")
+# 12. Drop na's -----------------------------------------------------------------------------------------------------------------------------------------------
+
+# Check NA's
+visdat::vis_dat(elsocs[[1]])
+visdat::vis_dat(elsocs[[2]])
+visdat::vis_dat(elsocs[[3]])
+
+# NOTA: Por ahora, solo eliminaré los casos con NA en el isei
+# test <- map(elsocs, .f = function(x) x %>% filter(!is.na(isei)))
+
+# 12. Save dfs ------------------------------------------------------------------------------------------------------------------------------------------------
+write_dta(elsocs[[1]], "input/data/proc/elsoc_2016_2_created_variables.dta")
+write_dta(elsocs[[2]], "input/data/proc/elsoc_2019_2_created_variables.dta")
+write_dta(elsocs[[3]], "input/data/proc/elsoc_2022_2_created_variables.dta")
