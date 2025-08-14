@@ -50,6 +50,7 @@ rsconnect/
 
 # original data folder
 input/data/original
+input/data/pre-proc
 
 # specific dataframes
 input/data/proc/elsoc_vars_selected.dta
