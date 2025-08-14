@@ -109,7 +109,7 @@ elsoc <- elsoc %>%
     # Size network: create to binary variable
     mutate(
         across(starts_with("r13"), ~ if_else(. >= median(., na.rm = T), 1, 0), .names = "rec_{.col}"),
-        across(ends_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1)))
+        across(starts_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1)))
     )
 
 # 5. Impute values --------------------------------------------------------------------------------------------------------------------------------------
@@ -122,6 +122,7 @@ elsoc <- elsoc %>% mutate(
     # Create network variables for w01
     r15_w01 = r15_w02,
     r13_nredes_w01 = r13_nredes_w02,
+    rec_r13_nredes_w01 = rec_r13_nredes_w02,
 
     # Wave 04
     c06_04_w04 = (c06_04_w03 + c06_04_w06) / 2,
@@ -184,7 +185,7 @@ impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = 
 # Create vectors with variables tu imputate
 vars_to_imput <- c(
     "c32_01", "c32_02",
-    "r15", "r13_nredes",
+    "r15", "r13_nredes", "rec_r13_nredes",
     "c02", "c06_04", "c06_05", "c06_06",
     "c05_01", "c05_02", "c05_05", "c05_07",
     "c13",
