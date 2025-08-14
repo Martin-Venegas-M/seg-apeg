@@ -138,6 +138,7 @@ impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = 
         )
 }
 
+# Create vectors with variables tu imputate
 vars_to_imput <- c(
     "c32_01", "c32_02",
     "r15", "r13_nredes",
@@ -154,6 +155,8 @@ vars_to_imput <- c(
     "f05_01", "f05_02", "f05_03"
 )
 
+# Apply the function!
+# Imputate values for w01 variables
 elsoc <- reduce(
     vars_to_imput,
     function(df, var) {
@@ -162,6 +165,7 @@ elsoc <- reduce(
     .init = elsoc
 )
 
+# Imputate values for w04 variables
 elsoc <- reduce(
     vars_to_imput,
     function(df, var) {
@@ -170,6 +174,7 @@ elsoc <- reduce(
     .init = elsoc
 )
 
+# Imputate values for w04 variables
 elsoc <- reduce(
     vars_to_imput,
     function(df, var) {
@@ -228,6 +233,11 @@ elsoc <- elsoc %>%
     )
 
 # 4.5 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------------
+
+#* NOTE: In w01 we don't have ciuo08; instead, we have ciuo88. In this scenario, we need to convert from the older version of CIUO to the newer one.
+#* To do this, I used a source document based on Stata code (see "docs/stata/1. sample and imputation.do", lines 383 to 1729).
+#* I literally copied all those lines and saved them as an .xlsx file called "insumo_ciuo.xlsx".
+#* Then, I loaded the .xlsx file in this script and joined it with the elsoc dataset.
 
 # Reduce ciuo source document
 insumo_ciuo_reduced <- insumo_ciuo %>%
@@ -340,4 +350,4 @@ elsoc <- elsoc %>%
 
 # 6. Save df -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-write_dta(elsoc, "input/data/pre-proc/elsoc_wide_selected_imputed.dta")
+write_dta(elsoc, "input/data/pre-proc/elsoc_wide_1_selected_sample.dta")
