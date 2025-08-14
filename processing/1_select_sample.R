@@ -1,12 +1,10 @@
 #******************************************************************************************************************************************************
 # 0. Identification -------------------------------------------------------
-
 # Title: Processing code for a research paper on Residential segregation ans Attachment to society - Crossectional analysis
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
-
 # Executive Summary: This script contains the code to select the sample and variable to use in the article
-# Date: August 10, 2025
+# Date: August 14, 2025
 #******************************************************************************************************************************************************
 
 rm(list = ls())
@@ -27,12 +25,15 @@ elsoc_original <- haven::read_stata("input/data/original/ELSOC_Wide_2016_2022.dt
 insumo_ciuo <- readxl::read_xlsx("input/insumo_ciuo.xlsx")
 all_vars <- readxl::read_xlsx("input/all_vars.xlsx")
 
-# 3. Select variable ------------------------------------------------------------------------------------------------------------------------------------
+source("processing/helpers/remove_value_labels.R", encoding = "UTF-8")
+
+# 3. Select variables ------------------------------------------------------------------------------------------------------------------------------------
 elsoc <- elsoc_original %>%
     filter(muestra == 1) %>% # Mantener casos de la muestra original
     select(
         starts_with("idencuesta"),
         starts_with("ola"),
+        starts_with("estrato"),
         starts_with("c32_01"), starts_with("c32_02"), # 1. Sense of belonging and identification
         starts_with("r15"), # 2. Number of friends
         starts_with("r13_nredes"), # 3. Intimate network size
@@ -62,15 +63,58 @@ elsoc <- elsoc_original %>%
         -starts_with("idencuestador")
     ) %>%
     mutate(
-        across(everything(), ~ if_else(. %in% c(-666, -777, -888, -999), NA, .))
+        across(everything(), ~ if_else(. %in% c(-666, -777, -888, -999), NA, .)), # ! RECODE TO NA SPECIAL VALUES (TECHNICAL ERRORS, NON RESPONSE ETC.)
+        across(everything(), ~ remove_value_labels(., c(-666, -777, -888, -999))) # ! DROPS LABELS FROM SPECIAL VALUES
     )
 
-# Function for checking recodifications
-source("processing/helpers/check_recode.R", encoding = "UTF-8")
+# 4. Recode specific variables ---------------------------------------------------------------------------------------------------------------------------------
 
-# 4. Impute values --------------------------------------------------------------------------------------------------------------------------------------
+# Create function to invert the scale of 5 categories likert variables
+invert_scale <- function(x) {
+    ((x * (-1)) + 6)
+}
 
-# 4.1 Impute full variables -----------------------------------------------------------------------------------------------------------------------------
+# Specific recodes
+elsoc <- elsoc %>%
+    # Generalized trust: recode in order to create an ordinal variable (+gen_trust -> +atachment to society)
+    mutate(
+        across(starts_with("c02"), ~ case_when(
+            . == 1 ~ 3,
+            . == 3 ~ 2,
+            . == 2 ~ 1,
+            TRUE ~ .
+        )),
+        across(starts_with("c02"), ~ set_labels(
+            .,
+            labels = c(
+                "Casi siempre hay que tener cuidado al tratar con las personas" = 1,
+                "Depende" = 2,
+                "Casi siempre se puede confiar en las personas" = 3
+            )
+        ))
+    ) %>%
+    # Justifiction of violence: invert the scale in order to +justif_violence -> +atachment to society
+    mutate(
+        across(starts_with("f05"), ~ invert_scale(.)),
+        across(starts_with("f05"), ~ set_labels(.,
+            labels = c(
+                "Siempre se justifica" = 1,
+                "Muchas veces se justifica" = 2,
+                "Algunas veces se justifica" = 3,
+                "Pocas veces se justifica" = 4,
+                "Nunca se justifica" = 5
+            )
+        ))
+    ) %>%
+    # Size network: create to binary variable
+    mutate(
+        across(starts_with("r13"), ~ if_else(. >= median(., na.rm = T), 1, 0), .names = "rec_{.col}"),
+        across(ends_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1)))
+    )
+
+# 5. Impute values --------------------------------------------------------------------------------------------------------------------------------------
+
+# 5.1 Impute full variables -----------------------------------------------------------------------------------------------------------------------------
 
 # Crear variables that doesn't have measurement in Wave 4 or wave 6
 elsoc <- elsoc %>% mutate(
@@ -95,8 +139,7 @@ elsoc <- elsoc %>% mutate(
     c07_05_w06 = c07_05_w05
 )
 
-# 4.2 Manual imputations for dependent variables ----------------------------------------------------------------------------------------------------------
-
+# 5.2 Manual imputations for dependent variables ----------------------------------------------------------------------------------------------------------
 elsoc <- elsoc %>% mutate(
     c32_01_w04 = coalesce(c32_01_w04, (c32_01_w03 + c32_01_w05) / 2),
     c32_02_w04 = coalesce(c32_02_w04, (c32_02_w03 + c32_02_w05) / 2),
@@ -114,7 +157,7 @@ elsoc <- elsoc %>% mutate(
     f05_03_w04 = coalesce(f05_03_w04, (f05_03_w03 + f05_03_w05) / 2)
 )
 
-# 4.3 Automate imputations ----------------------------------------------------------------------------------------------------------------------------------
+# 5.3 Automate imputations ----------------------------------------------------------------------------------------------------------------------------------
 
 # Create function
 impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = c("w02", "w03", "w04", "w05", "w06")) {
@@ -183,8 +226,7 @@ elsoc <- reduce(
     .init = elsoc
 )
 
-# 4.4 Manual imputations for independent variables -----------------------------------------------------------------------------------------------------------
-
+# 5.4 Manual imputations for independent variables -----------------------------------------------------------------------------------------------------------
 elsoc <- elsoc %>%
     mutate(
         # Assign missing values ton income=0
@@ -232,7 +274,7 @@ elsoc <- elsoc %>%
             )
     )
 
-# 4.5 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------------
+# 5.5 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------------
 
 #* NOTE: In w01 we don't have ciuo08; instead, we have ciuo88. In this scenario, we need to convert from the older version of CIUO to the newer one.
 #* To do this, I used a source document based on Stata code (see "docs/stata/1. sample and imputation.do", lines 383 to 1729).
@@ -249,8 +291,7 @@ elsoc <- elsoc %>%
     left_join(insumo_ciuo_reduced %>% rename(ciuo08_m03_w01 = ciuo08), by = c("ciuo88_m03_w01" = "ciuo88")) %>%
     left_join(insumo_ciuo_reduced %>% rename(ciuo08_m22_w01 = ciuo08), by = c("ciuo88_m22_w01" = "ciuo88"))
 
-# 4.6 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
-
+# 5.6 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
 elsoc <- elsoc %>%
     # Generate variables for wave 4 (based on wave 3) and wave 6 (based on wave 5)
     mutate(
@@ -325,9 +366,9 @@ elsoc <- elsoc %>%
     # We drop the individuals without occupation (n=462)
     filter(!is.na(ciuo08_m03_w01))
 
-# 5. Paste geocodigo ------------------------------------------------------------------------------------------------------------------------------------------
+# 6. Join geocodigo ------------------------------------------------------------------------------------------------------------------------------------------
 
-# Cargar archivo con geocodigo (zona censal)
+# Load file with geocodigo (zona censal)
 zona_censal <- read_dta("input/data/original/zona censal muestra inicial.dta")
 
 elsoc <- elsoc %>%
@@ -348,6 +389,6 @@ elsoc <- elsoc %>%
         by = "idencuesta"
     )
 
-# 6. Save df -----------------------------------------------------------------------------------------------------------------------------------------------------
+# 7. Save df -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 write_dta(elsoc, "input/data/pre-proc/elsoc_wide_1_selected_sample.dta")
