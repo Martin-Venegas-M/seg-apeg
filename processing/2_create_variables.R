@@ -29,9 +29,18 @@ pacman::p_load(
 elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta")
 
 elsocs <- list(
-    "elsoc_2016" = elsoc %>% select(idencuesta, ends_with("_w01")) %>% rename_with(~ (str_replace_all(., "_w01", ""))),
-    "elsoc_2019" = elsoc %>% select(idencuesta, ends_with("_w04")) %>% rename_with(~ (str_replace_all(., "_w04", ""))),
-    "elsoc_2022" = elsoc %>% select(idencuesta, ends_with("_w06")) %>% rename_with(~ (str_replace_all(., "_w06", "")))
+    "elsoc_2016" = elsoc %>%
+        select(idencuesta, ends_with("_w01")) %>%
+        rename_with(~ (str_replace_all(., "_w01", ""))) %>%
+        filter(estrato %in% c(1:4)),
+    "elsoc_2019" = elsoc %>%
+        select(idencuesta, ends_with("_w04")) %>%
+        rename_with(~ (str_replace_all(., "_w04", ""))) %>%
+        filter(estrato %in% c(1:4)),
+    "elsoc_2022" = elsoc %>%
+        select(idencuesta, ends_with("_w06")) %>%
+        rename_with(~ (str_replace_all(., "_w06", ""))) %>%
+        filter(estrato %in% c(1:4))
 )
 
 insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch_10_06_2014.xls") %>%
@@ -51,6 +60,7 @@ create_dep_vars <- function(data) {
             #***** Relational dimension
             friends = r15,
             size_network = r13_nredes,
+            size_network_rec = rec_r13_nredes,
             gen_trust = c02,
             trust_minorities = (c06_04 + c06_05 + c06_06) / 3,
             trust_inst = (c05_01 + c05_02 + c05_05 + c05_07) / 4,
@@ -77,7 +87,7 @@ rm(create_dep_vars)
 # 4. Standardisation of dependent variables ----------------------------------------------------------------------------------------------------------------
 standardize_dep_vars <- function(data) {
     vars_to_standardize <- c(
-        "identification", "friends", "size_network", "gen_trust",
+        "identification", "friends", "size_network", "size_network_rec", "gen_trust",
         "trust_minorities", "trust_inst", "interest_pol", "satisf_demo",
         "conv_particip", "unconv_particip", "egalitarianism", "altruistic",
         "prosoc_behave", "democracy_support", "justif_violence"
@@ -288,33 +298,23 @@ elsocs <- map(
 # 8. Create individual-level NSE -----------------------------------------------------------------------------------------------------------------------------
 
 # Probar el PCA!
-data_for_pca <- elsocs[[1]] %>%
-    select(idencuesta, ln_income, educ, isei) %>%
-    drop_na()
+# data_for_pca <- elsocs[[1]] %>%
+#     select(idencuesta, ln_income, educ, isei) %>%
+#     drop_na()
 
-data_for_pca <- data_for_pca %>%
-    mutate(
-        pc1 = prcomp(data_for_pca %>% select(-idencuesta))$x[, 1], # Store scores for all individuals on mca1 and mca2)
-        # Normalize scores
-        max_pc1 = max(pc1, na.rm = TRUE),
-        min_pc1 = min(pc1, na.rm = TRUE),
-        nse_indiv = (pc1 - min_pc1) / (max_pc1 - min_pc1)
-    ) %>%
-    select(idencuesta, nse_indiv)
-
-#* prcomp(data_for_pca) %>% summary()
+# prcomp(data_for_pca %>% select(-idencuesta)) %>% summary()
 
 #* Rotation (n x k) = (3 x 3):
-#*                   PC1         PC2          PC3
-#* ln_income -0.02735583  0.39428288  0.918581881
-#* educ      -0.04695259  0.91740475 -0.395175886
-#* isei      -0.99852247 -0.05394016 -0.006583768
+#*                   PC1        PC2          PC3
+#* ln_income -0.02766284  0.4116408  0.910926252
+#* educ      -0.04740333  0.9097096 -0.412530506
+#* isei      -0.99849271 -0.0545927 -0.005652007
 
 #* Importance of components:
-#*                           PC1     PC2     PC3
-#* Standard deviation     14.443 1.02037 0.65157
-#* Proportion of Variance  0.993 0.00496 0.00202
-#* Cumulative Proportion   0.993 0.99798 1.00000
+#*                            PC1     PC2     PC3
+#* Standard deviation     14.8162 1.02545 0.65237
+#* Proportion of Variance  0.9933 0.00476 0.00193
+#* Cumulative Proportion   0.9933 0.99807 1.00000
 
 # ! NOTA: En elsoc 2016, el componente 1 captura el 99.3% de la varanza con una carga del componente altisima en comparación a las demás variables.
 # ! Creo que tiene poco sentido hacer un pca, es suficiente con isei. De todos modos igual lo guardaré.
@@ -413,9 +413,9 @@ elsocs <- map(
 # 12. Drop na's -----------------------------------------------------------------------------------------------------------------------------------------------
 
 # Check NA's
-visdat::vis_dat(elsocs[[1]])
-visdat::vis_dat(elsocs[[2]])
-visdat::vis_dat(elsocs[[3]])
+visdat::vis_miss(elsocs[[1]])
+visdat::vis_miss(elsocs[[2]])
+visdat::vis_miss(elsocs[[3]])
 
 # NOTA: Por ahora, solo eliminaré los casos con NA en el isei
 # test <- map(elsocs, .f = function(x) x %>% filter(!is.na(isei)))
