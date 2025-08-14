@@ -20,7 +20,8 @@ pacman::p_load(
     tidylog,
     rlang,
     sjlabelled,
-    RStata
+    RStata,
+    ISCO08ConveRsions
 )
 
 # 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ elsocs <- list(
 )
 
 insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch_10_06_2014.xls") %>%
-    select("isco" = 1, "description" = 2, "class" = 3) %>%
+    select("isco" = 1, "description" = 2, "class_R" = 3) %>%
     mutate(isco = as.numeric(isco)) %>%
     select(-description)
 
@@ -121,7 +122,7 @@ create_socioec_vars <- function(data) {
             quint_inc = ntile(ln_income, 5) # Generate discrete variable of househols income (quintiles)
         )
 
-    # Join social class (Oesch Scheme based on Isco 08)
+    # Join social class_R (Oesch Scheme based on Isco 08)
     data <- data %>%
         rename(isco = ciuo08_m03) %>%
         mutate(
@@ -137,32 +138,32 @@ create_socioec_vars <- function(data) {
         ) %>%
         left_join(insumo_oesch, by = "isco") %>%
         mutate(
-            class = as.numeric(class),
-            class = case_when(
+            class_R = as.numeric(class_R),
+            class_R = case_when(
                 isco == 15000 ~ 17, # retired
                 isco == 16000 ~ 18, # unemployed
-                TRUE ~ class
+                TRUE ~ class_R
             )
         )
-    # Create grouped categories of social class
+    # Create grouped categories of social class_R
     data <- data %>%
         mutate(
-            # Create class with eight categories + retired and unemployed categories
-            class_8 = case_when(
-                class %in% c(1, 2) ~ 1,
-                class %in% c(3, 4) ~ 2,
-                class %in% c(5, 6) ~ 3,
-                class %in% c(7, 8) ~ 4,
-                class %in% c(9, 10) ~ 5,
-                class %in% c(11, 12) ~ 6,
-                class %in% c(13, 14) ~ 7,
-                class %in% c(15, 16) ~ 8,
-                class %in% c(17) ~ 9,
-                class %in% c(18) ~ 10
+            # Create class_R with eight categories + retired and unemployed categories
+            class_R_8 = case_when(
+                class_R %in% c(1, 2) ~ 1,
+                class_R %in% c(3, 4) ~ 2,
+                class_R %in% c(5, 6) ~ 3,
+                class_R %in% c(7, 8) ~ 4,
+                class_R %in% c(9, 10) ~ 5,
+                class_R %in% c(11, 12) ~ 6,
+                class_R %in% c(13, 14) ~ 7,
+                class_R %in% c(15, 16) ~ 8,
+                class_R %in% c(17) ~ 9,
+                class_R %in% c(18) ~ 10
             ),
-            # Set labels for the eight categories version of class
-            class_8 = set_labels(
-                class_8,
+            # Set labels for the eight categories version of class_R
+            class_R_8 = set_labels(
+                class_R_8,
                 labels = c(
                     "Self-employed professionals and large employers" = 1,
                     "Small business owners" = 2,
@@ -176,22 +177,22 @@ create_socioec_vars <- function(data) {
                     "Unemployed" = 10
                 )
             ),
-            # Create class with five categories + retired and unemployed categories
-            class_5 = case_when(
-                class %in% c(1, 2, 5, 9, 13) ~ 1,
-                class %in% c(6, 10, 14) ~ 2,
-                class %in% c(3, 4) ~ 3,
-                class %in% c(7, 11, 15) ~ 4,
-                class %in% c(8, 12, 16) ~ 5,
-                class %in% c(17) ~ 6,
-                class %in% c(18) ~ 7
+            # Create class_R with five categories + retired and unemployed categories
+            class_R_5 = case_when(
+                class_R %in% c(1, 2, 5, 9, 13) ~ 1,
+                class_R %in% c(6, 10, 14) ~ 2,
+                class_R %in% c(3, 4) ~ 3,
+                class_R %in% c(7, 11, 15) ~ 4,
+                class_R %in% c(8, 12, 16) ~ 5,
+                class_R %in% c(17) ~ 6,
+                class_R %in% c(18) ~ 7
             ),
-            # Set labels for the five categories version of class
-            class_5 = set_labels(
-                class_5,
+            # Set labels for the five categories version of class_R
+            class_R_5 = set_labels(
+                class_R_5,
                 labels = c(
-                    "Higher-grade service class" = 1,
-                    "Lower-grade service class" = 2,
+                    "Higher-grade service class_R" = 1,
+                    "Lower-grade service class_R" = 2,
                     "Small business owners" = 3,
                     "Skilled workers" = 4,
                     "Unskilled workers" = 5,
@@ -204,9 +205,9 @@ create_socioec_vars <- function(data) {
     # ! Cambiar nombre a las variables de clase. Solo porque quiero tener la versión de stata en el mismo dataframe.
 
     data <- data %>% rename(
-        class_R = class,
-        class_5_R = class_5,
-        class_8_R = class_8
+        class_R = class_R,
+        class_R_5_R = class_R_5,
+        class_R_8_R = class_R_8
     )
 
     return(data)
@@ -238,6 +239,52 @@ elsocs <- list(
     elsoc_2022 = read_dta("input/data/pre-proc/elsoc_2022_created_variables_AFTER_ISEI.dta")
 )
 
-elsocs[[1]] %>%
-    select(idencuesta, isco, class_R, class) %>%
+# Comparar las class
+
+all(elsocs[[1]]$class_R == elsocs[[1]]$class) #* TRUE
+all(elsocs[[2]]$class_R == elsocs[[2]]$class) # NA #! FALSE con operador de %in%
+all(elsocs[[3]]$class_R == elsocs[[3]]$class) # NA #* TRUE con operador %in%
+
+# 8. Create ISEI from R -------------------------------------------------------------------------------------------------------------------------------------
+
+create_isei_from_r <- function(data) {
+    # Create social class_R based on ISEI
+    # Tengo que crear un insumo aparte para aplicar isco08toisei08(), porque no acepta NA ni tampoco un código que no corresponda
+    isei_na <- data %>%
+        select(idencuesta, isco, class_R) %>%
+        filter(!is.na(class_R)) %>% # Son 4 casos que tienen códigos inexistentes, debo revisar
+        filter(!class_R %in% c(17, 18)) %>%
+        mutate(isco = as.character(isco)) %>%
+        filter(nchar(isco) == 4) # ! OJO, ESTA LINEA LA DEBO SACAR, DEBO AJUSTAR PARA QUE QUEDE BIEN EL class_R para que no queden valores de 3 digitos
+
+    isei <- purrr::map(isei_na$isco, ~ isco08toisei08(.x)) %>% unlist() # ! La función no está vectorizada, debo aplicar un map
+
+    # Pegar isei al df solo con casos validos
+    isei_na <- isei_na %>%
+        mutate(isei_R = isei) %>%
+        select(idencuesta, isei_R)
+
+    # Pegar isei al df oficial
+    data <- data %>% left_join(isei_na, by = "idencuesta")
+    rm(isei_na, isei)
+
+    # Predict ISEI for unemployed, retired and people with missing ISCO
+    model_isei <- lm(isei_R ~ ln_income + factor(educ) + m0_edad, data = data)
+    data <- data %>%
+        mutate(
+            predicted_isei = predict(model_isei, newdata = data),
+            isei_R = if_else(is.na(isei_R), predicted_isei, isei_R)
+        ) %>%
+        select(-predicted_isei)
+}
+
+test <- map(elsocs, ~ create_isei_from_r(.x))
+rm(create_isei_from_r)
+
+test[[1]] %>%
+    select(idencuesta, isco, class_R, class, isei, isei_R) %>%
     View()
+
+# ! RESULTADOS:
+# ! En general son distintos
+# ! ¿Cómo es posible que R le genere un código a los no ocupados? Vale la pena revisar después, por ahora lo dejaré pasar.
