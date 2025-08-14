@@ -424,3 +424,7 @@ visdat::vis_miss(elsocs[[3]])
 write_dta(elsocs[[1]], "input/data/proc/elsoc_2016_2_created_variables.dta")
 write_dta(elsocs[[2]], "input/data/proc/elsoc_2019_2_created_variables.dta")
 write_dta(elsocs[[3]], "input/data/proc/elsoc_2022_2_created_variables.dta")
+
+saveRDS(elsocs[[1]], "input/data/proc/elsoc_2016_2_created_variables.RDS")
+saveRDS(elsocs[[2]], "input/data/proc/elsoc_2019_2_created_variables.RDS")
+saveRDS(elsocs[[3]], "input/data/proc/elsoc_2022_2_created_variables.RDS")
