@@ -26,23 +26,60 @@ pacman::p_load(
 )
 
 # 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
-elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta") %>%
-    mutate(across(c(geocodigo_w01, geocodigo_w04, geocodigo_w06), ~ if_else(. == "", NA, .)))
+insumo_barrio <- read_csv("input/data/pre-proc/muestra_nacional_nse_barrio.csv") %>% as_tibble()
+elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta") # %>%
+# mutate(across(c(geocodigo_w01, geocodigo_w04, geocodigo_w06), ~ if_else(. == "", NA, .)))
+
+# Create function for separating elsoc
+separate_elsoc <- function(data, wave) {
+    results <- data %>%
+        select(idencuesta, muestra, ends_with(wave)) %>%
+        rename_with(~ (str_replace_all(., wave, ""))) %>%
+        filter(estrato %in% c(1:4))
+
+    print(NROW(results))
+    return(results)
+}
 
 elsocs <- list(
-    "elsoc_2016" = elsoc %>%
-        select(idencuesta, ends_with("_w01")) %>%
-        rename_with(~ (str_replace_all(., "_w01", ""))) %>%
-        filter(estrato %in% c(1:4)),
-    "elsoc_2019" = elsoc %>%
-        select(idencuesta, ends_with("_w04")) %>%
-        rename_with(~ (str_replace_all(., "_w04", ""))) %>%
-        filter(estrato %in% c(1:4)),
-    "elsoc_2022" = elsoc %>%
-        select(idencuesta, ends_with("_w06")) %>%
-        rename_with(~ (str_replace_all(., "_w06", ""))) %>%
-        filter(estrato %in% c(1:4))
+    elsoc_2016 = separate_elsoc(elsoc, "_w01"), # 1,894 rows remaining
+    elsoc_2019 = separate_elsoc(elsoc, "_w04"), # 2,263 rows remaining
+    elsoc_2022 = separate_elsoc(elsoc, "_w06") # 1,804 rows remaining
 )
+
+# ? ############################################## 2.1 Checks! ##########################################################################################
+
+insumo_barrio1 <- insumo_barrio %>%
+    filter(ola == 1) %>%
+    select(idencuesta, geocodigo) # 1,888 rows remaining
+
+insumo_barrio2 <- insumo_barrio %>%
+    filter(ola == 4) %>%
+    select(idencuesta, geocodigo) # 2,256 rows remaining
+
+insumo_barrio3 <- insumo_barrio %>%
+    filter(ola == 6) %>%
+    select(idencuesta, geocodigo) # 1,800 rows remaining
+
+# Check rows for 2016 -----------------------------------------------------------------------------------------------------------------------------------
+test1 <- elsocs[[1]] %>% left_join(insumo_barrio1, by = "idencuesta")
+sum(is.na(test1$geocodigo)) #* Si hago un left_join(), quedan 6 casos NA
+test1 <- elsocs[[1]] %>% inner_join(insumo_barrio1, by = "idencuesta")
+sum(is.na(test1$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos coincide con la de insumo_barrio
+
+# Check rows for 2019 ------------------------------------------------------------------------------------------------------------------------------------
+test2 <- elsocs[[2]] %>% left_join(insumo_barrio2, by = "idencuesta")
+sum(is.na(test2$geocodigo)) #* Si hago un left_join(), quedan 7 casos NA
+test2 <- elsocs[[2]] %>% inner_join(insumo_barrio2, by = "idencuesta")
+sum(is.na(test2$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos coincide con la de insumo_barrio
+
+# Check rows for 2022 -------------------------------------------------------------------------------------------------------------------------------------
+test3 <- elsocs[[3]] %>% left_join(insumo_barrio3, by = "idencuesta")
+sum(is.na(test3$geocodigo)) # *Si hago un left_join(), quedan 4 casos NA
+test3 <- elsocs[[3]] %>% inner_join(insumo_barrio3, by = "idencuesta")
+sum(is.na(test3$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos conincide con la de insumo_barrio
+
+# ? #######################################################################################################################################################
 
 insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch_10_06_2014.xls") %>%
     select("isco" = 1, "description" = 2, "class" = 3) %>%

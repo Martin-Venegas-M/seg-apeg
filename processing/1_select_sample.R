@@ -32,6 +32,7 @@ elsoc <- elsoc_original %>%
     select(
         starts_with("idencuesta"),
         starts_with("ola"),
+        starts_with("muestra"),
         starts_with("estrato"),
         starts_with("c32_01"), starts_with("c32_02"), # 1. Sense of belonging and identification
         starts_with("r15"), # 2. Number of friends
@@ -367,7 +368,7 @@ elsoc <- elsoc %>%
 # 6. Join geocodigo ------------------------------------------------------------------------------------------------------------------------------------------
 
 # Load file with geocodigo (zona censal)
-zona_censal <- read_dta("input/data/original/zona censal muestra inicial.dta")
+# zona_censal <- read_dta("input/data/original/zona censal muestra inicial.dta")
 
 elsoc <- elsoc %>%
     # Drop useless variables from waves 2, 3 and 5
@@ -379,13 +380,13 @@ elsoc <- elsoc %>%
         -m02_w01, -m02_w04, -m02_w06,
         -m37_01_w01, -m37_02_w01,
         -segmento_disenno
-    ) %>%
-    # Merge with geocodigo (census tract if)
-    mutate(idencuesta = as.character(idencuesta)) %>%
-    left_join(
-        zona_censal %>% mutate(idencuesta = as.character(idencuesta)),
-        by = "idencuesta"
-    )
+    ) # %>%
+# # Merge with geocodigo (census tract if)
+# mutate(idencuesta = as.character(idencuesta)) %>%
+# left_join(
+#     zona_censal %>% mutate(idencuesta = as.character(idencuesta)),
+#     by = "idencuesta"
+# )
 
 # 7. Save df -----------------------------------------------------------------------------------------------------------------------------------------------------
 
