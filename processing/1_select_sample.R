@@ -29,7 +29,6 @@ source("processing/helpers/remove_value_labels.R", encoding = "UTF-8")
 
 # 3. Select variables ------------------------------------------------------------------------------------------------------------------------------------
 elsoc <- elsoc_original %>%
-    filter(muestra == 1) %>% # Mantener casos de la muestra original
     select(
         starts_with("idencuesta"),
         starts_with("ola"),
@@ -363,9 +362,7 @@ elsoc <- elsoc %>%
     mutate(
         ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w06),
         ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w06)
-    ) %>%
-    # We drop the individuals without occupation (n=462)
-    filter(!is.na(ciuo08_m03_w01))
+    )
 
 # 6. Join geocodigo ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -385,7 +382,7 @@ elsoc <- elsoc %>%
     ) %>%
     # Merge with geocodigo (census tract if)
     mutate(idencuesta = as.character(idencuesta)) %>%
-    inner_join(
+    left_join(
         zona_censal %>% mutate(idencuesta = as.character(idencuesta)),
         by = "idencuesta"
     )

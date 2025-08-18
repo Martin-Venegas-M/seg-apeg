@@ -26,7 +26,8 @@ pacman::p_load(
 )
 
 # 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
-elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta")
+elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta") %>%
+    mutate(across(c(geocodigo_w01, geocodigo_w04, geocodigo_w06), ~ if_else(. == "", NA, .)))
 
 elsocs <- list(
     "elsoc_2016" = elsoc %>%
