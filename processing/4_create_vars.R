@@ -1,91 +1,3 @@
-#******************************************************************************************************************************************************
-# 0. Identification -------------------------------------------------------
-
-# Title: Processing code for a research paper on Residential segregation ans Attachment to society - Crossectional analysis
-# Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
-# Responsable: Technical assistant
-
-# Executive Summary: This script contains the code to select the sample and variable to use in the article
-# Date: August 13, 2025
-#******************************************************************************************************************************************************
-
-rm(list = ls())
-
-# 1. Load packages ------------------------------------------------------------------------------------------------------------------------------------
-if (!require("pacman")) install.packages("pacman") # if pacman es missing, install
-
-pacman::p_load(
-    tidyverse,
-    haven,
-    tidylog,
-    rlang,
-    sjlabelled,
-    RStata,
-    ISCO08ConveRsions,
-    visdat
-)
-
-# 2. Load data ------------------------------------------------------------------------------------------------------------------------------------------
-insumo_barrio <- read_csv("input/data/pre-proc/muestra_nacional_nse_barrio.csv") %>% as_tibble()
-elsoc <- haven::read_stata("input/data/pre-proc/elsoc_wide_1_selected_sample.dta") # %>%
-# mutate(across(c(geocodigo_w01, geocodigo_w04, geocodigo_w06), ~ if_else(. == "", NA, .)))
-
-# Create function for separating elsoc
-separate_elsoc <- function(data, wave) {
-    results <- data %>%
-        select(idencuesta, muestra, ends_with(wave)) %>%
-        rename_with(~ (str_replace_all(., wave, ""))) %>%
-        filter(estrato %in% c(1:4))
-
-    print(NROW(results))
-    return(results)
-}
-
-elsocs <- list(
-    elsoc_2016 = separate_elsoc(elsoc, "_w01"), # 1,894 rows remaining
-    elsoc_2019 = separate_elsoc(elsoc, "_w04"), # 2,263 rows remaining
-    elsoc_2022 = separate_elsoc(elsoc, "_w06") # 1,804 rows remaining
-)
-
-# ? ############################################## 2.1 Checks! ##########################################################################################
-
-insumo_barrio1 <- insumo_barrio %>%
-    filter(ola == 1) %>%
-    select(idencuesta, geocodigo) # 1,888 rows remaining
-
-insumo_barrio2 <- insumo_barrio %>%
-    filter(ola == 4) %>%
-    select(idencuesta, geocodigo) # 2,256 rows remaining
-
-insumo_barrio3 <- insumo_barrio %>%
-    filter(ola == 6) %>%
-    select(idencuesta, geocodigo) # 1,800 rows remaining
-
-# Check rows for 2016 -----------------------------------------------------------------------------------------------------------------------------------
-test1 <- elsocs[[1]] %>% left_join(insumo_barrio1, by = "idencuesta")
-sum(is.na(test1$geocodigo)) #* Si hago un left_join(), quedan 6 casos NA
-test1 <- elsocs[[1]] %>% inner_join(insumo_barrio1, by = "idencuesta")
-sum(is.na(test1$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos coincide con la de insumo_barrio
-
-# Check rows for 2019 ------------------------------------------------------------------------------------------------------------------------------------
-test2 <- elsocs[[2]] %>% left_join(insumo_barrio2, by = "idencuesta")
-sum(is.na(test2$geocodigo)) #* Si hago un left_join(), quedan 7 casos NA
-test2 <- elsocs[[2]] %>% inner_join(insumo_barrio2, by = "idencuesta")
-sum(is.na(test2$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos coincide con la de insumo_barrio
-
-# Check rows for 2022 -------------------------------------------------------------------------------------------------------------------------------------
-test3 <- elsocs[[3]] %>% left_join(insumo_barrio3, by = "idencuesta")
-sum(is.na(test3$geocodigo)) # *Si hago un left_join(), quedan 4 casos NA
-test3 <- elsocs[[3]] %>% inner_join(insumo_barrio3, by = "idencuesta")
-sum(is.na(test3$geocodigo)) #* Si hago un inner_join() efectivamente quedan 0 NA's y la cantidad de casos conincide con la de insumo_barrio
-
-# ? #######################################################################################################################################################
-
-insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch_10_06_2014.xls") %>%
-    select("isco" = 1, "description" = 2, "class" = 3) %>%
-    mutate(isco = as.numeric(isco)) %>%
-    select(-description)
-
 # 3. Create dependent variables --------------------------------------------------------------------------------------------------------------------------
 
 # Create function with the code
@@ -276,9 +188,9 @@ stata_path <- glue::glue("\"C:\\Users\\{tolower(Sys.info()['user'])}\\Desktop\\S
 options("RStata.StataPath" = stata_path)
 options("RStata.StataVersion" = 15)
 
-stata("C:/Work/Github/seg-apeg/processing/iscogen.do")
+stata("C:/Work/Github/seg-apeg/processing/helpers/iscogen.do")
 
-rm(list = ls())
+rm(list = ls()[!ls() %in% c("insumo_oesch")])
 
 # 7. Load data again -----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -292,9 +204,9 @@ elsocs <- list(
 elsocs <- map(elsocs, .f = function(x) x %>% mutate(class = if_else(class == 0, NA, class)))
 
 # Comparar las class
-all(elsocs[[1]]$class_R == elsocs[[1]]$class) #* TRUE
-all(elsocs[[2]]$class_R == elsocs[[2]]$class) # NA
-all(elsocs[[3]]$class_R == elsocs[[3]]$class) # NA
+all(elsocs[[1]]$class_R %in% elsocs[[1]]$class) #* TRUE
+all(elsocs[[2]]$class_R %in% elsocs[[2]]$class) #* TRUE
+all(elsocs[[3]]$class_R %in% elsocs[[3]]$class) #* TRUE
 
 elsocs[[2]] %>%
     select(idencuesta, isco, class, class_R) %>%
@@ -342,17 +254,16 @@ elsocs <- map(
 
 # prcomp(data_for_pca %>% select(-idencuesta)) %>% summary()
 
-#* Rotation (n x k) = (3 x 3):
-#*                   PC1        PC2          PC3
-#* ln_income -0.02766284  0.4116408  0.910926252
-#* educ      -0.04740333  0.9097096 -0.412530506
-#* isei      -0.99849271 -0.0545927 -0.005652007
+#*                   PC1         PC2          PC3
+#* ln_income -0.02801635  0.41378986  0.909941226
+#* educ      -0.04793454  0.90869518 -0.414699098
+#* isei      -0.99845749 -0.05523597 -0.005623501
 
 #* Importance of components:
-#*                            PC1     PC2     PC3
-#* Standard deviation     14.8162 1.02545 0.65237
-#* Proportion of Variance  0.9933 0.00476 0.00193
-#* Cumulative Proportion   0.9933 0.99807 1.00000
+#*                           PC1     PC2     PC3
+#* Standard deviation     14.7199 1.02419 0.65387
+#* Proportion of Variance  0.9932 0.00481 0.00196
+#* Cumulative Proportion   0.9932 0.99804 1.00000
 
 # ! NOTA: En elsoc 2016, el componente 1 captura el 99.3% de la varanza con una carga del componente altisima en comparación a las demás variables.
 # ! Creo que tiene poco sentido hacer un pca, es suficiente con isei. De todos modos igual lo guardaré.
@@ -410,29 +321,7 @@ create_indiviual_covariates <- function(data) {
 elsocs <- map(elsocs, ~ create_indiviual_covariates(.x))
 rm(create_indiviual_covariates)
 
-
-# 11. Join nse_barrio ------------------------------------------------------------------------------------------------------------------------------------------
-
-join_nse_barrio <- function(data, y) {
-    nse_barrio <- read_dta("input/data/original/nse_barrio_vf.dta") %>%
-        group_by(year) %>%
-        mutate(quint_nse_barrio = ntile(nse_barrio, 5)) %>%
-        ungroup()
-
-    data %>%
-        left_join(nse_barrio %>% filter(year == y), by = "geocodigo") %>%
-        select(-year)
-}
-
-elsocs <- map2(
-    elsocs,
-    c("2016", "2019", "2022"),
-    ~ join_nse_barrio(.x, .y)
-)
-
-rm(join_nse_barrio)
-
-# 11. Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
+# 10. Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
 
 elsocs <- map(
     elsocs,
@@ -441,28 +330,12 @@ elsocs <- map(
             idencuesta, ola, geocodigo, fact_exp02, segmento, region, region_cod, yr_address,
             identification:justif_violence,
             z_identification:z_justif_violence,
-            age, age_sq, sex, homeowner, married, has_children,
-            educ, ln_income, quint_inc, isco, isei, nse_indiv, quint_nse_indiv, nse_barrio, quint_nse_barrio,
-            class, class_8, class_5
+            class, class_8, class_5,
+            educ, ln_income, quint_inc, isco, isei, nse_indiv,
+            pct_desempleo:nse_barrio_norm,
+            age, age_sq, sex, homeowner, married, has_children
         )
     }
 )
 
-# 12. Drop na's -----------------------------------------------------------------------------------------------------------------------------------------------
-
-# Check NA's
-visdat::vis_miss(elsocs[[1]])
-visdat::vis_miss(elsocs[[2]])
-visdat::vis_miss(elsocs[[3]])
-
-# NOTA: Por ahora, solo eliminaré los casos con NA en el isei
-# test <- map(elsocs, .f = function(x) x %>% filter(!is.na(isei)))
-
-# 12. Save dfs ------------------------------------------------------------------------------------------------------------------------------------------------
-write_dta(elsocs[[1]], "input/data/proc/elsoc_2016_2_created_variables.dta")
-write_dta(elsocs[[2]], "input/data/proc/elsoc_2019_2_created_variables.dta")
-write_dta(elsocs[[3]], "input/data/proc/elsoc_2022_2_created_variables.dta")
-
-saveRDS(elsocs[[1]], "input/data/proc/elsoc_2016_2_created_variables.RDS")
-saveRDS(elsocs[[2]], "input/data/proc/elsoc_2019_2_created_variables.RDS")
-saveRDS(elsocs[[3]], "input/data/proc/elsoc_2022_2_created_variables.RDS")
+rm(insumo_oesch)
