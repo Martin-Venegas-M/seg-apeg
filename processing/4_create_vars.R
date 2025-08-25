@@ -216,8 +216,8 @@ label_class_vars <- function(data) {
 elsocs <- map(elsocs, ~ label_class_vars(.x))
 rm(label_class_vars)
 
-# 4.7 Create individual-level covariates -----------------------------------------------------------------------------------------------------------------------
-create_indiviual_covariates <- function(data) {
+# 4.7 Create covariates ----------------------------------------------------------------------------------------------------------------------------------------
+create_covariates <- function(data) {
     data %>%
         # Rename
         rename(
@@ -234,13 +234,15 @@ create_indiviual_covariates <- function(data) {
             # Generate dummies for housing tenure and presence of children
             homeowner = if_else(tenure <= 2, 1, 0),
             married = if_else(marital_status %in% c(1, 3), 1, 0),
-            has_children = if_else(children >= 1, 1, 0)
+            has_children = if_else(children >= 1, 1, 0),
+            # Quntiles of nse neighbourhood
+            quint_nse_barrio = ntile(nse_barrio_norm, 5)
         ) %>%
         select(-c(tenure, marital_status, children))
 }
 
-elsocs <- map(elsocs, ~ create_indiviual_covariates(.x))
-rm(create_indiviual_covariates)
+elsocs <- map(elsocs, ~ create_covariates(.x))
+rm(create_covariates)
 
 # 4.8 Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
 elsocs <- map(
