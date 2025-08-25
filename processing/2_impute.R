@@ -36,7 +36,11 @@ elsoc <- elsoc %>%
         m33_w06 = m33_w05,
         # Predict years at current neighborhood for waves 4 and 6 from the value of wave 1 (which has no missing value)
         m34_03_w04 = m34_03_w01 + 3,
-        m34_03_w06 = m34_03_w01 + 6
+        m34_03_w06 = m34_03_w01 + 6,
+        # Imputation for number of children (use only wave 1), it is time-constant. We sum sons and daughters
+        m37_w01 = m37_01_w01 + m37_02_w01,
+        m37_w04 = m37_w01,
+        m37_w06 = m37_w01
     )
 
 # 2.2 Automatic imputations for dependent variables -----------------------------------------------------------------------------------------------------
