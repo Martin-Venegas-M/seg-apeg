@@ -108,22 +108,6 @@ create_socioec_vars <- function(data) {
                 class %in% c(17) ~ 9,
                 class %in% c(18) ~ 10
             ),
-            # Set labels for the eight categories version of class
-            class_8 = set_labels(
-                class_8,
-                labels = c(
-                    "Self-employed professionals and large employers" = 1,
-                    "Small business owners" = 2,
-                    "Technical (semi-)professionals" = 3,
-                    "Production workers" = 4,
-                    "(Associate) managers" = 5,
-                    "Clerks" = 6,
-                    "Socio-cultural (semi-)professionals" = 7,
-                    "Service workers" = 8,
-                    "Retired" = 9,
-                    "Unemployed" = 10
-                )
-            ),
             # Create class with five categories + retired and unemployed categories
             class_5 = case_when(
                 class %in% c(1, 2, 5, 9, 13) ~ 1,
@@ -133,19 +117,6 @@ create_socioec_vars <- function(data) {
                 class %in% c(8, 12, 16) ~ 5,
                 class %in% c(17) ~ 6,
                 class %in% c(18) ~ 7
-            ),
-            # Set labels for the five categories version of class
-            class_5 = set_labels(
-                class_5,
-                labels = c(
-                    "Higher-grade service class" = 1,
-                    "Lower-grade service class" = 2,
-                    "Small business owners" = 3,
-                    "Skilled workers" = 4,
-                    "Unskilled workers" = 5,
-                    "Retired" = 6,
-                    "Unemployed" = 7
-                )
             )
         )
 
@@ -153,7 +124,7 @@ create_socioec_vars <- function(data) {
 }
 
 elsocs <- map(elsocs, ~ create_socioec_vars(.x))
-rm(create_socioec_vars)
+rm(create_socioec_vars, insumo_oesch)
 
 # Save intermediate datasets for stata
 haven::write_dta(elsocs[["elsoc_2016"]], "input/data/pre-proc/elsoc_2016_created_variables_BEFORE_ISEI.dta")
@@ -178,8 +149,74 @@ elsocs <- list(
     elsoc_2022 = read_dta("input/data/pre-proc/elsoc_2022_created_variables_AFTER_ISEI.dta")
 )
 
-# 4.6 Create individual-level covariates -----------------------------------------------------------------------------------------------------------------------
+# 4.6 Label class variables -----------------------------------------------------------------------------------------------------------------------------------
+#* NOTE: This is necessary because if I do this before using iscogen in stata, labels are removed.
 
+label_class_vars <- function(data) {
+    # Create grouped categories of social class
+    data <- data %>%
+        mutate(
+            class = set_labels(
+                class,
+                labels = c(
+                    "Large employers" = 1,
+                    "Self-employed professionals" = 2,
+                    "Small business owners with employees" = 3,
+                    "Small business owners without employees" = 4,
+                    "Technical experts" = 5,
+                    "Technicians" = 6,
+                    "Skilled manual" = 7,
+                    "Low-skilled manual" = 8,
+                    "Higher-grade managers and administrators" = 9,
+                    "Lower-grade managers and administrators" = 10,
+                    "Skilled clerks" = 11,
+                    "Unskilled clerks" = 12,
+                    "Socio-cultural professionals" = 13,
+                    "Socio-cultural semi-professionals" = 14,
+                    "Skilled service" = 15,
+                    "Low-skilled service" = 16,
+                    "Retired" = 17,
+                    "Unemployed" = 18
+                )
+            ),
+            # Set labels for the eight categories version of class
+            class_8 = set_labels(
+                class_8,
+                labels = c(
+                    "Self-employed professionals and large employers" = 1,
+                    "Small business owners" = 2,
+                    "Technical (semi-)professionals" = 3,
+                    "Production workers" = 4,
+                    "(Associate) managers" = 5,
+                    "Clerks" = 6,
+                    "Socio-cultural (semi-)professionals" = 7,
+                    "Service workers" = 8,
+                    "Retired" = 9,
+                    "Unemployed" = 10
+                )
+            ),
+            # Set labels for the five categories version of class
+            class_5 = set_labels(
+                class_5,
+                labels = c(
+                    "Higher-grade service class" = 1,
+                    "Lower-grade service class" = 2,
+                    "Small business owners" = 3,
+                    "Skilled workers" = 4,
+                    "Unskilled workers" = 5,
+                    "Retired" = 6,
+                    "Unemployed" = 7
+                )
+            )
+        )
+
+    return(data)
+}
+
+elsocs <- map(elsocs, ~ label_class_vars(.x))
+rm(label_class_vars)
+
+# 4.7 Create individual-level covariates -----------------------------------------------------------------------------------------------------------------------
 create_indiviual_covariates <- function(data) {
     data %>%
         # Rename
@@ -205,8 +242,7 @@ create_indiviual_covariates <- function(data) {
 elsocs <- map(elsocs, ~ create_indiviual_covariates(.x))
 rm(create_indiviual_covariates)
 
-# 4.7 Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
-
+# 4.8 Drop variables ------------------------------------------------------------------------------------------------------------------------------------------
 elsocs <- map(
     elsocs,
     .f = function(x) {
@@ -221,5 +257,3 @@ elsocs <- map(
         )
     }
 )
-
-rm(insumo_oesch)

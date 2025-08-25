@@ -35,7 +35,8 @@ insumo_barrio <- read_csv("input/data/pre-proc/muestra_nacional_nse_barrio.csv")
 insumo_oesch <- readxl::read_excel("input/Final_proposition_passage_ISCO08_Oesch_10_06_2014.xls") %>% # Source document with equivalences between isco and oesch class scheme
     select("isco" = 1, "description" = 2, "class" = 3) %>%
     mutate(isco = as.numeric(isco)) %>%
-    select(-description)
+    select(-description) %>%
+    mutate(class = as.numeric(if_else(class == "leave aside", NA, class)))
 
 source("processing/helpers/functions.R", encoding = "UTF-8") # Utility functions for processing data
 
