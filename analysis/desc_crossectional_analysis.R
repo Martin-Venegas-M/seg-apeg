@@ -177,3 +177,21 @@ names(nse_barrio_class) <- c("class_8_nse_barrio", "class_5_nse_barrio")
 
 # Save!
 writexl::write_xlsx(nse_barrio_class, "output/tables/nse_barrio_class_tab.xlsx")
+
+# 4.5 Quintil NSE Barrio x Class ----------------------------------------------------------------------------------------------------------
+
+crosstable <- function(data, group1, group2, count_name) {
+    data %>%
+        group_by({{ group1 }}, {{ group2 }}) %>%
+        summarise({{ count_name }} := n()) %>%
+        ungroup()
+}
+
+quint_nse_barrio_class_w01 <- crosstable(elsocs[[1]] %>% mutate(class_5 = to_label(class_5)), class_5, quint_nse_barrio, "count_w01")
+quint_nse_barrio_class_w04 <- crosstable(elsocs[[2]] %>% mutate(class_5 = to_label(class_5)), class_5, quint_nse_barrio, "count_w04") %>% select(count_w04)
+quint_nse_barrio_class_w06 <- crosstable(elsocs[[3]] %>% mutate(class_5 = to_label(class_5)), class_5, quint_nse_barrio, "count_w06") %>% select(count_w06)
+
+quint_nse_barrio_class <- bind_cols(list(quint_nse_barrio_class_w01, quint_nse_barrio_class_w04, quint_nse_barrio_class_w06))
+
+# Save!
+writexl::write_xlsx(quint_nse_barrio_class, "output/tables/quint_nse_barrio_class_tab.xlsx")
