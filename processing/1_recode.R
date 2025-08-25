@@ -85,6 +85,18 @@ elsoc <- elsoc %>%
     mutate(
         across(starts_with("r13"), ~ if_else(. >= median(., na.rm = T), 1, 0), .names = "rec_{.col}"), # Recoding values
         across(starts_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1))) # Recoding labels
+    ) %>%
+    mutate(
+        across(starts_with("c25"), ~ invert_scale(., cats = 4)), # Recoding values
+        # Recoding labels
+        across(starts_with("c25"), ~ set_labels(.,
+            labels = c(
+                "Ninguna" = 1, # ! NOTE: Here we are assuming that people who doesn't feel representated by any of the sentences have the lower support. DISCUSS
+                "A la gente como uno, nos da lo mismo un regimen democratico que uno autoritario" = 2,
+                "En algunas circunstancias, un gobierno autoritario puede ser preferible a uno democratico" = 3,
+                "La democracia es preferible a cualquier otra forma de gobierno" = 4
+            )
+        ))
     )
 
 # Remove from the global enviroment

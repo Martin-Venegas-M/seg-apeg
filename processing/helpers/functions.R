@@ -9,8 +9,9 @@ remove_value_labels <- function(x, codes_to_remove) {
 }
 
 # Create function to invert the scale of 5 categories likert variables
-invert_scale <- function(x) {
-    ((x * (-1)) + 6)
+invert_scale <- function(x, cats = 5) {
+    plus <- cats + 1
+    ((x * (-1)) + plus)
 }
 
 impute_waves <- function(data, base_var, wave_to_impute = "w01", waves_source = c("w02", "w03", "w04", "w05", "w06")) {
