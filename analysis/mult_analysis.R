@@ -79,15 +79,16 @@ estimate_mm <- function(
     }
 
     # Create dynamic formulas and estimate models
-    m1 <- lmer(as.formula(glue("{vardep} ~ 1 + (1 | {cluster})")), data = datos)
-    m2 <- lmer(as.formula(glue("{vardep} ~ {pred1} + {controls} + (1 | {cluster})")), data = datos)
-    m3 <- lmer(as.formula(glue("{vardep} ~ {pred2} + {controls} + (1 | {cluster})")), data = datos)
-    m4 <- lmer(as.formula(glue("{vardep} ~ {pred1} + {pred2} + {controls} + (1 | {cluster})")), data = datos)
-    m5 <- lmer(as.formula(glue("{vardep} ~ {pred1} * {pred2} + {controls} + (1 | {cluster})")), data = datos)
+    forms <- c(
+        "{vardep} ~ 1 + (1 | {cluster})",
+        "{vardep} ~ {pred1} + {controls} + (1 | {cluster})",
+        "{vardep} ~ {pred2} + {controls} + (1 | {cluster})",
+        "{vardep} ~ {pred1} + {pred2} + {controls} + (1 | {cluster})",
+        "{vardep} ~ {pred1} * {pred2} + {controls} + (1 | {cluster})"
+    )
 
-    # List all models
-    all_models <- list(m1, m2, m3, m4, m5)
-    return(all_models)
+    models <- map(forms, ~ lmer(as.formula(glue(.x)), data = datos))
+    return(models)
 }
 
 # Test
