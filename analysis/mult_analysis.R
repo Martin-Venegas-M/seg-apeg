@@ -89,3 +89,20 @@ estimate_mm <- function(
 estimate_mm("friends", datos = elsocs[[1]]) %>% screenreg()
 estimate_mm("identification", datos = elsocs[[1]]) %>% screenreg()
 estimate_mm("gen_trust", datos = elsocs[[1]]) %>% screenreg()
+
+# 5. Create models ---------------------------------------------------------------------------------------------------------------------------------
+
+# Create vector with dependent variables to model
+varsdep <- c(
+    "identification", "friends",
+    "gen_trust", "trust_minorities", "trust_inst", "interest_pol",
+    "satisf_demo", "conv_particip", "unconv_particip", "egalitarianism",
+    "altruistic", "prosoc_behave", "democracy_support", "justif_violence"
+)
+
+# Create list with results
+results_mm <- list(
+    elsoc_2016 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[1]])) %>% set_names(varsdep),
+    elsoc_2019 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[2]])) %>% set_names(varsdep),
+    elsoc_2022 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[3]])) %>% set_names(varsdep)
+)
