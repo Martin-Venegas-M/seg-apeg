@@ -48,6 +48,9 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
+# Rproj
+*.Rproj
+
 # original data folder
 input/data/original
 input/data/pre-proc
