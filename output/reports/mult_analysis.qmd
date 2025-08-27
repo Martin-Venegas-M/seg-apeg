@@ -36,7 +36,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/250826_results_mm.RData")
+load("../../output/models/250827_results_mm.RData")
 ```
 
 ```{r}
@@ -55,9 +55,6 @@ coef_labels <- c(
   "class_5Unemployed"                 = "Unemployed",
   
   # Controls
-  "educ"         = "Years of education",
-  "ln_income"    = "Log income",
-  "isei"         = "ISEI (occupational status)",
   "age"          = "Age",
   "age_sq"       = "Age squared",
   "sex"          = "Female",

@@ -34,9 +34,9 @@ user <- tolower(Sys.info()["user"])
 # 3. Create function ---------------------------------------------------------------------------------------------------------------------------------
 estimate_mm <- function(
     vardep, pred1 = "class_5", pred2 = "nse_barrio_norm", cluster = "geocodigo",
-    controls = c("educ", "ln_income", "isei", "age", "age_sq", "sex", "homeowner", "married", "has_children"),
+    controls = c("age", "age_sq", "sex", "homeowner", "married", "has_children"),
     datos = df, transform = TRUE, relevel = TRUE, relevel_cat = 4) {
-    # Transform pred1 to factor if necesary
+    # Transform pred1 to factor if necessary
     if (transform) {
         datos[[pred1]] <- to_label(datos[[pred1]])
     }
