@@ -254,7 +254,7 @@ elsocs <- map(
             z_identification:z_justif_violence,
             class, class_8, class_5,
             educ, ln_income, quint_inc, isco, isei,
-            pct_desempleo:nse_barrio_norm,
+            pct_desempleo:nse_barrio_norm, quint_nse_barrio,
             age, age_sq, sex, homeowner, married, has_children
         )
     }
