@@ -31,7 +31,8 @@ pacman::p_load(
     tidylog,
     texreg,
     sjPlot,
-    glue
+    glue,
+    ggeffects
 )
 
 # Data
@@ -100,6 +101,26 @@ tab_mm <- function(model, type = "texreg") {
     }
 }
 
+plot_int_mm <- function(model, vardep) {
+    marginales <- ggpredict(model, terms = c("nse_barrio_norm", "class_5"))
+
+    # grafico
+    ggplot(marginales, aes(x = x, y = predicted, color = group)) +
+        geom_line(size = 1.2) +
+        geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.15, color = NA) +
+        labs(
+            x = "Neighborhood socioeconomic status (standardized)",
+            y = paste0("Predicted ", vardep),
+            color = "Class",
+            fill = "Class"
+        ) +
+        theme_minimal(base_size = 14) +
+        theme(
+            legend.position = "top",
+            panel.grid.minor = element_blank()
+        )
+}
+
 ```
 
 # Introduction
@@ -146,10 +167,19 @@ tab_mm(results_mm$elsoc_2016$interest_pol)
 
 ```
 
+```{r}
+
+plot_int_mm(results_mm$elsoc_2016$interest_pol[[5]], "Political interest")
+```
+
 # Satisfaction with democracy
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2016$satisf_demo)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$satisf_demo[[5]], "Satisfaction with democracy")
 ```
 
 # Conventional participation
@@ -164,10 +194,18 @@ tab_mm(results_mm$elsoc_2016$conv_particip)
 tab_mm(results_mm$elsoc_2016$unconv_particip)
 ```
 
+```{r}
+plot_int_mm(results_mm$elsoc_2016$unconv_particip[[5]], "Unconventional participation")
+```
+
 # Egalitarianism
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2016$egalitarianism)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$egalitarianism[[5]], "Egalitarianism")
 ```
 
 # Altruistic behavior
@@ -192,6 +230,10 @@ tab_mm(results_mm$elsoc_2016$democracy_support)
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2016$justif_violence)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$justif_violence[[5]], "(In)justif violence")
 ```
 :::
 
