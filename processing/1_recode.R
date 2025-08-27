@@ -86,6 +86,7 @@ elsoc <- elsoc %>%
         across(starts_with("r13"), ~ if_else(. >= median(., na.rm = T), 1, 0), .names = "rec_{.col}"), # Recoding values
         across(starts_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1))) # Recoding labels
     ) %>%
+    # Democracy support: invert the scale in order to +democracy support -> +atachment to society
     mutate(
         across(starts_with("c25"), ~ invert_scale(., cats = 4)), # Recoding values
         # Recoding labels
