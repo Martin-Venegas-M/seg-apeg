@@ -17,3 +17,5 @@ elsocs <- map(elsocs, .f = function(x) x %>% drop_na())
 #* elsoc_2016 removed 275 rows (15%), 1,613 rows remaining
 #* elsoc_2019 removed 155 rows (7%), 2,101 rows remaining
 #* elsoc_2022 removed 132 rows (7%), 1,668 rows remaining
+
+#! REVISAR SI HAY ALGUN PATRÓN POR CIUDAD EN LA ELIMINACIÓN DE NA

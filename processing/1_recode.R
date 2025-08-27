@@ -88,6 +88,7 @@ elsoc <- elsoc %>%
     ) %>%
     # Democracy support: invert the scale in order to +democracy support -> +atachment to society
     mutate(
+        #* COMENTARIO POST-REUNION: Recodificar categorías: 1 y 2 van a ser 2, la 3 será 1 y la 4 será 3.
         across(starts_with("c25"), ~ invert_scale(., cats = 4)), # Recoding values
         # Recoding labels
         across(starts_with("c25"), ~ set_labels(.,
