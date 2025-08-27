@@ -39,6 +39,7 @@ elsoc <- elsoc %>%
         m34_03_w06 = m34_03_w01 + 6,
         # Imputation for number of children (use only wave 1), it is time-constant. We sum sons and daughters
         m37_w01 = m37_01_w01 + m37_02_w01,
+        m37_w03 = m37_01_w03 + m37_02_w03, # Source for refresh sample
         m37_w04 = m37_w01,
         m37_w06 = m37_w01
     )
@@ -60,7 +61,7 @@ vars_to_impute <- c(
     "c07_04", "c07_05",
     "c25",
     "f05_01", "f05_02", "f05_03",
-    "m29", "m01", "m33", "m36" #* INDEPENDENT VARIABLES
+    "m29", "m01", "m33", "m36", "m37" #* INDEPENDENT VARIABLES
 )
 
 # Apply the function!
