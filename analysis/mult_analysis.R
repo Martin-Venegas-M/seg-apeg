@@ -57,39 +57,35 @@ screenreg(list(m0, m1, m2, m3, m5))
 # 4. Create function ---------------------------------------------------------------------------------------------------------------------------------
 estimate_mm <- function(
     vardep, pred1 = "class_5", pred2 = "nse_barrio_norm", cluster = "geocodigo",
-    controls = c("age", "age_sq", "sex", "homeowner", "married", "has_children"),
+    controls = c("educ", "ln_income", "isei", "age", "age_sq", "sex", "homeowner", "married", "has_children"),
     datos = df, transform = TRUE, relevel = TRUE, relevel_cat = 4) {
-    # Bridge symbol -> string if user use bare names for parameters
-    vardep <- as_label(ensym(vardep))
-    pred1 <- as_label(ensym(pred1))
-    pred2 <- as_label(ensym(pred2))
-    cluster <- as_label(ensym(cluster))
-
-    # Create string of controls separated by "+"
-    controls <- paste(controls, collapse = " + ")
-
     # Transform pred1 to factor if necesary
-    if (transform == TRUE) {
-        datos <- datos %>% mutate({{ pred1 }} := to_label({{ pred1 }}))
+    if (transform) {
+        datos[[pred1]] <- to_label(datos[[pred1]])
     }
 
     # Relevel pred1 if necessary
-    if (relevel == TRUE) {
-        datos <- datos %>% mutate({{ pred1 }} := relevel({{ pred1 }}, ref = relevel_cat))
+    if (relevel) {
+        datos[[pred1]] <- relevel(as.factor(datos[[pred1]]), ref = relevel_cat)
     }
+
+    # Create string of controls separated by "+"
+    controls_str <- paste(controls, collapse = " + ")
 
     # Create dynamic formulas and estimate models
     forms <- c(
-        "{vardep} ~ 1 + (1 | {cluster})",
-        "{vardep} ~ {pred1} + {controls} + (1 | {cluster})",
-        "{vardep} ~ {pred2} + {controls} + (1 | {cluster})",
-        "{vardep} ~ {pred1} + {pred2} + {controls} + (1 | {cluster})",
-        "{vardep} ~ {pred1} * {pred2} + {controls} + (1 | {cluster})"
+        glue("{vardep} ~ 1 + (1 | {cluster})"),
+        glue("{vardep} ~ {pred1} + {controls_str} + (1 | {cluster})"),
+        glue("{vardep} ~ {pred2} + {controls_str} + (1 | {cluster})"),
+        glue("{vardep} ~ {pred1} + {pred2} + {controls_str} + (1 | {cluster})"),
+        glue("{vardep} ~ {pred1} * {pred2} + {controls_str} + (1 | {cluster})")
     )
 
-    models <- map(forms, ~ lmer(as.formula(glue(.x)), data = datos))
+    models <- map(forms, ~ lmer(as.formula(.x), data = datos))
     return(models)
 }
 
 # Test
-estimate_mm(friends, datos = elsocs[[1]]) %>% screenreg()
+estimate_mm("friends", datos = elsocs[[1]]) %>% screenreg()
+estimate_mm("identification", datos = elsocs[[1]]) %>% screenreg()
+estimate_mm("gen_trust", datos = elsocs[[1]]) %>% screenreg()
