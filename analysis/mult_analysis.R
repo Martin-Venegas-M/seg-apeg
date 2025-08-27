@@ -27,34 +27,11 @@ pacman::p_load(
 # 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
 load("input/data/proc/elsoc_proc.RData")
 
-# Test data
-df <- elsocs[[1]] %>% mutate(class_5 = to_label(class_5))
+# Declate date and user
+date <- format(Sys.Date(), "%y%m%d")
+user <- tolower(Sys.info()["user"])
 
-# 3. Preliminary analysis -----------------------------------------------------------------------------------------------------------------------------
-
-# Null model
-m0 <- lmer(friends ~ 1 + (1 | geocodigo), data = df)
-ICC(m0)
-
-# Indiviual level variables model
-m1 <- lmer(friends ~ 1 + relevel(class_5, ref = 4) + (1 | geocodigo), data = df)
-
-# Contextual level variables model
-m2 <- lmer(friends ~ 1 + nse_barrio_norm + (1 | geocodigo), data = df)
-
-# Individual and contextual level variables model
-m3 <- lmer(friends ~ 1 + relevel(class_5, ref = 4) + nse_barrio_norm + (1 | geocodigo), data = df)
-
-# Randome slope model #! Doesn´t work!
-# m4 <- lmer(friends ~ class_5 + (1 + class | geocodigo), data = df)
-
-# Cross-level interaction model
-m5 <- lmer(friends ~ 1 + relevel(class_5, ref = 4) * nse_barrio_norm + (1 | geocodigo), data = df)
-
-# Check model
-screenreg(list(m0, m1, m2, m3, m5))
-
-# 4. Create function ---------------------------------------------------------------------------------------------------------------------------------
+# 3. Create function ---------------------------------------------------------------------------------------------------------------------------------
 estimate_mm <- function(
     vardep, pred1 = "class_5", pred2 = "nse_barrio_norm", cluster = "geocodigo",
     controls = c("educ", "ln_income", "isei", "age", "age_sq", "sex", "homeowner", "married", "has_children"),
@@ -85,14 +62,9 @@ estimate_mm <- function(
     return(models)
 }
 
-# Test
-estimate_mm("friends", datos = elsocs[[1]]) %>% screenreg()
-estimate_mm("identification", datos = elsocs[[1]]) %>% screenreg()
-estimate_mm("gen_trust", datos = elsocs[[1]]) %>% screenreg()
+# 4. Estimate models ---------------------------------------------------------------------------------------------------------------------------------
 
-# 5. Create models ---------------------------------------------------------------------------------------------------------------------------------
-
-# Create vector with dependent variables to model
+# Create vector with dependent variables to estimate
 varsdep <- c(
     "identification", "friends",
     "gen_trust", "trust_minorities", "trust_inst", "interest_pol",
@@ -106,3 +78,8 @@ results_mm <- list(
     elsoc_2019 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[2]])) %>% set_names(varsdep),
     elsoc_2022 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[3]])) %>% set_names(varsdep)
 )
+
+rm(list = ls()[!ls() %in% c("results_mm", "date")])
+
+# 5. Save ---------------------------------------------------------------------------------------------------------------------------------------------
+save.image(glue("output/models/{date}_results_mm.RData"))
