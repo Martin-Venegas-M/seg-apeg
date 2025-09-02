@@ -30,7 +30,7 @@ elsoc <- elsoc_original %>%
 
         starts_with("m0_sexo"), starts_with("m0_edad"), starts_with("m01"), starts_with("m02"),
         starts_with("ciuo88_m03"), starts_with("ciuo08_m03"), starts_with("ciuo88_m22"), starts_with("ciuo08_m22"),
-        starts_with("m19"), starts_with("m21"), starts_with("m29"), starts_with("m33"), starts_with("m34"),
+        starts_with("m19"), starts_with("m20"), starts_with("m21"), starts_with("m29"), starts_with("m33"), starts_with("m34"),
         starts_with("m36"), starts_with("m37"), # Control variables
 
         starts_with("fact_exp02"), starts_with("segmento"), starts_with("region") # Other variables

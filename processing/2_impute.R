@@ -34,6 +34,9 @@ elsoc <- elsoc %>%
         # Impute full variables for ownership
         m33_w04 = m33_w03,
         m33_w06 = m33_w05,
+        # Impute full variables for househould sostainer education
+        m20_w04 = m20_w03,
+        m20_w06 = m20_w05,
         # Predict years at current neighborhood for waves 4 and 6 from the value of wave 1 (which has no missing value)
         m34_03_w04 = m34_03_w01 + 3,
         m34_03_w06 = m34_03_w01 + 6,
@@ -61,7 +64,7 @@ vars_to_impute <- c(
     "c07_04", "c07_05",
     "c25",
     "f05_01", "f05_02", "f05_03",
-    "m29", "m01", "m33", "m36", "m37" #* INDEPENDENT VARIABLES
+    "m29", "m01", "m20", "m33", "m36", "m37" #* INDEPENDENT VARIABLES
 )
 
 # Apply the function!

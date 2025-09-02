@@ -65,6 +65,23 @@ create_socioec_vars <- function(data) {
                 m01 %in% c(9, 10) ~ 5,
                 TRUE ~ NA
             ),
+            educ_sost = case_when(
+                m20 <= 2 ~ 1,
+                m20 %in% c(3, 4) ~ 2,
+                m20 %in% c(5, 6) ~ 3,
+                m20 %in% c(7, 8) ~ 4,
+                m20 %in% c(9, 10) ~ 5,
+                TRUE ~ NA
+            ) %>% replace_na(0),
+            across(c(educ, educ_sost), ~ set_labels(.,
+                labels = c(
+                    "No formal education" = 1,
+                    "Primary education" = 2,
+                    "Secondary education" = 3,
+                    "Tertiary technical education" = 4,
+                    "Tertiary universitary education" = 5
+                )
+            )),
             ln_income = log(m29), # Generate natural logaritm of household income
             quint_inc = ntile(ln_income, 5) # Generate discrete variable of househols income (quintiles)
         )
@@ -238,7 +255,12 @@ create_covariates <- function(data) {
             # Quntiles of nse neighbourhood
             quint_nse_barrio = ntile(nse_barrio_norm, 5)
         ) %>%
-        select(-c(tenure, marital_status, children))
+        select(-c(tenure, marital_status, children)) %>%
+        #* AUXILIAR VARIABLES FOR CONSTRUCTING NEW SOCIAL CLASS
+        mutate(
+            income_cat_final = ntile(m29, 10),
+            educ_cat_final = if_else(educ_sost > educ, educ_sost, educ) # If the education of sustainer y higher than the interviwe education, keep that, if not keep the interviewe education
+        )
 }
 
 elsocs <- map(elsocs, ~ create_covariates(.x))
