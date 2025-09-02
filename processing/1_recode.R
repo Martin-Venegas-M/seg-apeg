@@ -88,15 +88,18 @@ elsoc <- elsoc %>%
     ) %>%
     # Democracy support: invert the scale in order to +democracy support -> +atachment to society
     mutate(
-        #* COMENTARIO POST-REUNION: Recodificar categorías: 1 y 2 van a ser 2, la 3 será 1 y la 4 será 3.
-        across(starts_with("c25"), ~ invert_scale(., cats = 4)), # Recoding values
+        # Recoding values
+        across(starts_with("c25"), ~ case_when(
+            . == 2 ~ 1,
+            . %in% c(3, 4) ~ 2,
+            . == 1 ~ 3
+        )),
         # Recoding labels
         across(starts_with("c25"), ~ set_labels(.,
             labels = c(
-                "Ninguna" = 1, # ! NOTE: Here we are assuming that people who doesn't feel representated by any of the sentences have the lower support. DISCUSS
-                "A la gente como uno, nos da lo mismo un regimen democratico que uno autoritario" = 2,
-                "En algunas circunstancias, un gobierno autoritario puede ser preferible a uno democratico" = 3,
-                "La democracia es preferible a cualquier otra forma de gobierno" = 4
+                "En algunas circunstancias, un gobierno autoritario puede ser preferible a uno democratico" = 1,
+                "A la gente como uno, nos da lo mismo un regimen democratico que uno autoritario / Ninguna" = 2,
+                "La democracia es preferible a cualquier otra forma de gobierno" = 3
             )
         ))
     )
