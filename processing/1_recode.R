@@ -58,8 +58,7 @@ elsoc <- elsoc %>%
             TRUE ~ .
         )),
         # Recoding labels
-        across(starts_with("c02"), ~ set_labels(
-            .,
+        across(starts_with("c02"), ~ set_labels(.,
             labels = c(
                 "Casi siempre hay que tener cuidado al tratar con las personas" = 1,
                 "Depende" = 2,
@@ -86,7 +85,7 @@ elsoc <- elsoc %>%
         across(starts_with("r13"), ~ if_else(. >= median(., na.rm = T), 1, 0), .names = "rec_{.col}"), # Recoding values
         across(starts_with("_rec"), ~ set_labels(., labels = c("Below the median" = 0, "Equal to or above the median" = 1))) # Recoding labels
     ) %>%
-    # Democracy support: invert the scale in order to +democracy support -> +atachment to society
+    # Democracy support: recode the scale in order to +democracy support -> +atachment to society
     mutate(
         # Recoding values
         across(starts_with("c25"), ~ case_when(
@@ -100,6 +99,20 @@ elsoc <- elsoc %>%
                 "En algunas circunstancias, un gobierno autoritario puede ser preferible a uno democratico" = 1,
                 "A la gente como uno, nos da lo mismo un regimen democratico que uno autoritario / Ninguna" = 2,
                 "La democracia es preferible a cualquier otra forma de gobierno" = 3
+            )
+        ))
+    ) %>%
+    # Egalitarianism: invert the scale in order to +egalitarianism -> + atachment to society
+    mutate(
+        across(starts_with("d02"), ~ invert_scale(.)), # Recoding values
+        # Recoding labels
+        across(starts_with("d02"), ~ set_labels(.,
+            labels = c(
+                "Totalmente de acuerdo" = 1,
+                "De acuerdo" = 2,
+                "Ni de acuerdo ni en desacuerdo" = 3,
+                "En desacuerdo" = 4,
+                "Totalmente en desacuerdo" = 5
             )
         ))
     )
