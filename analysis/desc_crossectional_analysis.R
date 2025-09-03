@@ -171,3 +171,14 @@ quint_nse_barrio_class <- bind_cols(list(quint_nse_barrio_class_w01, quint_nse_b
 # Save!
 writexl::write_xlsx(quint_nse_barrio_class, glue("output/tables/{date}_quint_nse_barrio_class_tab.xlsx"))
 rm(quint_nse_barrio_class, quint_nse_barrio_class_w01, quint_nse_barrio_class_w04, quint_nse_barrio_class_w06, crosstable)
+
+#* NEW CLASS!
+quint_nse_barrio_new_class_w01 <- crosstable(elsocs[[1]], new_class, quint_nse_barrio, "count_w01")
+quint_nse_barrio_new_class_w04 <- crosstable(elsocs[[2]], new_class, quint_nse_barrio, "count_w04") %>% select(count_w04)
+quint_nse_barrio_new_class_w06 <- crosstable(elsocs[[3]], new_class, quint_nse_barrio, "count_w06") %>% select(count_w06)
+
+quint_nse_barrio_new_class <- bind_cols(list(quint_nse_barrio_new_class_w01, quint_nse_barrio_new_class_w04, quint_nse_barrio_new_class_w06))
+
+# Save!
+writexl::write_xlsx(quint_nse_barrio_new_class, glue("output/tables/{date}_quint_nse_barrio_new_class_tab.xlsx"))
+rm(quint_nse_barrio_new_class, quint_nse_barrio_new_class_w01, quint_nse_barrio_new_class_w04, quint_nse_barrio_new_class_w06, crosstable)
