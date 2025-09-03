@@ -5,7 +5,25 @@
 # Responsable: Technical assistant
 #******************************************************************************************************************************************************
 
-# 2.1 Manual imputation of full variables or specific modifications  ----------------------------------------------------------------------------------
+# 2.1 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------
+
+#* NOTE: In w01 we don't have ciuo08; instead, we have ciuo88. In this scenario, we need to convert from the older version of CIUO to the newer one.
+#* To do this, I used a source document based on Stata code (see "docs/stata/1. sample and imputation.do", lines 383 to 1729).
+#* I literally copied all those lines and saved them as an .xlsx file called "insumo_ciuo.xlsx".
+#* Then, I loaded the .xlsx file in this script and joined it with the elsoc dataset.
+
+# Reduce ciuo source document
+insumo_ciuo_reduced <- insumo_ciuo %>%
+    arrange(ciuo88) %>% # Sort ascending by ciuo88
+    distinct(ciuo88, .keep_all = T) # Keep only the first row of each repeated ciuo88, in case it is repeated.
+
+# Join variables
+elsoc <- elsoc %>%
+    left_join(insumo_ciuo_reduced %>% rename(ciuo08_m03_w01 = ciuo08), by = c("ciuo88_m03_w01" = "ciuo88")) %>%
+    left_join(insumo_ciuo_reduced %>% rename(ciuo08_m22_w01 = ciuo08), by = c("ciuo88_m22_w01" = "ciuo88")) %>%
+    select(-starts_with("ciuo88"))
+
+# 2.2 Manual imputation of full variables or specific modifications  ----------------------------------------------------------------------------------
 elsoc <- elsoc %>%
     # DEPENDENT VARIABLES: Create variables that doesn't have measurement in wave 4 or wave 6
     mutate(
@@ -44,10 +62,72 @@ elsoc <- elsoc %>%
         m37_w01 = m37_01_w01 + m37_02_w01,
         m37_w03 = m37_01_w03 + m37_02_w03, # Source for refresh sample
         m37_w04 = m37_w01,
-        m37_w06 = m37_w01
+        m37_w06 = m37_w01,
+        # Imputation of full variable for ciuo
+        # For interviwie
+        ciuo08_m03_w04 = ciuo08_m03_w03,
+        ciuo08_m03_w06 = ciuo08_m03_w05,
+        # For household sostainer
+        ciuo08_m22_w04 = ciuo08_m03_w03,
+        ciuo08_m22_w06 = ciuo08_m03_w05,
+    ) %>%
+    mutate(
+        # Imputate ciuo for retired and unemployed
+        # Interview
+        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 5, 15000, ciuo08_m03_w01), # retired
+        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 6, 16000, ciuo08_m03_w01), # unemployed
+        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 5, 15000, ciuo08_m03_w04),
+        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 6, 16000, ciuo08_m03_w04),
+        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 5, 15000, ciuo08_m03_w06),
+        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 6, 16000, ciuo08_m03_w06),
+        # Household sostainer
+        ciuo08_m22_w01 = if_else(is.na(ciuo08_m22_w01) & m02_w01 == 5, 15000, ciuo08_m22_w01), # retired
+        ciuo08_m22_w01 = if_else(is.na(ciuo08_m22_w01) & m02_w01 == 6, 16000, ciuo08_m22_w01), # unemployed
+        ciuo08_m22_w04 = if_else(is.na(ciuo08_m22_w04) & m02_w04 == 5, 15000, ciuo08_m22_w04),
+        ciuo08_m22_w04 = if_else(is.na(ciuo08_m22_w04) & m02_w04 == 6, 16000, ciuo08_m22_w04),
+        ciuo08_m22_w06 = if_else(is.na(ciuo08_m22_w06) & m02_w06 == 5, 15000, ciuo08_m22_w06),
+        ciuo08_m22_w06 = if_else(is.na(ciuo08_m22_w06) & m02_w06 == 6, 16000, ciuo08_m22_w06)
     )
 
-# 2.2 Automatic imputations for dependent variables -----------------------------------------------------------------------------------------------------
+# 2.2 Manual imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
+
+# ! NOTA: Me gustaría incluir estas imputaciones manuales al flujo automatico, pero eso implicaría no imputar por ciuo08_m22
+# ! (o al menos no hacerlo con una jerarquía intermitente con ciuo08_m03)
+elsoc <- elsoc %>%
+    # Imputation for WAVE 1
+    mutate(
+        # for wave 1: inactive and unemployed
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w01), # assign household head occupation to inactive (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w03), # assign individual occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w03), # assign household head occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w05), # assign individual occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w05) # assign household head occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
+    ) %>%
+    # Imputation for WAVE 4
+    mutate(
+        # Inactive and unemployed
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w03),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w01),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w01),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w05),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w05)
+    ) %>%
+    # Imputation for WAVE 6
+    mutate(
+        # Inactive and unemployed
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w05),
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w04),
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w03),
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w01),
+        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w01)
+    ) %>%
+    # For the remaining missing values, we imput the values of 2016
+    mutate(
+        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w06),
+        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w06)
+    )
+
+# 2.3 Automatic imputations for dependent variables -----------------------------------------------------------------------------------------------------
 
 # Create vectors with variables to impute
 vars_to_impute <- c(
@@ -64,7 +144,7 @@ vars_to_impute <- c(
     "c07_04", "c07_05",
     "c25",
     "f05_01", "f05_02", "f05_03",
-    "m29", "m01", "m20", "m33", "m36", "m37" #* INDEPENDENT VARIABLES
+    "m29", "m01", "m20", "m33", "m36", "m37", "ciuo08_m22" #* INDEPENDENT VARIABLES
 )
 
 # Apply the function!
@@ -94,74 +174,6 @@ elsoc <- reduce(
     },
     .init = elsoc
 )
-
-# 2.3 Transform ocupation for w01 --------------------------------------------------------------------------------------------------------------------------------
-
-#* NOTE: In w01 we don't have ciuo08; instead, we have ciuo88. In this scenario, we need to convert from the older version of CIUO to the newer one.
-#* To do this, I used a source document based on Stata code (see "docs/stata/1. sample and imputation.do", lines 383 to 1729).
-#* I literally copied all those lines and saved them as an .xlsx file called "insumo_ciuo.xlsx".
-#* Then, I loaded the .xlsx file in this script and joined it with the elsoc dataset.
-
-# Reduce ciuo source document
-insumo_ciuo_reduced <- insumo_ciuo %>%
-    arrange(ciuo88) %>% # Sort ascending by ciuo88
-    distinct(ciuo88, .keep_all = T) # Keep only the first row of each repeated ciuo88, in case it is repeated.
-
-# Join variables
-elsoc <- elsoc %>%
-    left_join(insumo_ciuo_reduced %>% rename(ciuo08_m03_w01 = ciuo08), by = c("ciuo88_m03_w01" = "ciuo88")) %>%
-    left_join(insumo_ciuo_reduced %>% rename(ciuo08_m22_w01 = ciuo08), by = c("ciuo88_m22_w01" = "ciuo88"))
-
-# 2.4 Imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
-elsoc <- elsoc %>%
-    # Generate variables for wave 4 (based on wave 3) and wave 6 (based on wave 5)
-    mutate(
-        ciuo08_m03_w04 = ciuo08_m03_w03,
-        ciuo08_m03_w06 = ciuo08_m03_w05
-    ) %>%
-    relocate(ciuo08_m03_w04, .after = ciuo08_m03_w03) %>%
-    relocate(ciuo08_m03_w06, .after = ciuo08_m03_w05) %>%
-    # Imputation for WAVE 1
-    mutate(
-        # for wave 1: inactive and unemployed
-        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 5, 15000, ciuo08_m03_w01), # retired
-        ciuo08_m03_w01 = if_else(is.na(ciuo08_m03_w01) & m02_w01 == 6, 16000, ciuo08_m03_w01), # unemployed
-
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w01), # assign household head occupation to inactive (student, domestic, disability, nini)
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w03), # assign individual occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w03), # assign household head occupation of wave 3 to inactive at wave 1 (student, domestic, disability, nini)
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w05), # assign individual occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m22_w05) # assign household head occupation of wave 5 to inactive at wave 1 (student, domestic, disability, nini)
-    ) %>%
-    # Imputation for WAVE 4
-    mutate(
-        # Inactive and unemployed
-        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 5, 15000, ciuo08_m03_w04), # retired
-        ciuo08_m03_w04 = if_else(is.na(ciuo08_m03_w04) & m02_w04 == 6, 16000, ciuo08_m03_w04), # unemployed
-
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w03),
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w01),
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w01),
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w05),
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m22_w05)
-    ) %>%
-    # Imputation for WAVE 6
-    mutate(
-        # Inactive and unemployed
-        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 5, 15000, ciuo08_m03_w06), # retired
-        ciuo08_m03_w06 = if_else(is.na(ciuo08_m03_w06) & m02_w06 == 6, 16000, ciuo08_m03_w06), # unemployed
-
-        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w05),
-        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w04),
-        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w03),
-        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m03_w01),
-        ciuo08_m03_w06 = coalesce(ciuo08_m03_w06, ciuo08_m22_w01)
-    ) %>%
-    # For the remaining missing values, we imput the values of 2016
-    mutate(
-        ciuo08_m03_w01 = coalesce(ciuo08_m03_w01, ciuo08_m03_w06),
-        ciuo08_m03_w04 = coalesce(ciuo08_m03_w04, ciuo08_m03_w06)
-    )
 
 # Remove objects from the global enviroment
 rm(impute_waves, vars_to_impute, insumo_ciuo, insumo_ciuo_reduced)

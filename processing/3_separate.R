@@ -11,7 +11,7 @@ elsoc <- elsoc %>%
     select(-matches("_w02$|-w02$|_w03$|-w03$|_w05$|-w05$")) %>%
     # Drop other useless variables
     select(
-        -m19_w01, -m21_w01, -ciuo08_m22_w01,
+        -m19_w01, -m21_w01,
         -starts_with("m34_01"), -starts_with("m34_02"),
         -m02_w01, -m02_w04, -m02_w06,
         -m37_01_w01, -m37_02_w01,

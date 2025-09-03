@@ -72,7 +72,7 @@ create_socioec_vars <- function(data) {
                 m20 %in% c(7, 8) ~ 4,
                 m20 %in% c(9, 10) ~ 5,
                 TRUE ~ NA
-            ) %>% replace_na(0),
+            ) %>% replace_na(0), # ! PARCHE PARA LUEGO CREAR EDUC_CAT_FINAL
             across(c(educ, educ_sost), ~ set_labels(.,
                 labels = c(
                     "No formal education" = 1,
@@ -109,6 +109,12 @@ create_socioec_vars <- function(data) {
                 TRUE ~ class
             )
         )
+
+    # Join social class for household sostainer
+    data <- data %>%
+        rename(isco_sost = ciuo08_m22) %>%
+        left_join(insumo_oesch %>% rename(class_sost = class), by = c("isco_sost" = "isco"))
+
     # Create grouped categories of social class
     data <- data %>%
         mutate(
@@ -135,6 +141,29 @@ create_socioec_vars <- function(data) {
                 class %in% c(17) ~ 6,
                 class %in% c(18) ~ 7
             )
+        ) %>%
+        mutate(
+            class_8_sost = case_when(
+                class_sost %in% c(1, 2) ~ 1,
+                class_sost %in% c(3, 4) ~ 2,
+                class_sost %in% c(5, 6) ~ 3,
+                class_sost %in% c(7, 8) ~ 4,
+                class_sost %in% c(9, 10) ~ 5,
+                class_sost %in% c(11, 12) ~ 6,
+                class_sost %in% c(13, 14) ~ 7,
+                class_sost %in% c(15, 16) ~ 8,
+                class_sost %in% c(17) ~ 9,
+                class_sost %in% c(18) ~ 10
+            ),
+            class_5_sost = case_when(
+                class_sost %in% c(1, 2, 5, 9, 13) ~ 1,
+                class_sost %in% c(6, 10, 14) ~ 2,
+                class_sost %in% c(3, 4) ~ 3,
+                class_sost %in% c(7, 11, 15) ~ 4,
+                class_sost %in% c(8, 12, 16) ~ 5,
+                class_sost %in% c(17) ~ 6,
+                class_sost %in% c(18) ~ 7
+            ) %>% replace_na(100) # ! PARCHE PARA LUEGO CREAR CLASE_FINAL
         )
 
     return(data)
@@ -154,7 +183,7 @@ stata_path <- glue::glue("\"C:\\Users\\{tolower(Sys.info()['user'])}\\Desktop\\S
 options("RStata.StataPath" = stata_path)
 options("RStata.StataVersion" = 15)
 
-stata("C:/Work/Github/seg-apeg/processing/helpers/iscogen.do")
+suppressWarnings(stata("C:/Work/Github/seg-apeg/processing/helpers/iscogen.do"))
 
 rm(list = ls()[!ls() %in% c("insumo_oesch")])
 
@@ -173,8 +202,7 @@ label_class_vars <- function(data) {
     # Create grouped categories of social class
     data <- data %>%
         mutate(
-            class = set_labels(
-                class,
+            across(c(class, class_sost), ~ set_labels(.,
                 labels = c(
                     "Large employers" = 1,
                     "Self-employed professionals" = 2,
@@ -195,10 +223,9 @@ label_class_vars <- function(data) {
                     "Retired" = 17,
                     "Unemployed" = 18
                 )
-            ),
+            )),
             # Set labels for the eight categories version of class
-            class_8 = set_labels(
-                class_8,
+            across(c(class_8, class_8_sost), ~ set_labels(.,
                 labels = c(
                     "Self-employed professionals and large employers" = 1,
                     "Small business owners" = 2,
@@ -211,10 +238,9 @@ label_class_vars <- function(data) {
                     "Retired" = 9,
                     "Unemployed" = 10
                 )
-            ),
+            )),
             # Set labels for the five categories version of class
-            class_5 = set_labels(
-                class_5,
+            across(c(class_5, class_5_sost), ~ set_labels(.,
                 labels = c(
                     "Higher-grade service class" = 1,
                     "Lower-grade service class" = 2,
@@ -224,9 +250,8 @@ label_class_vars <- function(data) {
                     "Retired" = 6,
                     "Unemployed" = 7
                 )
-            )
+            ))
         )
-
     return(data)
 }
 
@@ -259,7 +284,8 @@ create_covariates <- function(data) {
         #* AUXILIAR VARIABLES FOR CONSTRUCTING NEW SOCIAL CLASS
         mutate(
             income_cat_final = ntile(m29, 10),
-            educ_cat_final = if_else(educ_sost > educ, educ_sost, educ) # If the education of sustainer y higher than the interviwe education, keep that, if not keep the interviewe education
+            educ_cat_final = if_else(educ_sost > educ, educ_sost, educ), # If the education of sustainer y higher than the interviwe education, keep that, if not keep the interviewe education
+            clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
         )
 }
 
@@ -277,7 +303,8 @@ elsocs <- map(
             class, class_8, class_5,
             educ, ln_income, quint_inc, isco, isei,
             pct_desempleo:nse_barrio_norm, quint_nse_barrio,
-            age, age_sq, sex, homeowner, married, has_children
+            age, age_sq, sex, homeowner, married, has_children,
+            income_cat_final, educ_cat_final, clase_final # ! FOR MCA ANALYSIS
         )
     }
 )
