@@ -1,0 +1,425 @@
+---
+title: |
+  ![](https://coes.cl/wp-content/uploads/2025/03/COES_Logo_azul.png){width=25% height=25%}  
+  Class MCA and HCPC analysis
+author: 
+  - Techinical assistant
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+    bookdown::html_document2:
+          theme: yeti
+          toc: yes
+          toc_float: yes
+          toc_collapsed: yes
+          number_sections: yes
+          
+          
+    
+linkcolor: black
+urlcolor: blue
+execute:
+  echo: false
+  warning: false
+---
+
+```{r packages and data}
+
+# Packages
+pacman::p_load(
+    tidyverse,
+    haven,
+    tidylog,
+    texreg,
+    sjPlot,
+    glue,
+    ggeffects,
+    FactoMineR,
+    factoextra,
+    knitr,
+    kableExtra,
+    reactable
+)
+
+# Data
+load("../../output/models/250902_results_mca_hcpc.RData")
+```
+
+
+```{r wrappers}
+
+plot_mca <- function(obj){
+  obj %>% 
+  fviz_mca_var(repel = TRUE,
+  col.var = "cos2",                # color = calidad de representación
+  gradient.cols = c("#B3CDE3","#6497B1","#03396C"),
+  ggtheme = theme_minimal()
+  ) +
+  ggtitle("MCA: categorías (Dim1 vs Dim2)") +
+  theme(legend.position = "right")
+
+}
+
+plot_cluster <- function(obj){
+  obj %>% 
+  fviz_cluster(clust, geom = "point", main = "Factor map")
+}
+
+```
+
+```{r desc cluster function}
+process_tab_desc_clust <- function(obj) {
+    # Save object
+    cl_cat <- obj
+
+    # Process object
+    desc_all <- imap_dfr(cl_cat, ~ {
+        as.data.frame(.x) %>%
+            rownames_to_column("var") %>%
+            mutate(cluster = .y)
+    }) %>%
+        relocate(cluster, var) %>%
+        mutate(across(where(is.numeric), ~ round(., 2))) %>%
+        separate(var,
+            into = c("variable", "categoria"),
+            sep = "=", fill = "right", extra = "merge"
+        ) %>%
+        mutate(categoria = if_else(is.na(categoria), variable, categoria)) %>%
+        relocate(variable, categoria, .after = cluster)
+
+    return(desc_all)
+}
+
+tab_desc_clust <- function(x, process = TRUE) {
+
+    # Process if needed
+    if (process) {
+        x <- process_tab_desc_clust(x)
+    }
+
+    # Create interactive table
+    reactable(
+        x,
+        groupBy = "cluster",
+        searchable = TRUE,
+        filterable = TRUE,
+        striped = TRUE,
+        highlight = TRUE,
+        defaultPageSize = 12,
+        columns = list(
+            cluster   = colDef(name = "Cluster", filterable = TRUE),
+            variable  = colDef(name = "Variable"),
+            categoria = colDef(name = "Categoría"),
+            `Cla/Mod` = colDef(name = "Cla/Mod"),
+            `Mod/Cla` = colDef(name = "Mod/Cla"),
+            Global    = colDef(name = "Global"),
+            `p.value` = colDef(name = "p-valor"),
+            `v.test`  = colDef(name = "v-test")
+        )
+    )
+}
+```
+
+# Introduction
+
+This document...
+
+## ELSOC 2016
+
+::: panel-tabset
+# MCA
+
+```{r}
+plot_mca(results_all$elsoc_2016$class6$acm)
+```
+
+# Class 6
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2016$class6$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category)
+```
+
+```{r}
+e16c6c1 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 1)
+e16c6c2 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 2)
+e16c6c3 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 3)
+e16c6c4 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 4)
+e16c6c5 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 5)
+e16c6c6 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e16c6c1$categoria[[1]]`** (*v_test = `r e16c6c1$v.test[[1]]`*); **`r e16c6c1$categoria[[2]]`** (*v_test = `r e16c6c1$v.test[[2]]`*) and **`r e16c6c1$categoria[[3]]`** (*v_test = `r e16c6c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e16c6c2$categoria[[1]]`** (*v_test = `r e16c6c2$v.test[[1]]`*); **`r e16c6c2$categoria[[2]]`** (*v_test = `r e16c6c2$v.test[[2]]`*) and **`r e16c6c2$categoria[[3]]`** (*v_test = `r e16c6c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e16c6c3$categoria[[1]]`** (*v_test = `r e16c6c3$v.test[[1]]`*); **`r e16c6c3$categoria[[2]]`** (*v_test = `r e16c6c3$v.test[[2]]`*) and **`r e16c6c3$categoria[[3]]`** (*v_test = `r e16c6c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e16c6c4$categoria[[1]]`** (*v_test = `r e16c6c4$v.test[[1]]`*); **`r e16c6c4$categoria[[2]]`** (*v_test = `r e16c6c4$v.test[[2]]`*) and **`r e16c6c4$categoria[[3]]`** (*v_test = `r e16c6c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e16c6c5$categoria[[1]]`** (*v_test = `r e16c6c5$v.test[[1]]`*); **`r e16c6c5$categoria[[2]]`** (*v_test = `r e16c6c5$v.test[[2]]`*) and **`r e16c6c5$categoria[[3]]`** (*v_test = `r e16c6c5$v.test[[3]]`*)
+
+- Cluster 6 is characterized by an overrepresentation of: **`r e16c6c6$categoria[[1]]`** (*v_test = `r e16c6c6$v.test[[1]]`*); **`r e16c6c6$categoria[[2]]`** (*v_test = `r e16c6c6$v.test[[2]]`*) and **`r e16c6c6$categoria[[3]]`** (*v_test = `r e16c6c6$v.test[[3]]`*)
+
+
+# Class 5
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2016$class5$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category)
+```
+
+# Class 4
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2016$class4$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2016$class4$clust$desc.var$category)
+```
+
+# Class 3
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2016$class3$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2016$class3$clust$desc.var$category)
+```
+
+# Class 2
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2016$class2$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2016$class2$clust$desc.var$category)
+```
+
+:::
+
+## ELSOC 2019
+
+::: panel-tabset
+# MCA
+
+```{r}
+plot_mca(results_all$elsoc_2019$class6$acm)
+```
+
+# Class 6
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2019$class6$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category)
+```
+
+```{r}
+e19c6c1 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 1)
+e19c6c2 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 2)
+e19c6c3 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 3)
+e19c6c4 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 4)
+e19c6c5 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 5)
+e19c6c6 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e19c6c1$categoria[[1]]`** (*v_test = `r e19c6c1$v.test[[1]]`*); **`r e19c6c1$categoria[[2]]`** (*v_test = `r e19c6c1$v.test[[2]]`*) and **`r e19c6c1$categoria[[3]]`** (*v_test = `r e19c6c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e19c6c2$categoria[[1]]`** (*v_test = `r e19c6c2$v.test[[1]]`*); **`r e19c6c2$categoria[[2]]`** (*v_test = `r e19c6c2$v.test[[2]]`*) and **`r e19c6c2$categoria[[3]]`** (*v_test = `r e19c6c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e19c6c3$categoria[[1]]`** (*v_test = `r e19c6c3$v.test[[1]]`*); **`r e19c6c3$categoria[[2]]`** (*v_test = `r e19c6c3$v.test[[2]]`*) and **`r e19c6c3$categoria[[3]]`** (*v_test = `r e19c6c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e19c6c4$categoria[[1]]`** (*v_test = `r e19c6c4$v.test[[1]]`*); **`r e19c6c4$categoria[[2]]`** (*v_test = `r e19c6c4$v.test[[2]]`*) and **`r e19c6c4$categoria[[3]]`** (*v_test = `r e19c6c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e19c6c5$categoria[[1]]`** (*v_test = `r e19c6c5$v.test[[1]]`*); **`r e19c6c5$categoria[[2]]`** (*v_test = `r e19c6c5$v.test[[2]]`*) and **`r e19c6c5$categoria[[3]]`** (*v_test = `r e19c6c5$v.test[[3]]`*)
+
+- Cluster 6 is characterized by an overrepresentation of: **`r e19c6c6$categoria[[1]]`** (*v_test = `r e19c6c6$v.test[[1]]`*); **`r e19c6c6$categoria[[2]]`** (*v_test = `r e19c6c6$v.test[[2]]`*) and **`r e19c6c6$categoria[[3]]`** (*v_test = `r e19c6c6$v.test[[3]]`*)
+
+# Class 5
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2019$class5$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2019$class5$clust$desc.var$category)
+```
+
+# Class 4
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2019$class4$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2019$class4$clust$desc.var$category)
+```
+
+# Class 3
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2019$class3$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2019$class3$clust$desc.var$category)
+```
+
+# Class 2
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2019$class2$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2019$class2$clust$desc.var$category)
+```
+
+:::
+
+## ELSOC 2022
+
+::: panel-tabset
+# MCA
+
+```{r}
+plot_mca(results_all$elsoc_2022$class6$acm)
+```
+
+# Class 6
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2022$class6$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category)
+```
+
+```{r}
+e22c6c1 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 1)
+e22c6c2 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 2)
+e22c6c3 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 3)
+e22c6c4 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 4)
+e22c6c5 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 5)
+e22c6c6 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e22c6c1$categoria[[1]]`** (*v_test = `r e22c6c1$v.test[[1]]`*); **`r e22c6c1$categoria[[2]]`** (*v_test = `r e22c6c1$v.test[[2]]`*) and **`r e22c6c1$categoria[[3]]`** (*v_test = `r e22c6c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e22c6c2$categoria[[1]]`** (*v_test = `r e22c6c2$v.test[[1]]`*); **`r e22c6c2$categoria[[2]]`** (*v_test = `r e22c6c2$v.test[[2]]`*) and **`r e22c6c2$categoria[[3]]`** (*v_test = `r e22c6c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e22c6c3$categoria[[1]]`** (*v_test = `r e22c6c3$v.test[[1]]`*); **`r e22c6c3$categoria[[2]]`** (*v_test = `r e22c6c3$v.test[[2]]`*) and **`r e22c6c3$categoria[[3]]`** (*v_test = `r e22c6c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e22c6c4$categoria[[1]]`** (*v_test = `r e22c6c4$v.test[[1]]`*); **`r e22c6c4$categoria[[2]]`** (*v_test = `r e22c6c4$v.test[[2]]`*) and **`r e22c6c4$categoria[[3]]`** (*v_test = `r e22c6c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e22c6c5$categoria[[1]]`** (*v_test = `r e22c6c5$v.test[[1]]`*); **`r e22c6c5$categoria[[2]]`** (*v_test = `r e22c6c5$v.test[[2]]`*) and **`r e22c6c5$categoria[[3]]`** (*v_test = `r e22c6c5$v.test[[3]]`*)
+
+- Cluster 6 is characterized by an overrepresentation of: **`r e22c6c6$categoria[[1]]`** (*v_test = `r e22c6c6$v.test[[1]]`*); **`r e22c6c6$categoria[[2]]`** (*v_test = `r e22c6c6$v.test[[2]]`*) and **`r e22c6c6$categoria[[3]]`** (*v_test = `r e22c6c6$v.test[[3]]`*)
+
+# Class 5
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2022$class5$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2022$class5$clust$desc.var$category)
+```
+
+# Class 4
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2022$class4$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2022$class5$clust$desc.var$category)
+```
+
+# Class 3
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2022$class3$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2022$class3$clust$desc.var$category)
+```
+
+# Class 2
+
+```{r results='asis'}
+plot_cluster(results_all$elsoc_2022$class2$clust)
+```
+
+```{r}
+tab_desc_clust(results_all$elsoc_2022$class2$clust$desc.var$category)
+```
+
+:::
+
+# Desc comparisson between class 6 of elsocs
+
+```{r}
+
+e16c6 <- process_tab_desc_clust(results_all$elsoc_2016$class6$clust$desc.var$category) %>% select(cluster, cat_w01 = categoria, vt_w01 = v.test) %>% group_by(cluster)  %>% slice_head(n = 5) %>% ungroup()
+e19c6 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% select(cluster, cat_w04 = categoria, vt_w04 =  v.test) %>% group_by(cluster) %>% slice_head(n = 5) %>% ungroup()
+e22c6 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% select(cluster, cat_w06 = categoria, vt_w06 =  v.test) %>% group_by(cluster) %>% slice_head(n = 5) %>% ungroup()
+ 
+tabs <- bind_cols(list(e16c6, e19c6[, -1], e22c6[,-1]))
+
+tabs %>%
+  kable(
+    caption = "HCPC Desc comparison between waves (first five per cluster)"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE
+  ) %>% 
+  row_spec(0, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(5, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(10, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(15, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(20, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(25, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(30, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";"))
+
+```
+
+## Cluster 1
+
+En las tres olas el cluster se define de manera consistente por baja educación y retiro laboral: *Retired*, *No formal education*, *Primary education* y deciles bajos (1 y 3) aparecen siempre entre las categorías principales. El orden varía levemente (ej. en ola 04 *No formal education* sube posiciones), pero la composición del perfil se mantiene estable: es un grupo marcado por bajos ingresos y muy baja escolaridad.
+
+## Cluster 2
+
+Se mantiene muy estable en torno a los trabajadores no calificados, baja escolaridad y deciles bajos. En todas las olas aparecen *Unskilled workers*, *Second decile*, *Primary/Secondary education* y deciles 3–4. El orden cambia entre olas (ej. en ola 04 y 06 sube la *Secondary education*), pero no cambia la naturaleza del cluster: sigue representando a los sectores trabajadores de base y bajos ingresos.
+
+## Cluster 3
+
+Es el cluster más difuso: en la ola 01 se definía fuertemente por *Unemployed*, con baja presencia de ingresos bajos; en ola 04 la sobrerepresentración se da principalmente por "Unemployed" y en ola 06 el desempleo desaparece y es reemplazado por el primer decil y la educación primaria. Esto sugiere que el cluster 3 es algo más inestrable hacia la ola 06, aunque con sobrerepresentación de categorías probablemente relacionadas.
+
+## Cluster 4
+
+En las tres olas se define claramente por trabajadores calificados y educación secundaria/técnica. *Skilled workers* lidera en ola 01, luego se mantiene en ola 04 y en ola 06 aparece *Unemployed* junto con categorías de ingresos y educación media. Aunque hay ajustes en el orden, la coherencia es alta: es un cluster de sectores medios con credenciales técnicas y secundaria.
+
+## Cluster 5
+
+En ola 01 se caracteriza por educación técnica/terciaria baja y deciles altos intermedios (7, 8, 9). En ola 04 gana peso la *Lower-grade service class* y deciles altos (8, 9), y en ola 06 se consolida con *Tertiary technical education* y *Skilled workers*. El orden cambia, pero la lógica es consistente: este cluster representa a clases medias-altas en ascenso, con educación técnica/universitaria y deciles medios/altos.
+
+## Cluster 6
+
+Es el más estable y con mayor coherencia sustantiva: siempre definido por la élite socioeconómica. En las tres olas aparecen *Higher-grade service class*, *Tertiary university education* y *Tenth decile* como principales categorías. El orden se mantiene relativamente constante y no entran categorías de bajos ingresos o baja educación. Es el cluster más estable y homogéneo a lo largo del tiempo.
+
+*NOTA: Generado con Chat GPT, revisado y modificado por mi*
