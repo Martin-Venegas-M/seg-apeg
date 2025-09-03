@@ -30,6 +30,7 @@ pacman::p_load(
     haven,
     tidylog,
     texreg,
+    rlang,
     sjPlot,
     glue,
     ggeffects,
@@ -41,7 +42,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/250903_results_mca_hcpc.RData")
+load("../../output/models/250904_results_mca_hcpc.RData")
 ```
 
 
@@ -116,6 +117,47 @@ tab_desc_clust <- function(x, process = TRUE) {
             `v.test`  = colDef(name = "v-test")
         )
     )
+}
+```
+
+```{r}
+tab_n_clust <- function(obj, wave) {
+  tab_frq <- obj$data.clust$clust %>% sjmisc::frq(.)
+  tab_frq[[1]] %>% select("val_{wave}" := val, "frq_{wave}" := frq, "prc_{wave}" := valid.prc)
+  }
+
+wrap_tab_n_clust <- function(class){
+  tab <- map2(
+    c("elsoc_2016", "elsoc_2019", "elsoc_2022"),
+    c("w01", "w04", "w06"), 
+    ~ tab_n_clust(results_all[[.x]][[class]]$clust, wave = .y)
+    ) %>% 
+    list_cbind() %>% 
+    select(-c(val_w04, val_w06)) %>% 
+    select(cluster = val_w01, ends_with("w01"), ends_with("w04"), ends_with("w06")) %>% 
+    filter(row_number() <= n() - 1)
+
+    return(tab)
+}
+```
+
+
+```{r}
+format_kable <- function(x, title = "Here goes some title!"){
+  x %>% kable(
+    caption = title
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE
+  )
+}
+
+format_lines <- function(x){
+  x %>% 
+  column_spec(1, extra_css = "border-right: 2px solid #726c6c54;", include_thead = TRUE) %>% 
+  column_spec(3, extra_css = "border-right: 2px solid #726c6c54;", include_thead = TRUE) %>% 
+  column_spec(5, extra_css = "border-right: 2px solid #726c6c54;", include_thead = TRUE)
 }
 ```
 
@@ -398,28 +440,43 @@ tabs %>%
 
 ```
 
-## Cluster 1
+# N per cluster
 
-En las tres olas el cluster se define de manera consistente por baja educación y retiro laboral: *Retired*, *No formal education*, *Primary education* y deciles bajos (1 y 3) aparecen siempre entre las categorías principales. El orden varía levemente (ej. en ola 04 *No formal education* sube posiciones), pero la composición del perfil se mantiene estable: es un grupo marcado por bajos ingresos y muy baja escolaridad.
-
-## Cluster 2
-
-Se mantiene muy estable en torno a los trabajadores no calificados, baja escolaridad y deciles bajos. En todas las olas aparecen *Unskilled workers*, *Second decile*, *Primary/Secondary education* y deciles 3–4. El orden cambia entre olas (ej. en ola 04 y 06 sube la *Secondary education*), pero no cambia la naturaleza del cluster: sigue representando a los sectores trabajadores de base y bajos ingresos.
-
-## Cluster 3
-
-Es el cluster más difuso: en la ola 01 se definía fuertemente por *Unemployed*, con baja presencia de ingresos bajos; en ola 04 la sobrerepresentración se da principalmente por "Unemployed" y en ola 06 el desempleo desaparece y es reemplazado por el primer decil y la educación primaria. Esto sugiere que el cluster 3 es algo más inestrable hacia la ola 06, aunque con sobrerepresentación de categorías probablemente relacionadas.
-
-## Cluster 4
-
-En las tres olas se define claramente por trabajadores calificados y educación secundaria/técnica. *Skilled workers* lidera en ola 01, luego se mantiene en ola 04 y en ola 06 aparece *Unemployed* junto con categorías de ingresos y educación media. Aunque hay ajustes en el orden, la coherencia es alta: es un cluster de sectores medios con credenciales técnicas y secundaria.
-
-## Cluster 5
-
-En ola 01 se caracteriza por educación técnica/terciaria baja y deciles altos intermedios (7, 8, 9). En ola 04 gana peso la *Lower-grade service class* y deciles altos (8, 9), y en ola 06 se consolida con *Tertiary technical education* y *Skilled workers*. El orden cambia, pero la lógica es consistente: este cluster representa a clases medias-altas en ascenso, con educación técnica/universitaria y deciles medios/altos.
+::: panel-tabset
 
 ## Cluster 6
+```{r}
+wrap_tab_n_clust("class6") %>% 
+  format_kable(title = "Sample frequencies per cluster - Class 6") %>% 
+  format_lines()
+```
 
-Es el más estable y con mayor coherencia sustantiva: siempre definido por la élite socioeconómica. En las tres olas aparecen *Higher-grade service class*, *Tertiary university education* y *Tenth decile* como principales categorías. El orden se mantiene relativamente constante y no entran categorías de bajos ingresos o baja educación. Es el cluster más estable y homogéneo a lo largo del tiempo.
+## Cluster 5
+```{r}
+wrap_tab_n_clust("class5") %>% 
+  format_kable(title = "Sample frequencies per cluster - Class 5") %>% 
+  format_lines()
+```
 
-*NOTA: Generado con Chat GPT, revisado y modificado por mi*
+## Cluster 4
+```{r}
+wrap_tab_n_clust("class4") %>% 
+  format_kable(title = "Sample frequencies per cluster - Class 4") %>% 
+  format_lines()
+```
+
+## Cluster 3
+```{r}
+wrap_tab_n_clust("class3") %>% 
+  format_kable(title = "Sample frequencies per cluster - Class 3") %>% 
+  format_lines()
+```
+
+## Cluster 2
+```{r}
+wrap_tab_n_clust("class2") %>% 
+  format_kable(title = "Sample frequencies per cluster - Class 2") %>% 
+  format_lines()
+```
+
+:::
