@@ -286,6 +286,46 @@ create_covariates <- function(data) {
             income_cat_final = ntile(m29, 10),
             educ_cat_final = if_else(educ_sost > educ, educ_sost, educ), # If the education of sustainer y higher than the interviwe education, keep that, if not keep the interviewe education
             clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
+        ) %>%
+        # Label variables for MCA
+        mutate(
+            income_cat_final = set_labels(
+                income_cat_final,
+                labels = c(
+                    "First decile" = 1,
+                    "Second decile" = 2,
+                    "Third decile" = 3,
+                    "Fourth decile" = 4,
+                    "Fifth decile" = 5,
+                    "Sixth decile" = 6,
+                    "Seventh decile" = 7,
+                    "Eighth decile" = 8,
+                    "Ninth decile" = 9,
+                    "Tenth decile" = 10
+                )
+            ),
+            educ_cat_final = set_labels(
+                educ_cat_final,
+                labels = c(
+                    "No formal education" = 1,
+                    "Primary education" = 2,
+                    "Secondary education" = 3,
+                    "Tertiary technical education" = 4,
+                    "Tertiary universitary education" = 5
+                )
+            ),
+            clase_final = set_labels(
+                clase_final,
+                labels = c(
+                    "Higher-grade service class" = 1,
+                    "Lower-grade service class" = 2,
+                    "Small business owners" = 3,
+                    "Skilled workers" = 4,
+                    "Unskilled workers" = 5,
+                    "Retired" = 6,
+                    "Unemployed" = 7
+                )
+            )
         )
 }
 
