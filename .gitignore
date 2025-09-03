@@ -58,3 +58,4 @@ input/data/pre-proc
 # specific dataframes
 input/data/proc/elsoc_vars_selected.dta
 input/data/proc/elsoc_proc.dta
+output/models
