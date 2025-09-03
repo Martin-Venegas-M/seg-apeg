@@ -36,7 +36,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/250827_results_mm.RData")
+load("../../output/models/250903_results_mm.RData")
 ```
 
 ```{r}
@@ -48,11 +48,11 @@ coef_labels <- c(
   "(Intercept)" = "Constant",
   
   # Social class
-  "class_5Higher-grade service class" = "Higher-grade service class",
-  "class_5Lower-grade service class"  = "Lower-grade service class",
-  "class_5Unskilled workers"          = "Unskilled workers",
-  "class_5Retired"                    = "Retired",
-  "class_5Unemployed"                 = "Unemployed",
+  "new_class2" = "Class 2",
+  "new_class3" = "Class 3",
+  "new_class4" = "Class 4",
+  "new_class5" = "Class 5",
+  "new_class6" = "Class 6",
   
   # Controls
   "age"          = "Age",
@@ -61,16 +61,20 @@ coef_labels <- c(
   "homeowner"    = "Homeowner",
   "married"      = "Married",
   "has_children" = "Has children",
+  "pop_density" = "Population density",
+  "pct_migrant" = "Inmigrants percentage",
+  "insecuryty" = "Insecurity at neighbourhood",
   
   # Neighborhood SES
   "nse_barrio_norm" = "Neighborhood SES",
   
   # Interactions
-  "class_5Higher-grade service class:nse_barrio_norm" = "Higher-grade service × Neighborhood SES",
-  "class_5Lower-grade service class:nse_barrio_norm" = "Lower-grade service × Neighborhood SES",
-  "class_5Unskilled workers:nse_barrio_norm"         = "Unskilled workers × Neighborhood SES",
-  "class_5Retired:nse_barrio_norm"                   = "Retired × Neighborhood SES",
-  "class_5Unemployed:nse_barrio_norm"                = "Unemployed × Neighborhood SES"
+  "new_class2:nse_barrio_norm" = "Class 2 × Neighborhood SES",
+  "new_class3:nse_barrio_norm" = "Class 3 × Neighborhood SES",
+  "new_class4:nse_barrio_norm" = "Class 4 × Neighborhood SES",
+  "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES",
+  "new_class6:nse_barrio_norm" = "Class 6 × Neighborhood SES"
+
 )
 ```
 
@@ -99,7 +103,7 @@ tab_mm <- function(model, type = "texreg") {
 }
 
 plot_int_mm <- function(model, vardep) {
-    marginales <- ggpredict(model, terms = c("nse_barrio_norm", "class_5"))
+    marginales <- ggpredict(model, terms = c("nse_barrio_norm", "new_class"))
 
     # grafico
     ggplot(marginales, aes(x = x, y = predicted, color = group)) +

@@ -33,9 +33,9 @@ user <- tolower(Sys.info()["user"])
 
 # 3. Create function ---------------------------------------------------------------------------------------------------------------------------------
 estimate_mm <- function(
-    vardep, pred1 = "class_5", pred2 = "nse_barrio_norm", cluster = "geocodigo",
-    controls = c("age", "age_sq", "sex", "homeowner", "married", "has_children"),
-    datos = df, transform = TRUE, relevel = TRUE, relevel_cat = 4) {
+    vardep, pred1 = "new_class", pred2 = "nse_barrio_norm", cluster = "geocodigo",
+    controls = c("age", "age_sq", "sex", "homeowner", "married", "has_children", "pop_density", "pct_migrant", "insecurity"),
+    datos = df, transform = FALSE, relevel = FALSE, relevel_cat = 4) {
     # Transform pred1 to factor if necessary
     if (transform) {
         datos[[pred1]] <- to_label(datos[[pred1]])
@@ -74,9 +74,9 @@ varsdep <- c(
 
 # Create list with results
 results_mm <- list(
-    elsoc_2016 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[1]])) %>% set_names(varsdep),
-    elsoc_2019 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[2]])) %>% set_names(varsdep),
-    elsoc_2022 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[3]])) %>% set_names(varsdep)
+    elsoc_2016 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[1]]), .progress = TRUE) %>% set_names(varsdep),
+    elsoc_2019 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[2]]), .progress = TRUE) %>% set_names(varsdep),
+    elsoc_2022 = map(varsdep, ~ estimate_mm(.x, datos = elsocs[[3]]), .progress = TRUE) %>% set_names(varsdep)
 )
 
 rm(list = ls()[!ls() %in% c("results_mm", "date")])
