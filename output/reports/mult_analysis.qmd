@@ -51,9 +51,7 @@ coef_labels <- c(
   "new_class2" = "Class 2",
   "new_class3" = "Class 3",
   "new_class4" = "Class 4",
-  "new_class5" = "Class 5",
-  "new_class6" = "Class 6",
-  
+  "new_class5" = "Class 5",  
   # Controls
   "age"          = "Age",
   "age_sq"       = "Age squared",
@@ -72,9 +70,7 @@ coef_labels <- c(
   "new_class2:nse_barrio_norm" = "Class 2 × Neighborhood SES",
   "new_class3:nse_barrio_norm" = "Class 3 × Neighborhood SES",
   "new_class4:nse_barrio_norm" = "Class 4 × Neighborhood SES",
-  "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES",
-  "new_class6:nse_barrio_norm" = "Class 6 × Neighborhood SES"
-
+  "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES"
 )
 ```
 
