@@ -47,6 +47,7 @@ source("processing/2_impute.R", encoding = "UTF-8")
 source("processing/3_separate.R", encoding = "UTF-8")
 source("processing/4_create_vars.R", encoding = "UTF-8")
 source("processing/5_drop_na.R", encoding = "UTF-8")
+source("processing/6_join_new_class.R", encoding = "UTF-8")
 
 # 4. Save data --------------------------------------------------------------------------------------------------------------------------------------------
 save.image("input/data/proc/elsoc_proc.RData") # Saving whole workspace
