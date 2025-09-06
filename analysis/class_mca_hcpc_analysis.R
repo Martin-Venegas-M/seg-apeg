@@ -4,7 +4,7 @@
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
 # Executive Summary: This script contains the code to generate descriptive tables
-# Date: August 25, 2025
+# Date: September 05, 2025
 #******************************************************************************************************************************************************
 
 rm(list = ls())
@@ -70,29 +70,6 @@ results_all <- map(
   }
 )
 
-# 4. Plots and tables -----------------------------------------------------------------------------------------------------------------------------------
-
-# # Test!
-#
-# # Biplot
-# results_all[[1]]$class6$acm %>%
-#   fviz_mca_var(repel = TRUE,
-#   col.var = "cos2",                # color = calidad de representación
-#   gradient.cols = c("#B3CDE3","#6497B1","#03396C"),
-#   ggtheme = theme_minimal()
-# ) +
-#   ggtitle("MCA: categorías (Dim1 vs Dim2)") +
-#   theme(legend.position = "right")
-#
-#
-# # Cluster map
-# results_all[[1]]$class6$clust %>%
-#   fviz_cluster(clust, geom = "point", main = "Factor map")
-
-#* It works!
-
-# 5. Save ------------------------------------------------------------------------------------------------------------------------------------------------
-
+# 4. Save ------------------------------------------------------------------------------------------------------------------------------------------------
 rm(list = ls()[!ls() %in% c("date", "results_all")])
-# save.image(glue("{date}_results_mca_hcpc.RData"))
-save.image(glue("250904_results_mca_hcpc.RData")) # ! MANUAL, PARA DEJAR REGISTRO DE LO QUE SE HIZO PREVIO A LA REUNIÓN
+save.image(glue("output/models/{date}_results_mca_hcpc.RData"))
