@@ -36,7 +36,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/250903_results_mm.RData")
+load("../../output/models/250905_results_mm.RData")
 ```
 
 ```{r}
@@ -223,7 +223,7 @@ tab_mm(results_mm$elsoc_2016$prosoc_behave)
 tab_mm(results_mm$elsoc_2016$democracy_support)
 ```
 
-# Justification of violence
+# Injustification of violence
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2016$justif_violence)
@@ -316,7 +316,7 @@ tab_mm(results_mm$elsoc_2019$prosoc_behave)
 tab_mm(results_mm$elsoc_2019$democracy_support)
 ```
 
-# Justification of violence
+# Injustification of violence
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2019$justif_violence)
@@ -405,7 +405,7 @@ tab_mm(results_mm$elsoc_2022$prosoc_behave)
 tab_mm(results_mm$elsoc_2022$democracy_support)
 ```
 
-# Justification of violence
+# Injustification of violence
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2022$justif_violence)
