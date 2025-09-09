@@ -137,6 +137,7 @@ writexl::write_xlsx(vardep_class_5_tab, glue("output/tables/{date}_varsdep_class
 rm(vardep_class_8_tab, vardep_class_5_tab)
 
 # 3.3 Dependent variables per quintiles nse neighbourhood ---------------------------------------------------------------------------------------------
+vardep_quint_nse_barrio_tab <- map_df(varsdep, ~ mean_per_group("quint_nse_barrio", .x))
 
 # Save!
 writexl::write_xlsx(vardep_quint_nse_barrio_tab, glue("output/tables/{date}_vardep_quint_nse_barrio_tab.xlsx"))
