@@ -1,7 +1,7 @@
 # 6.1 Join new class variables ------------------------------------------------------------------------------------
 
 # Load model results
-load("output/models/250905_results_mca_hcpc.RData")
+load("output/models/250911b_results_mca_hcpc.RData")
 
 # Save dataset with relevant information in list
 datas <- map(1:3, ~ (results_all[[.x]]$class5$data %>% select(idencuesta, class_index = acm_scores1, new_class = clusters_5)))
