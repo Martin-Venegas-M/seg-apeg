@@ -35,7 +35,7 @@ user <- tolower(Sys.info()["user"])
 estimate_mm <- function(
     vardep, pred1 = "new_class", pred2 = "nse_barrio_norm", cluster = "geocodigo",
     controls = c("age", "age_sq", "sex", "homeowner", "married", "has_children", "pop_density", "pct_migrant", "insecurity"),
-    datos = df, transform = FALSE, relevel = FALSE, relevel_cat = 4) {
+    datos = df, transform = FALSE, relevel = TRUE, relevel_cat = 3) {
     # Transform pred1 to factor if necessary
     if (transform) {
         datos[[pred1]] <- to_label(datos[[pred1]])
@@ -82,4 +82,4 @@ results_mm <- list(
 rm(list = ls()[!ls() %in% c("results_mm", "date")])
 
 # 5. Save ---------------------------------------------------------------------------------------------------------------------------------------------
-save.image(glue("output/models/{date}_results_mm.RData"))
+save.image(glue("output/models/{date}b_results_mm.RData"))

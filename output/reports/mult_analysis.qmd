@@ -36,7 +36,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/250905_results_mm.RData")
+load("../../output/models/250911b_results_mm.RData")
 ```
 
 ```{r}
@@ -48,8 +48,8 @@ coef_labels <- c(
   "(Intercept)" = "Constant",
   
   # Social class
+  "new_class1" = "Class 1",
   "new_class2" = "Class 2",
-  "new_class3" = "Class 3",
   "new_class4" = "Class 4",
   "new_class5" = "Class 5",  
   # Controls
@@ -67,8 +67,8 @@ coef_labels <- c(
   "nse_barrio_norm" = "Neighborhood SES",
   
   # Interactions
+  "new_class1:nse_barrio_norm" = "Class 1 × Neighborhood SES",
   "new_class2:nse_barrio_norm" = "Class 2 × Neighborhood SES",
-  "new_class3:nse_barrio_norm" = "Class 3 × Neighborhood SES",
   "new_class4:nse_barrio_norm" = "Class 4 × Neighborhood SES",
   "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES"
 )
@@ -133,6 +133,10 @@ This document...
 tab_mm(results_mm$elsoc_2016$identification)
 ```
 
+```{r}
+plot_int_mm(results_mm$elsoc_2016$identification[[5]], "Identification")
+```
+
 # Friends
 
 ```{r results='asis'}
@@ -157,16 +161,15 @@ tab_mm(results_mm$elsoc_2016$trust_minorities)
 tab_mm(results_mm$elsoc_2016$trust_inst)
 ```
 
+```{r}
+plot_int_mm(results_mm$elsoc_2016$trust_inst[[5]], "Institutional trust")
+```
+
 # Interest in politics
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2016$interest_pol)
 
-```
-
-```{r}
-
-plot_int_mm(results_mm$elsoc_2016$interest_pol[[5]], "Political interest")
 ```
 
 # Satisfaction with democracy
@@ -217,6 +220,10 @@ tab_mm(results_mm$elsoc_2016$altruistic)
 tab_mm(results_mm$elsoc_2016$prosoc_behave)
 ```
 
+```{r}
+plot_int_mm(results_mm$elsoc_2016$prosoc_behave[[5]], "Prosocial behavior")
+```
+
 # Democracy support
 
 ```{r results='asis'}
@@ -229,9 +236,6 @@ tab_mm(results_mm$elsoc_2016$democracy_support)
 tab_mm(results_mm$elsoc_2016$justif_violence)
 ```
 
-```{r}
-plot_int_mm(results_mm$elsoc_2016$justif_violence[[5]], "(In)justif violence")
-```
 :::
 
 ## ELSOC 2019
@@ -265,6 +269,10 @@ tab_mm(results_mm$elsoc_2019$trust_minorities)
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2019$trust_inst)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2019$trust_inst[[5]], "Institutional trust")
 ```
 
 # Interest in politics
@@ -356,11 +364,19 @@ tab_mm(results_mm$elsoc_2022$trust_minorities)
 tab_mm(results_mm$elsoc_2022$trust_inst)
 ```
 
+```{r}
+plot_int_mm(results_mm$elsoc_2022$trust_inst[[5]], "Institutional trust")
+```
+
 # Interest in politics
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2022$interest_pol)
 
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2022$interest_pol[[5]], "Interest in politics")
 ```
 
 # Satisfaction with democracy
@@ -379,6 +395,10 @@ tab_mm(results_mm$elsoc_2022$conv_particip)
 
 ```{r results='asis'}
 tab_mm(results_mm$elsoc_2022$unconv_particip)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2022$unconv_particip[[5]], "Unconventional participation")
 ```
 
 # Egalitarianism
