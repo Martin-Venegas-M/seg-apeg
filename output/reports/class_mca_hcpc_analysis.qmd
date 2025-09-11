@@ -42,6 +42,7 @@ pacman::p_load(
 )
 
 # Data
+# load("output/models/250905_results_mca_hcpc.RData")
 load("../../output/models/250905_results_mca_hcpc.RData")
 ```
 
@@ -159,6 +160,17 @@ format_lines <- function(x){
   column_spec(3, extra_css = "border-right: 2px solid #726c6c54;", include_thead = TRUE) %>% 
   column_spec(5, extra_css = "border-right: 2px solid #726c6c54;", include_thead = TRUE)
 }
+
+specific_col <- function(kbl, data, n, umbrale = 0, ...){
+      kableExtra::column_spec(kbl, n, 
+                  color = dplyr::case_when(
+                  as.matrix(data[,n]) > umbrale ~ "darkblue",
+                  as.matrix(data[,n]) < -umbrale ~ "red",
+                  TRUE ~ "lightgrey"
+                  ),
+                  ...
+                )
+}
 ```
 
 # Introduction
@@ -215,6 +227,25 @@ plot_cluster(results_all$elsoc_2016$class5$clust)
 ```{r}
 tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category)
 ```
+
+```{r}
+e16c5c1 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 1)
+e16c5c2 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 2)
+e16c5c3 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 3)
+e16c5c4 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 4)
+e16c5c5 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 5)
+e16c5c6 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e16c5c1$categoria[[1]]`** (*v_test = `r e16c5c1$v.test[[1]]`*); **`r e16c5c1$categoria[[2]]`** (*v_test = `r e16c5c1$v.test[[2]]`*) and **`r e16c5c1$categoria[[3]]`** (*v_test = `r e16c5c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e16c5c2$categoria[[1]]`** (*v_test = `r e16c5c2$v.test[[1]]`*); **`r e16c5c2$categoria[[2]]`** (*v_test = `r e16c5c2$v.test[[2]]`*) and **`r e16c5c2$categoria[[3]]`** (*v_test = `r e16c5c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e16c5c3$categoria[[1]]`** (*v_test = `r e16c5c3$v.test[[1]]`*); **`r e16c5c3$categoria[[2]]`** (*v_test = `r e16c5c3$v.test[[2]]`*) and **`r e16c5c3$categoria[[3]]`** (*v_test = `r e16c5c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e16c5c4$categoria[[1]]`** (*v_test = `r e16c5c4$v.test[[1]]`*); **`r e16c5c4$categoria[[2]]`** (*v_test = `r e16c5c4$v.test[[2]]`*) and **`r e16c5c4$categoria[[3]]`** (*v_test = `r e16c5c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e16c5c5$categoria[[1]]`** (*v_test = `r e16c5c5$v.test[[1]]`*); **`r e16c5c5$categoria[[2]]`** (*v_test = `r e16c5c5$v.test[[2]]`*) and **`r e16c5c5$categoria[[3]]`** (*v_test = `r e16c5c5$v.test[[3]]`*)
 
 # Class 4
 
@@ -293,6 +324,25 @@ e19c6c6 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$c
 ```{r results='asis'}
 plot_cluster(results_all$elsoc_2019$class5$clust)
 ```
+
+```{r}
+e19c5c1 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 1)
+e19c5c2 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 2)
+e19c5c3 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 3)
+e19c5c4 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 4)
+e19c5c5 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 5)
+e19c5c6 <- process_tab_desc_clust(results_all$elsoc_2019$class6$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e19c5c1$categoria[[1]]`** (*v_test = `r e19c5c1$v.test[[1]]`*); **`r e19c5c1$categoria[[2]]`** (*v_test = `r e19c5c1$v.test[[2]]`*) and **`r e19c5c1$categoria[[3]]`** (*v_test = `r e19c5c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e19c5c2$categoria[[1]]`** (*v_test = `r e19c5c2$v.test[[1]]`*); **`r e19c5c2$categoria[[2]]`** (*v_test = `r e19c5c2$v.test[[2]]`*) and **`r e19c5c2$categoria[[3]]`** (*v_test = `r e19c5c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e19c5c3$categoria[[1]]`** (*v_test = `r e19c5c3$v.test[[1]]`*); **`r e19c5c3$categoria[[2]]`** (*v_test = `r e19c5c3$v.test[[2]]`*) and **`r e19c5c3$categoria[[3]]`** (*v_test = `r e19c5c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e19c5c4$categoria[[1]]`** (*v_test = `r e19c5c4$v.test[[1]]`*); **`r e19c5c4$categoria[[2]]`** (*v_test = `r e19c5c4$v.test[[2]]`*) and **`r e19c5c4$categoria[[3]]`** (*v_test = `r e19c5c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e19c5c5$categoria[[1]]`** (*v_test = `r e19c5c5$v.test[[1]]`*); **`r e19c5c5$categoria[[2]]`** (*v_test = `r e19c5c5$v.test[[2]]`*) and **`r e19c5c5$categoria[[3]]`** (*v_test = `r e19c5c5$v.test[[3]]`*)
 
 ```{r}
 tab_desc_clust(results_all$elsoc_2019$class5$clust$desc.var$category)
@@ -380,6 +430,25 @@ plot_cluster(results_all$elsoc_2022$class5$clust)
 tab_desc_clust(results_all$elsoc_2022$class5$clust$desc.var$category)
 ```
 
+```{r}
+e22c5c1 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 1)
+e22c5c2 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 2)
+e22c5c3 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 3)
+e22c5c4 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 4)
+e22c5c5 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 5)
+e22c5c6 <- process_tab_desc_clust(results_all$elsoc_2022$class6$clust$desc.var$category) %>% filter(cluster == 6)
+```
+
+- Cluster 1 is characterized by an overrepresentation of: **`r e22c5c1$categoria[[1]]`** (*v_test = `r e22c5c1$v.test[[1]]`*); **`r e22c5c1$categoria[[2]]`** (*v_test = `r e22c5c1$v.test[[2]]`*) and **`r e22c5c1$categoria[[3]]`** (*v_test = `r e22c5c1$v.test[[3]]`*)
+
+- Cluster 2 is characterized by an overrepresentation of: **`r e22c5c2$categoria[[1]]`** (*v_test = `r e22c5c2$v.test[[1]]`*); **`r e22c5c2$categoria[[2]]`** (*v_test = `r e22c5c2$v.test[[2]]`*) and **`r e22c5c2$categoria[[3]]`** (*v_test = `r e22c5c2$v.test[[3]]`*)
+
+- Cluster 3 is characterized by an overrepresentation of: **`r e22c5c3$categoria[[1]]`** (*v_test = `r e22c5c3$v.test[[1]]`*); **`r e22c5c3$categoria[[2]]`** (*v_test = `r e22c5c3$v.test[[2]]`*) and **`r e22c5c3$categoria[[3]]`** (*v_test = `r e22c5c3$v.test[[3]]`*)
+
+- Cluster 4 is characterized by an overrepresentation of: **`r e22c5c4$categoria[[1]]`** (*v_test = `r e22c5c4$v.test[[1]]`*); **`r e22c5c4$categoria[[2]]`** (*v_test = `r e22c5c4$v.test[[2]]`*) and **`r e22c5c4$categoria[[3]]`** (*v_test = `r e22c5c4$v.test[[3]]`*)
+
+- Cluster 5 is characterized by an overrepresentation of: **`r e22c5c5$categoria[[1]]`** (*v_test = `r e22c5c5$v.test[[1]]`*); **`r e22c5c5$categoria[[2]]`** (*v_test = `r e22c5c5$v.test[[2]]`*) and **`r e22c5c5$categoria[[3]]`** (*v_test = `r e22c5c5$v.test[[3]]`*)
+
 # Class 4
 
 ```{r results='asis'}
@@ -436,9 +505,44 @@ tabs %>%
   row_spec(15, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
   row_spec(20, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
   row_spec(25, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
-  row_spec(30, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";"))
+  row_spec(30, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  specific_col(data = tabs, n = 3) %>% 
+  specific_col(data = tabs, n = 5) %>% 
+  specific_col(data = tabs, n = 7)
+
 
 ```
+
+# Desc comparisson between class 5 of elsocs
+
+```{r}
+
+e16c5 <- process_tab_desc_clust(results_all$elsoc_2016$class5$clust$desc.var$category) %>% select(cluster, cat_w01 = categoria, vt_w01 = v.test) %>% group_by(cluster)  %>% slice_head(n = 5) %>% ungroup()
+e19c5 <- process_tab_desc_clust(results_all$elsoc_2019$class5$clust$desc.var$category) %>% select(cluster, cat_w04 = categoria, vt_w04 =  v.test) %>% group_by(cluster) %>% slice_head(n = 5) %>% ungroup()
+e22c5 <- process_tab_desc_clust(results_all$elsoc_2022$class5$clust$desc.var$category) %>% select(cluster, cat_w06 = categoria, vt_w06 =  v.test) %>% group_by(cluster) %>% slice_head(n = 5) %>% ungroup()
+ 
+tabs <- bind_cols(list(e16c5, e19c5[, -1], e22c5[,-1]))
+
+tabs %>%
+  kable(
+    caption = "HCPC Desc comparison between waves (first five per cluster)"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE
+  ) %>% 
+  row_spec(0, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(5, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(10, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(15, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(20, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  row_spec(25, extra_css = paste0("border-bottom: ", 2.5, "px solid ", "black", ";")) %>% 
+  specific_col(data = tabs, n = 3) %>% 
+  specific_col(data = tabs, n = 5) %>% 
+  specific_col(data = tabs, n = 7)
+
+```
+
 
 # N per cluster
 
