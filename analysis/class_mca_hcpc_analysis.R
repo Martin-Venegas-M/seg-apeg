@@ -72,4 +72,4 @@ results_all <- map(
 
 # 4. Save ------------------------------------------------------------------------------------------------------------------------------------------------
 rm(list = ls()[!ls() %in% c("date", "results_all")])
-save.image(glue("output/models/{date}_results_mca_hcpc.RData"))
+save.image(glue("output/models/{date}b_results_mca_hcpc.RData"))

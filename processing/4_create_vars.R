@@ -283,7 +283,15 @@ create_covariates <- function(data) {
         select(-c(tenure, marital_status, children)) %>%
         #* AUXILIAR VARIABLES FOR CONSTRUCTING NEW SOCIAL CLASS
         mutate(
-            income_cat_final = ntile(m29, 5),
+            aux = ntile(m29, 10),
+            income_cat_final = case_when(
+                aux %in% c(1) ~ 1,
+                aux %in% c(2:3) ~ 2,
+                aux %in% c(4:5) ~ 3,
+                aux %in% c(6:7) ~ 4,
+                aux %in% c(8:9) ~ 5,
+                aux %in% c(10) ~ 6
+            ),
             educ_cat_final = if_else(educ_sost > educ, educ_sost, educ), # If the education of sustainer y higher than the interviwe education, keep that, if not keep the interviewe education
             clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
         ) %>%
@@ -292,11 +300,12 @@ create_covariates <- function(data) {
             income_cat_final = set_labels(
                 income_cat_final,
                 labels = c(
-                    "First quintile" = 1,
-                    "Second quintile" = 2,
-                    "Third quintile" = 3,
-                    "Fourth quintile" = 4,
-                    "Fifth quintile" = 5
+                    "First  decile" = 1,
+                    "Second and third decile" = 2,
+                    "Fourth and fifth decile" = 3,
+                    "Sixth and seventh decile" = 4,
+                    "Eighth and ninth  decile" = 5,
+                    "Tenth decile" = 6
                 )
             ),
             educ_cat_final = set_labels(
