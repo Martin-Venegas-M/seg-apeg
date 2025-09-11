@@ -47,7 +47,7 @@ source("processing/2_impute.R", encoding = "UTF-8")
 source("processing/3_separate.R", encoding = "UTF-8")
 source("processing/4_create_vars.R", encoding = "UTF-8")
 source("processing/5_drop_na.R", encoding = "UTF-8")
-source("processing/6_join_new_class.R", encoding = "UTF-8") # ! PARA QUE SIGA EL FLUJO DEBO INCORPORAR UN source() CON class_mca_hcpc_analysis.R
+# source("processing/6_join_new_class.R", encoding = "UTF-8") # ! PARA QUE SIGA EL FLUJO DEBO INCORPORAR UN source() CON class_mca_hcpc_analysis.R
 
 # 4. Save data --------------------------------------------------------------------------------------------------------------------------------------------
 save.image("input/data/proc/elsoc_proc.RData") # Saving whole workspace

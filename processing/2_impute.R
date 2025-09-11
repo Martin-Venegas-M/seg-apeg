@@ -144,7 +144,7 @@ vars_to_impute <- c(
     "c07_04", "c07_05",
     "c25",
     "f05_01", "f05_02", "f05_03",
-    "m29", "m01", "m20", "m33", "m36", "m37", "ciuo08_m22" #* INDEPENDENT VARIABLES
+    "m01", "m20", "m33", "m36", "m37", "ciuo08_m22" #* INDEPENDENT VARIABLES
 )
 
 # Apply the function!
@@ -176,4 +176,29 @@ elsoc <- reduce(
 )
 
 # Remove objects from the global enviroment
-rm(impute_waves, vars_to_impute, insumo_ciuo, insumo_ciuo_reduced)
+rm(vars_to_impute, insumo_ciuo, insumo_ciuo_reduced)
+
+# 2.4 Impute income --------------------------------------------------------------------------------------------------------------------------------------
+
+# source("processing/review/check_m29.R")
+
+# Run new imputation method
+impute_m29 <- function(data) {
+    data %>%
+        mutate(across(starts_with("m29_"), ~ if_else(. %in% 0, NA_real_, .))) %>%
+        mutate(
+            numerador = rowSums(select(., starts_with("m29_")), na.rm = TRUE), # Suma todos m29 validos de la fila
+            denominador = rowSums(!is.na(select(., starts_with("m29_")))), # Suma la cantidad de olas para los que la fila tiene valores validos
+            # ! OJO: El código se aprovecha de que el !is.na() convierte los valores a logical y luego se suman logicals (TRUE = 1 y FALSE = 0)
+            income_to_impute = numerador / denominador
+        )
+}
+
+# Create income_to_impute and use it
+elsoc <- elsoc %>% 
+    impute_m29() %>% 
+    mutate(
+        m29_w01 = coalesce(m29_w01, income_to_impute),
+        m29_w04 = coalesce(m29_w04, income_to_impute),
+        m29_w06 = coalesce(m29_w06, income_to_impute)
+    )
