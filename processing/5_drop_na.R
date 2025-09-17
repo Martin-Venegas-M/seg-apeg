@@ -28,3 +28,7 @@ elsocs <- map(elsocs, \(x) x %>% filter(class_5 != 7))
 #* filter: removed 92 rows (6%), 1,521 rows remaining
 #* filter: removed 62 rows (3%), 2,039 rows remaining
 #* filter: removed 67 rows (4%), 1,601 rows remaining
+
+# 5.3 Save! -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+save.image("input/data/proc/elsoc_proc_5_drop_na.RData") # Saving whole workspace

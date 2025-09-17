@@ -24,7 +24,7 @@ pacman::p_load(
 )
 
 # 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
-load("input/data/proc/elsoc_proc.RData")
+load("input/data/proc/elsoc_proc_5_drop_na.RData")
 
 # Declate date and user
 date <- format(Sys.Date(), "%y%m%d")
@@ -72,4 +72,4 @@ results_all <- map(
 
 # 4. Save ------------------------------------------------------------------------------------------------------------------------------------------------
 rm(list = ls()[!ls() %in% c("date", "results_all")])
-save.image(glue("output/models/{date}b_results_mca_hcpc.RData"))
+save.image(glue("output/models/results_mca_hcpc.RData"))
