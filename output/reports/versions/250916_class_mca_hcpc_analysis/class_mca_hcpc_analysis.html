@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Technical assistant">
+<meta name="dcterms.date" content="2025-09-16">
+
+<title> Class MCA and HCPC analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="class_mca_hcpc_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="class_mca_hcpc_analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="class_mca_hcpc_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="class_mca_hcpc_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="class_mca_hcpc_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="class_mca_hcpc_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="class_mca_hcpc_analysis_files/libs/quarto-html/quarto-syntax-highlighting-2bb0ec5e928ee8c40b12725cb7836c35.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="class_mca_hcpc_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="class_mca_hcpc_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="class_mca_hcpc_analysis_files/libs/bootstrap/bootstrap-79610afbac66b5127bab01f3d3112952.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="class_mca_hcpc_analysis_files/libs/core-js-2.5.3/shim.min.js"></script>
+
+<script src="class_mca_hcpc_analysis_files/libs/react-18.2.0/react.min.js"></script>
+
+<script src="class_mca_hcpc_analysis_files/libs/react-18.2.0/react-dom.min.js"></script>
+
+<script src="class_mca_hcpc_analysis_files/libs/reactwidget-2.0.0/react-tools.js"></script>
+
+<link href="class_mca_hcpc_analysis_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="class_mca_hcpc_analysis_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="class_mca_hcpc_analysis_files/libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+
+<script src="class_mca_hcpc_analysis_files/libs/reactable-binding-0.4.4/reactable.js"></script>
+
+<script src="class_mca_hcpc_analysis_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="class_mca_hcpc_analysis_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><p><img src="https://coes.cl/wp-content/uploads/2025/03/COES_Logo_azul.png" style="width:25.0%;height:25.0%"> Class MCA and HCPC analysis</p></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Technical assistant </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 16, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This document…</p>
+<section id="elsoc-2016" class="level2">
+<h2 class="anchored" data-anchor-id="elsoc-2016">ELSOC 2016</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">MCA</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Class 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Class 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Class 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Class 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Class 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e9caf3702e2962a57bd8" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e9caf3702e2962a57bd8">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","6","6","6","6","6","6","6","6","6","6","6","6","6","6","6"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Unskilled workers","Sixth and seventh decile","Fourth and fifth decile","Tenth decile","Secondary education","Eighth and ninth  decile","Higher-grade service class","Lower-grade service class","Tertiary technical education","Skilled workers","Unskilled workers","Second and third decile","Primary education","No formal education","Lower-grade service class","Secondary education","Fourth and fifth decile","Tertiary technical education","Higher-grade service class","Eighth and ninth  decile","Tenth decile","Tertiary universitary education","First  decile","Skilled workers","Retired","Secondary education","Fourth and fifth decile","Skilled workers","Second and third decile","No formal education","Unskilled workers","Retired","Lower-grade service class","First  decile","Tenth decile","Higher-grade service class","Tertiary universitary education","Sixth and seventh decile","Primary education","Tertiary technical education","Skilled workers","Sixth and seventh decile","Primary education","Tertiary technical education","Fourth and fifth decile","Tenth decile","Secondary education","Lower-grade service class","Tertiary universitary education","Higher-grade service class","Eighth and ninth  decile","Second and third decile","No formal education","First  decile","Retired","Unskilled workers","Eighth and ninth  decile","Tertiary technical education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Fourth and fifth decile","No formal education","First  decile","Skilled workers","Secondary education","Retired","Unskilled workers","Second and third decile","Primary education","Higher-grade service class","Tertiary universitary education","Tenth decile","Lower-grade service class","Tertiary technical education","No formal education","First  decile","Sixth and seventh decile","Retired","Fourth and fifth decile","Second and third decile","Unskilled workers","Primary education","Skilled workers","Secondary education"],"Cla/Mod":[86.45,98.6,52.76,27.36,8.68,7.87,6.58,2.5,8.49,6.11,2.25,4.91,6,4.91,79.91,54.28,34.35,37.01,12.98,13.8,11.84,10.57,4.49,7.4,1.25,4,0,8.24,0,51.17,43.75,29,21.38,10.24,11.42,10.28,8.42,1.4,0,0,0,0,0,0,49.6,67.87,38.3,36,30.59,18.12,21.23,17.89,14,8.99,10.61,8.22,0,0,3.27,0,46.3,43.14,48.42,8.8,6.56,5.92,0,0,6.66,5.1,0,0,0,0,74.72,59.2,68.75,7.37,4.29,0,0,2.62,0,1.32,1.32,0,0,1.58,0.21],"Mod/Cla":[73.12,55.73,26.48,35.57,7.51,9.49,7.91,1.58,15.81,7.51,1.58,5.53,8.3,12.25,64.34,60.66,41.54,17.28,13.6,23.9,13.24,13.6,2.94,8.46,0.74,3.68,0,19.12,0,94.88,52.36,72.05,25.59,5.12,9.84,8.66,9.45,0.79,0,0,0,0,0,0,80.88,53.49,32.56,32.56,24.03,7.49,25.84,13.18,9.04,4.13,8.53,6.46,0,0,1.81,0,73.1,76.65,70.05,11.17,10.15,9.14,0,0,21.32,12.18,0,0,0,0,81.1,90.24,67.07,12.8,9.15,0,0,4.88,0,2.44,2.44,0,0,6.1,0.61],"Global":[14.01,9.36,8.32,21.55,14.34,19.97,19.91,10.48,30.84,20.37,11.66,18.66,22.92,41.32,14.34,19.91,21.55,8.32,18.66,30.84,19.91,22.92,11.66,20.37,10.48,16.37,9.36,41.32,14.01,30.84,19.91,41.32,19.91,8.32,14.34,14.01,18.66,9.36,10.48,11.66,16.37,19.97,21.55,22.92,41.32,19.97,21.55,22.92,19.91,10.48,30.84,18.66,16.37,11.66,20.37,19.91,8.32,9.36,14.01,14.34,20.37,22.92,18.66,16.37,19.97,19.91,8.32,9.36,41.32,30.84,14.01,14.34,19.91,21.55,11.66,16.37,10.48,18.66,22.92,8.32,9.36,19.97,14.01,19.91,19.91,14.34,21.55,41.32,30.84],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0.04,0.02,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0.02,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0.03,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0],"v.test":[25.75,23.82,9.9,5.66,-3.59,-4.86,-5.66,-5.9,-5.94,-6.04,-6.41,-6.5,-6.58,-10.94,22.75,16.88,8.32,5.39,-2.42,-2.77,-3.14,-4.2,-5.56,-5.79,-6.99,-7.06,-7.4,-8.51,-9.29,24.05,12.95,10.85,2.42,-2.09,-2.3,-2.8,-4.37,-6.17,-7.57,-8.04,-9.76,-10.95,-11.45,-11.88,18.5,17.97,5.9,5.08,2.32,-2.27,-2.49,-3.28,-4.72,-5.8,-7.14,-8.34,-8.56,-9.14,-9.26,-11.6,17.54,17.49,17.42,-2.17,-3.91,-4.34,-5.72,-6.12,-6.31,-6.5,-7.71,-7.81,-9.46,-9.91,23.28,22.99,19.64,-2.09,-4.8,-5.14,-5.5,-5.76,-6.95,-6.96,-6.96,-7.04,-8.94,-10.73,-10.74]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"441d8356612d03d2216620d79945fb1c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 25.75</em>); <strong>First decile</strong> (<em>v_test = 23.82</em>) and <strong>No formal education</strong> (<em>v_test = 9.9</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Unskilled workers</strong> (<em>v_test = 22.75</em>); <strong>Second and third decile</strong> (<em>v_test = 16.88</em>) and <strong>Primary education</strong> (<em>v_test = 8.32</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Secondary education</strong> (<em>v_test = 24.05</em>); <strong>Fourth and fifth decile</strong> (<em>v_test = 12.95</em>) and <strong>Skilled workers</strong> (<em>v_test = 10.85</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 18.5</em>); <strong>Sixth and seventh decile</strong> (<em>v_test = 17.97</em>) and <strong>Primary education</strong> (<em>v_test = 5.9</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Eighth and ninth decile</strong> (<em>v_test = 17.54</em>); <strong>Tertiary technical education</strong> (<em>v_test = 17.49</em>) and <strong>Lower-grade service class</strong> (<em>v_test = 17.42</em>)</p></li>
+<li><p>Cluster 6 is characterized by an overrepresentation of: <strong>Higher-grade service class</strong> (<em>v_test = 23.28</em>); <strong>Tertiary universitary education</strong> (<em>v_test = 22.99</em>) and <strong>Tenth decile</strong> (<em>v_test = 19.64</em>)</p></li>
+</ul>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-4de456e518141ed64bf7" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4de456e518141ed64bf7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Unskilled workers","Sixth and seventh decile","Fourth and fifth decile","Tenth decile","Secondary education","Eighth and ninth  decile","Higher-grade service class","Lower-grade service class","Tertiary technical education","Skilled workers","Unskilled workers","Second and third decile","Primary education","No formal education","Lower-grade service class","Secondary education","Fourth and fifth decile","Tertiary technical education","Higher-grade service class","Eighth and ninth  decile","Tenth decile","Tertiary universitary education","First  decile","Skilled workers","Retired","Skilled workers","Secondary education","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Second and third decile","Eighth and ninth  decile","Lower-grade service class","Tenth decile","No formal education","Retired","Higher-grade service class","Tertiary universitary education","Unskilled workers","First  decile","Eighth and ninth  decile","Tertiary technical education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Fourth and fifth decile","No formal education","First  decile","Skilled workers","Secondary education","Retired","Unskilled workers","Second and third decile","Primary education","Higher-grade service class","Tertiary universitary education","Tenth decile","Lower-grade service class","Tertiary technical education","No formal education","First  decile","Sixth and seventh decile","Retired","Fourth and fifth decile","Second and third decile","Unskilled workers","Primary education","Skilled workers","Secondary education"],"Cla/Mod":[86.45,98.6,52.76,27.36,8.68,7.87,6.58,2.5,8.49,6.11,2.25,4.91,6,4.91,79.91,54.28,34.35,37.01,12.98,13.8,11.84,10.57,4.49,7.4,1.25,4,0,8.24,0,78.61,72.4,74.34,67.87,36,29.61,27.97,26.32,18.12,10.24,13.55,8.99,14,11.42,1.4,46.3,43.14,48.42,8.8,6.56,5.92,0,0,6.66,5.1,0,0,0,0,74.72,59.2,68.75,7.37,4.29,0,0,2.62,0,1.32,1.32,0,0,1.58,0.21],"Mod/Cla":[73.12,55.73,26.48,35.57,7.51,9.49,7.91,1.58,15.81,7.51,1.58,5.53,8.3,12.25,64.34,60.66,41.54,17.28,13.6,23.9,13.24,13.6,2.94,8.46,0.74,3.68,0,19.12,0,77.38,53.2,35.26,32.29,19.66,14.04,13.57,11.7,4.52,2.03,4.52,2.5,5.46,3.9,0.31,73.1,76.65,70.05,11.17,10.15,9.14,0,0,21.32,12.18,0,0,0,0,81.1,90.24,67.07,12.8,9.15,0,0,4.88,0,2.44,2.44,0,0,6.1,0.61],"Global":[14.01,9.36,8.32,21.55,14.34,19.97,19.91,10.48,30.84,20.37,11.66,18.66,22.92,41.32,14.34,19.91,21.55,8.32,18.66,30.84,19.91,22.92,11.66,20.37,10.48,16.37,9.36,41.32,14.01,41.32,30.84,19.91,19.97,22.92,19.91,20.37,18.66,10.48,8.32,14.01,11.66,16.37,14.34,9.36,20.37,22.92,18.66,16.37,19.97,19.91,8.32,9.36,41.32,30.84,14.01,14.34,19.91,21.55,11.66,16.37,10.48,18.66,22.92,8.32,9.36,19.97,14.01,19.91,19.91,14.34,21.55,41.32,30.84],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0.03,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0],"v.test":[25.75,23.82,9.9,5.66,-3.59,-4.86,-5.66,-5.9,-5.94,-6.04,-6.41,-6.5,-6.58,-10.94,22.75,16.88,8.32,5.39,-2.42,-2.77,-3.14,-4.2,-5.56,-5.79,-6.99,-7.06,-7.4,-8.51,-9.29,25.04,16.16,12.79,10.2,-2.59,-4.95,-5.69,-6.05,-6.74,-8.16,-9.63,-10.29,-10.35,-10.59,-11.95,17.54,17.49,17.42,-2.17,-3.91,-4.34,-5.72,-6.12,-6.31,-6.5,-7.71,-7.81,-9.46,-9.91,23.28,22.99,19.64,-2.09,-4.8,-5.14,-5.5,-5.76,-6.95,-6.96,-6.96,-7.04,-8.94,-10.73,-10.74]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"30454ca0eefd720b54297be297752897"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 25.75</em>); <strong>First decile</strong> (<em>v_test = 23.82</em>) and <strong>No formal education</strong> (<em>v_test = 9.9</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Unskilled workers</strong> (<em>v_test = 22.75</em>); <strong>Second and third decile</strong> (<em>v_test = 16.88</em>) and <strong>Primary education</strong> (<em>v_test = 8.32</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 25.04</em>); <strong>Secondary education</strong> (<em>v_test = 16.16</em>) and <strong>Fourth and fifth decile</strong> (<em>v_test = 12.79</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Eighth and ninth decile</strong> (<em>v_test = 17.54</em>); <strong>Tertiary technical education</strong> (<em>v_test = 17.49</em>) and <strong>Lower-grade service class</strong> (<em>v_test = 17.42</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Higher-grade service class</strong> (<em>v_test = 23.28</em>); <strong>Tertiary universitary education</strong> (<em>v_test = 22.99</em>) and <strong>Tenth decile</strong> (<em>v_test = 19.64</em>)</p></li>
+</ul>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-7e5a1dc19b8d45b768c2" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7e5a1dc19b8d45b768c2">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","clase_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Unskilled workers","Sixth and seventh decile","Fourth and fifth decile","Tenth decile","Secondary education","Eighth and ninth  decile","Higher-grade service class","Lower-grade service class","Tertiary technical education","Skilled workers","Skilled workers","Secondary education","Unskilled workers","Fourth and fifth decile","Second and third decile","Sixth and seventh decile","Primary education","No formal education","Tertiary technical education","Lower-grade service class","Eighth and ninth  decile","Tenth decile","Higher-grade service class","Tertiary universitary education","Retired","First  decile","Eighth and ninth  decile","Tertiary technical education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Fourth and fifth decile","No formal education","First  decile","Skilled workers","Secondary education","Retired","Unskilled workers","Second and third decile","Primary education","Higher-grade service class","Tertiary universitary education","Tenth decile","Lower-grade service class","Tertiary technical education","No formal education","First  decile","Sixth and seventh decile","Retired","Fourth and fifth decile","Second and third decile","Unskilled workers","Primary education","Skilled workers","Secondary education"],"Cla/Mod":[86.45,98.6,52.76,27.36,8.68,7.87,6.58,2.5,8.49,6.11,2.25,4.91,6,4.91,86.85,86.2,91.32,86.18,83.88,82.95,72.64,47.24,46.57,39.3,35.37,19.38,13.48,18,13.55,1.4,46.3,43.14,48.42,8.8,6.56,5.92,0,0,6.66,5.1,0,0,0,0,74.72,59.2,68.75,7.37,4.29,0,0,2.62,0,1.32,1.32,0,0,1.58,0.21],"Mod/Cla":[73.12,55.73,26.48,35.57,7.51,9.49,7.91,1.58,15.81,7.51,1.58,5.53,8.3,12.25,60.02,44.47,21.91,28.7,27.93,27.71,26.18,6.57,17.85,12.27,12.05,3.4,2.63,4.93,3.18,0.22,73.1,76.65,70.05,11.17,10.15,9.14,0,0,21.32,12.18,0,0,0,0,81.1,90.24,67.07,12.8,9.15,0,0,4.88,0,2.44,2.44,0,0,6.1,0.61],"Global":[14.01,9.36,8.32,21.55,14.34,19.97,19.91,10.48,30.84,20.37,11.66,18.66,22.92,41.32,41.32,30.84,14.34,19.91,19.91,19.97,21.55,8.32,22.92,18.66,20.37,10.48,11.66,16.37,14.01,9.36,20.37,22.92,18.66,16.37,19.97,19.91,8.32,9.36,41.32,30.84,14.01,14.34,19.91,21.55,11.66,16.37,10.48,18.66,22.92,8.32,9.36,19.97,14.01,19.91,19.91,14.34,21.55,41.32,30.84],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.03,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0],"v.test":[25.75,23.82,9.9,5.66,-3.59,-4.86,-5.66,-5.9,-5.94,-6.04,-6.41,-6.5,-6.58,-10.94,18.82,14.72,11.18,11.08,10.02,9.62,5.45,-2.97,-5.69,-7.74,-9.75,-11.03,-13.59,-14.82,-15.09,-15.99,17.54,17.49,17.42,-2.17,-3.91,-4.34,-5.72,-6.12,-6.31,-6.5,-7.71,-7.81,-9.46,-9.91,23.28,22.99,19.64,-2.09,-4.8,-5.14,-5.5,-5.76,-6.95,-6.96,-6.96,-7.04,-8.94,-10.73,-10.74]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"b69b4433b313914e509496401952b5b2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-016097762922c10341f3" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-016097762922c10341f3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Unskilled workers","Sixth and seventh decile","Fourth and fifth decile","Tenth decile","Secondary education","Eighth and ninth  decile","Higher-grade service class","Lower-grade service class","Tertiary technical education","Skilled workers","Skilled workers","Secondary education","Fourth and fifth decile","Tertiary technical education","Sixth and seventh decile","Unskilled workers","Lower-grade service class","Second and third decile","Eighth and ninth  decile","No formal education","Tenth decile","Higher-grade service class","Tertiary universitary education","First  decile","Retired","Higher-grade service class","Tertiary universitary education","Tenth decile","Lower-grade service class","Tertiary technical education","No formal education","First  decile","Sixth and seventh decile","Retired","Fourth and fifth decile","Second and third decile","Unskilled workers","Primary education","Skilled workers","Secondary education"],"Cla/Mod":[86.45,98.6,52.76,27.36,8.68,7.87,6.58,2.5,8.49,6.11,2.25,4.91,6,4.91,93.5,91.3,92.11,89.71,89.51,91.32,87.72,83.88,81.67,47.24,28.75,23.03,26.8,1.4,13.55,74.72,59.2,68.75,7.37,4.29,0,0,2.62,0,1.32,1.32,0,0,1.58,0.21],"Mod/Cla":[73.12,55.73,26.48,35.57,7.51,9.49,7.91,1.58,15.81,7.51,1.58,5.53,8.3,12.25,53.15,38.74,25.23,28.29,24.59,18.02,22.52,22.97,22.88,5.41,4.14,3.69,6.04,0.18,2.61,81.1,90.24,67.07,12.8,9.15,0,0,4.88,0,2.44,2.44,0,0,6.1,0.61],"Global":[14.01,9.36,8.32,21.55,14.34,19.97,19.91,10.48,30.84,20.37,11.66,18.66,22.92,41.32,41.32,30.84,19.91,22.92,19.97,14.34,18.66,19.91,20.37,8.32,10.48,11.66,16.37,9.36,14.01,11.66,16.37,10.48,18.66,22.92,8.32,9.36,19.97,14.01,19.91,19.91,14.34,21.55,41.32,30.84],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0],"v.test":[25.75,23.82,9.9,5.66,-3.59,-4.86,-5.66,-5.9,-5.94,-6.04,-6.41,-6.5,-6.58,-10.94,16.34,11.66,9.27,8.71,7.9,7.3,6.7,5.08,4.09,-6.33,-12.31,-14.81,-16.8,-19.56,-19.85,23.28,22.99,19.64,-2.09,-4.8,-5.14,-5.5,-5.76,-6.95,-6.96,-6.96,-7.04,-8.94,-10.73,-10.74]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"2897c7e21b6fac739ad4b234048113e9"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e0ef379eae54f9f4003f" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e0ef379eae54f9f4003f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],"variable":["educ_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final"],"categoria":["Secondary education","Skilled workers","Primary education","Unskilled workers","Fourth and fifth decile","Second and third decile","Retired","Sixth and seventh decile","First  decile","No formal education","Tertiary technical education","Lower-grade service class","Tenth decile","Tertiary universitary education","Higher-grade service class","Higher-grade service class","Tertiary universitary education","Tenth decile","Lower-grade service class","Tertiary technical education","No formal education","First  decile","Sixth and seventh decile","Retired","Fourth and fifth decile","Second and third decile","Unskilled workers","Primary education","Skilled workers","Secondary education"],"Cla/Mod":[99.79,98.42,100,100,98.68,98.68,100,97.38,100,100,95.71,92.63,31.25,40.8,25.28,74.72,59.2,68.75,7.37,4.29,0,0,2.62,0,1.32,1.32,0,0,1.58,0.21],"Mod/Cla":[34.48,45.56,24.14,16.07,22.01,22.01,15.7,21.79,10.49,9.32,24.58,19.37,3.67,7.48,3.3,81.1,90.24,67.07,12.8,9.15,0,0,4.88,0,2.44,2.44,0,0,6.1,0.61],"Global":[30.84,41.32,21.55,14.34,19.91,19.91,14.01,19.97,9.36,8.32,22.92,18.66,10.48,16.37,11.66,11.66,16.37,10.48,18.66,22.92,8.32,9.36,19.97,14.01,19.91,19.91,14.34,21.55,41.32,30.84],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0],"v.test":[10.74,10.73,8.94,7.04,6.96,6.96,6.95,5.76,5.5,5.14,4.8,2.09,-19.64,-22.99,-23.28,23.28,22.99,19.64,-2.09,-4.8,-5.14,-5.5,-5.76,-6.95,-6.96,-6.96,-7.04,-8.94,-10.73,-10.74]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"8ea6869b374e8168903d3d3fd64bafdb"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="elsoc-2019" class="level2">
+<h2 class="anchored" data-anchor-id="elsoc-2019">ELSOC 2019</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">MCA</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Class 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Class 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Class 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">Class 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-6" role="tab" aria-controls="tabset-2-6" aria-selected="false" href="">Class 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-69f05db6f54abce3b850" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-69f05db6f54abce3b850">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","6","6","6","6","6","6","6","6","6","6","6","6","6","6","6","6"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","clase_final","clase_final","income_cat_final","income_cat_final","educ_cat_final","educ_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Fourth and fifth decile","Unskilled workers","Tertiary technical education","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary universitary education","Sixth and seventh decile","Eighth and ninth  decile","Secondary education","Skilled workers","Second and third decile","Secondary education","Unskilled workers","No formal education","Eighth and ninth  decile","First  decile","Lower-grade service class","Skilled workers","Retired","Higher-grade service class","Tenth decile","Fourth and fifth decile","Tertiary technical education","Primary education","Tertiary universitary education","Primary education","Fourth and fifth decile","Unskilled workers","Lower-grade service class","Sixth and seventh decile","Skilled workers","Eighth and ninth  decile","Retired","Tertiary technical education","Higher-grade service class","No formal education","First  decile","Tenth decile","Tertiary universitary education","Skilled workers","Sixth and seventh decile","Tertiary technical education","Secondary education","Eighth and ninth  decile","Retired","First  decile","No formal education","Lower-grade service class","Second and third decile","Primary education","Unskilled workers","Lower-grade service class","Eighth and ninth  decile","Tertiary universitary education","Tertiary technical education","Higher-grade service class","Unskilled workers","Fourth and fifth decile","Sixth and seventh decile","Second and third decile","No formal education","First  decile","Skilled workers","Secondary education","Primary education","Retired","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Lower-grade service class","No formal education","First  decile","Retired","Primary education","Second and third decile","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Secondary education","Skilled workers"],"Cla/Mod":[66.04,79.19,50.52,33.15,9.09,6.31,4.07,0,1.42,0,1.95,1.69,1.2,2.83,1.81,50,38.05,39.52,34.02,9.35,4.06,5.67,9.75,5.92,0,0,2.7,2.26,0,0,58.08,45.7,35.99,11.35,9.66,11.42,6.24,4.36,5.2,0,0,0,0,0,72.98,70.53,65.38,41.98,32.85,23.68,16.75,15.46,12.77,14.68,7.95,12.06,56.74,38.85,24.57,23.08,3.19,6.12,4.18,3.86,3.48,0,0,4.04,3.46,0.82,0,38.2,65.43,51.66,11.51,12.06,0,0,0,0,0,0,0,0,0,0,0],"Mod/Cla":[80.61,59.32,37.26,46.01,14.07,12.93,6.84,0,1.52,0,3.04,2.66,1.9,6.84,4.94,63.21,76.1,66.98,20.75,12.26,2.52,5.03,22.01,5.97,0,0,3.46,3.14,0,0,65.84,57.76,60.25,9.94,12.42,25.47,8.07,4.35,7.14,0,0,0,0,0,68.95,38.42,38.03,35.13,18.03,10,4.34,3.95,4.74,7.76,3.82,8.55,70.18,71.05,44.3,44.74,2.63,14.47,7.46,7.02,6.14,0,0,12.72,9.65,1.32,0,100,78.34,69.43,30.57,21.66,0,0,0,0,0,0,0,0,0,0,0],"Global":[15.67,9.62,9.47,17.82,19.87,26.32,21.58,9.18,13.77,10.3,20.07,20.21,20.36,31.05,35.06,19.63,31.05,26.32,9.47,20.36,9.62,13.77,35.06,15.67,9.18,10.3,19.87,21.58,17.82,20.07,17.82,19.87,26.32,13.77,20.21,35.06,20.36,15.67,21.58,9.18,9.47,9.62,10.3,20.07,35.06,20.21,21.58,31.05,20.36,15.67,9.62,9.47,13.77,19.63,17.82,26.32,13.77,20.36,20.07,21.58,9.18,26.32,19.87,20.21,19.63,9.47,9.62,35.06,31.05,17.82,15.67,20.07,9.18,10.3,20.36,13.77,9.47,9.62,15.67,17.82,19.63,19.87,20.21,21.58,26.32,31.05,35.06],"p.value":[0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.03,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"v.test":[26.39,23.42,13.69,11.5,-2.6,-5.6,-6.87,-7.07,-7.37,-7.54,-8.59,-8.9,-9.48,-10.12,-12.38,19.13,18.18,16.79,6.76,-4.07,-5.28,-5.4,-5.46,-5.65,-7.89,-8.41,-9.18,-10.07,-11.47,-12.29,21.71,16.8,14.16,-2.23,-3.95,-4,-6.46,-6.82,-7.53,-7.95,-8.09,-8.15,-8.47,-12.38,24.88,15.54,13.69,3.05,-2.02,-5.56,-6.54,-6.93,-9.73,-10.95,-13.92,-14.87,21.61,17.88,8.88,8.35,-4.08,-4.52,-5.44,-5.79,-6.03,-6.63,-6.69,-8.03,-8.08,-8.36,-8.83,23.54,22.88,19.22,3.16,2.81,-5.36,-5.4,-7.17,-7.73,-8.19,-8.25,-8.33,-8.66,-9.77,-10.83,-11.71]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"5744687e674b466b6831043b44744b1f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 26.39</em>); <strong>First decile</strong> (<em>v_test = 23.42</em>) and <strong>No formal education</strong> (<em>v_test = 13.69</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Second and third decile</strong> (<em>v_test = 19.13</em>); <strong>Secondary education</strong> (<em>v_test = 18.18</em>) and <strong>Unskilled workers</strong> (<em>v_test = 16.79</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Primary education</strong> (<em>v_test = 21.71</em>); <strong>Fourth and fifth decile</strong> (<em>v_test = 16.8</em>) and <strong>Unskilled workers</strong> (<em>v_test = 14.16</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 24.88</em>); <strong>Sixth and seventh decile</strong> (<em>v_test = 15.54</em>) and <strong>Tertiary technical education</strong> (<em>v_test = 13.69</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Lower-grade service class</strong> (<em>v_test = 21.61</em>); <strong>Eighth and ninth decile</strong> (<em>v_test = 17.88</em>) and <strong>Tertiary universitary education</strong> (<em>v_test = 8.88</em>)</p></li>
+<li><p>Cluster 6 is characterized by an overrepresentation of: <strong>Tertiary universitary education</strong> (<em>v_test = 23.54</em>); <strong>Higher-grade service class</strong> (<em>v_test = 22.88</em>) and <strong>Tenth decile</strong> (<em>v_test = 19.22</em>)</p></li>
+</ul>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 26.39</em>); <strong>First decile</strong> (<em>v_test = 23.42</em>) and <strong>No formal education</strong> (<em>v_test = 13.69</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Second and third decile</strong> (<em>v_test = 19.13</em>); <strong>Secondary education</strong> (<em>v_test = 18.18</em>) and <strong>Unskilled workers</strong> (<em>v_test = 16.79</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Primary education</strong> (<em>v_test = 21.71</em>); <strong>Fourth and fifth decile</strong> (<em>v_test = 16.8</em>) and <strong>Unskilled workers</strong> (<em>v_test = 14.16</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 24.88</em>); <strong>Sixth and seventh decile</strong> (<em>v_test = 15.54</em>) and <strong>Tertiary technical education</strong> (<em>v_test = 13.69</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Lower-grade service class</strong> (<em>v_test = 21.61</em>); <strong>Eighth and ninth decile</strong> (<em>v_test = 17.88</em>) and <strong>Tertiary universitary education</strong> (<em>v_test = 8.88</em>)</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e3b16ff687c51ad7264e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e3b16ff687c51ad7264e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","clase_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Fourth and fifth decile","Unskilled workers","Tertiary technical education","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary universitary education","Sixth and seventh decile","Eighth and ninth  decile","Secondary education","Skilled workers","Unskilled workers","Second and third decile","Secondary education","Primary education","Fourth and fifth decile","Sixth and seventh decile","Lower-grade service class","Skilled workers","Eighth and ninth  decile","Retired","First  decile","Higher-grade service class","Tenth decile","Tertiary technical education","Tertiary universitary education","Skilled workers","Sixth and seventh decile","Tertiary technical education","Secondary education","Eighth and ninth  decile","Retired","First  decile","No formal education","Lower-grade service class","Second and third decile","Primary education","Unskilled workers","Lower-grade service class","Eighth and ninth  decile","Tertiary universitary education","Tertiary technical education","Higher-grade service class","Unskilled workers","Fourth and fifth decile","Sixth and seventh decile","Second and third decile","No formal education","First  decile","Skilled workers","Secondary education","Primary education","Retired","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Lower-grade service class","No formal education","First  decile","Retired","Primary education","Second and third decile","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Secondary education","Skilled workers"],"Cla/Mod":[66.04,79.19,50.52,33.15,9.09,6.31,4.07,0,1.42,0,1.95,1.69,1.2,2.83,1.81,75.51,67.41,51.73,58.08,48.4,23.91,17.02,21.17,15.59,10.28,4.06,0,0,7.47,0,72.98,70.53,65.38,41.98,32.85,23.68,16.75,15.46,12.77,14.68,7.95,12.06,56.74,38.85,24.57,23.08,3.19,6.12,4.18,3.86,3.48,0,0,4.04,3.46,0.82,0,38.2,65.43,51.66,11.51,12.06,0,0,0,0,0,0,0,0,0,0,0],"Mod/Cla":[80.61,59.32,37.26,46.01,14.07,12.93,6.84,0,1.52,0,3.04,2.66,1.9,6.84,4.94,63.59,42.34,51.41,33.12,30.78,15.47,7.5,23.75,10.16,5.16,1.25,0,0,5.16,0,68.95,38.42,38.03,35.13,18.03,10,4.34,3.95,4.74,7.76,3.82,8.55,70.18,71.05,44.3,44.74,2.63,14.47,7.46,7.02,6.14,0,0,12.72,9.65,1.32,0,100,78.34,69.43,30.57,21.66,0,0,0,0,0,0,0,0,0,0,0],"Global":[15.67,9.62,9.47,17.82,19.87,26.32,21.58,9.18,13.77,10.3,20.07,20.21,20.36,31.05,35.06,26.32,19.63,31.05,17.82,19.87,20.21,13.77,35.06,20.36,15.67,9.62,9.18,10.3,21.58,20.07,35.06,20.21,21.58,31.05,20.36,15.67,9.62,9.47,13.77,19.63,17.82,26.32,13.77,20.36,20.07,21.58,9.18,26.32,19.87,20.21,19.63,9.47,9.62,35.06,31.05,17.82,15.67,20.07,9.18,10.3,20.36,13.77,9.47,9.62,15.67,17.82,19.63,19.87,20.21,21.58,26.32,31.05,35.06],"p.value":[0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.04,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"v.test":[26.39,23.42,13.69,11.5,-2.6,-5.6,-6.87,-7.07,-7.37,-7.54,-8.59,-8.9,-9.48,-10.12,-12.38,25.37,16.85,13.18,11.77,8.12,-3.66,-5.8,-7.36,-8.1,-9.55,-9.94,-12,-12.78,-13.36,-18.62,24.88,15.54,13.69,3.05,-2.02,-5.56,-6.54,-6.93,-9.73,-10.95,-13.92,-14.87,21.61,17.88,8.88,8.35,-4.08,-4.52,-5.44,-5.79,-6.03,-6.63,-6.69,-8.03,-8.08,-8.36,-8.83,23.54,22.88,19.22,3.16,2.81,-5.36,-5.4,-7.17,-7.73,-8.19,-8.25,-8.33,-8.66,-9.77,-10.83,-11.71]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"28a6649965dd09981112ebf962770fa4"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-d4014e77944ef04c5fef" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d4014e77944ef04c5fef">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","clase_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Fourth and fifth decile","Unskilled workers","Tertiary technical education","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary universitary education","Sixth and seventh decile","Eighth and ninth  decile","Secondary education","Skilled workers","Unskilled workers","Second and third decile","Secondary education","Primary education","Fourth and fifth decile","Sixth and seventh decile","Lower-grade service class","Skilled workers","Eighth and ninth  decile","Retired","First  decile","Higher-grade service class","Tenth decile","Tertiary technical education","Tertiary universitary education","Tertiary technical education","Skilled workers","Sixth and seventh decile","Eighth and ninth  decile","Lower-grade service class","Tertiary universitary education","Fourth and fifth decile","Higher-grade service class","First  decile","Retired","No formal education","Second and third decile","Unskilled workers","Primary education","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Lower-grade service class","No formal education","First  decile","Retired","Primary education","Second and third decile","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Secondary education","Skilled workers"],"Cla/Mod":[66.04,79.19,50.52,33.15,9.09,6.31,4.07,0,1.42,0,1.95,1.69,1.2,2.83,1.81,75.51,67.41,51.73,58.08,48.4,23.91,17.02,21.17,15.59,10.28,4.06,0,0,7.47,0,88.46,77.02,74.4,71.7,69.5,59.85,42.51,34.57,16.75,23.68,15.46,18.16,18.18,8.77,38.2,65.43,51.66,11.51,12.06,0,0,0,0,0,0,0,0,0,0,0],"Mod/Cla":[80.61,59.32,37.26,46.01,14.07,12.93,6.84,0,1.52,0,3.04,2.66,1.9,6.84,4.94,63.59,42.34,51.41,33.12,30.78,15.47,7.5,23.75,10.16,5.16,1.25,0,0,5.16,0,39.57,55.97,31.17,30.26,19.84,24.9,17.51,6.58,3.34,7.69,3.04,7.39,9.92,3.24,100,78.34,69.43,30.57,21.66,0,0,0,0,0,0,0,0,0,0,0],"Global":[15.67,9.62,9.47,17.82,19.87,26.32,21.58,9.18,13.77,10.3,20.07,20.21,20.36,31.05,35.06,26.32,19.63,31.05,17.82,19.87,20.21,13.77,35.06,20.36,15.67,9.62,9.18,10.3,21.58,20.07,21.58,35.06,20.21,20.36,13.77,20.07,19.87,9.18,9.62,15.67,9.47,19.63,26.32,17.82,20.07,9.18,10.3,20.36,13.77,9.47,9.62,15.67,17.82,19.63,19.87,20.21,21.58,26.32,31.05,35.06],"p.value":[0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"v.test":[26.39,23.42,13.69,11.5,-2.6,-5.6,-6.87,-7.07,-7.37,-7.54,-8.59,-8.9,-9.48,-10.12,-12.38,25.37,16.85,13.18,11.77,8.12,-3.66,-5.8,-7.36,-8.1,-9.55,-9.94,-12,-12.78,-13.36,-18.62,19.99,19.5,12.08,10.85,7.75,5.27,-2.59,-3.96,-9.68,-9.8,-10.03,-13.92,-16.78,-17.79,23.54,22.88,19.22,3.16,2.81,-5.36,-5.4,-7.17,-7.73,-8.19,-8.25,-8.33,-8.66,-9.77,-10.83,-11.71]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"c1144d96d59e00c0fbcf437e2e9040dd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-6eff2a865bf3524ed241" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6eff2a865bf3524ed241">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3"],"variable":["clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final"],"categoria":["Retired","First  decile","No formal education","Primary education","Fourth and fifth decile","Unskilled workers","Tertiary technical education","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary universitary education","Sixth and seventh decile","Eighth and ninth  decile","Secondary education","Skilled workers","Skilled workers","Secondary education","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Fourth and fifth decile","Eighth and ninth  decile","Second and third decile","Lower-grade service class","Primary education","No formal education","Tertiary universitary education","Tenth decile","Higher-grade service class","First  decile","Retired","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Lower-grade service class","No formal education","First  decile","Retired","Primary education","Second and third decile","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Secondary education","Skilled workers"],"Cla/Mod":[66.04,79.19,50.52,33.15,9.09,6.31,4.07,0,1.42,0,1.95,1.69,1.2,2.83,1.81,98.19,97.17,98.31,95.93,93.69,90.91,87.29,85.57,86.52,66.85,49.48,59.85,48.34,34.57,20.81,33.96,38.2,65.43,51.66,11.51,12.06,0,0,0,0,0,0,0,0,0,0,0],"Mod/Cla":[80.61,59.32,37.26,46.01,14.07,12.93,6.84,0,1.52,0,3.04,2.66,1.9,6.84,4.94,43.3,37.96,25,26.04,31.02,22.73,22.36,21.13,14.99,14.99,5.9,15.11,6.27,3.99,2.52,6.7,100,78.34,69.43,30.57,21.66,0,0,0,0,0,0,0,0,0,0,0],"Global":[15.67,9.62,9.47,17.82,19.87,26.32,21.58,9.18,13.77,10.3,20.07,20.21,20.36,31.05,35.06,35.06,31.05,20.21,21.58,26.32,19.87,20.36,19.63,13.77,17.82,9.47,20.07,10.3,9.18,9.62,15.67,20.07,9.18,10.3,20.36,13.77,9.47,9.62,15.67,17.82,19.63,19.87,20.21,21.58,26.32,31.05,35.06],"p.value":[0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"v.test":[26.39,23.42,13.69,11.5,-2.6,-5.6,-6.87,-7.07,-7.37,-7.54,-8.59,-8.9,-9.48,-10.12,-12.38,17.54,15.03,12.55,10.92,10.37,6.82,4.59,3.46,3.26,-6.3,-9.85,-10.39,-10.71,-14.19,-18.93,-19.88,23.54,22.88,19.22,3.16,2.81,-5.36,-5.4,-7.17,-7.73,-8.19,-8.25,-8.33,-8.66,-9.77,-10.83,-11.71]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"7a257a43b1898ab5ffb32838f0f331e1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-6-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-76b1673f5ba4e98f1248" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-76b1673f5ba4e98f1248">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],"variable":["clase_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final"],"categoria":["Skilled workers","Secondary education","Unskilled workers","Tertiary technical education","Sixth and seventh decile","Fourth and fifth decile","Second and third decile","Primary education","Retired","First  decile","No formal education","Lower-grade service class","Eighth and ninth  decile","Tenth decile","Higher-grade service class","Tertiary universitary education","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Lower-grade service class","No formal education","First  decile","Retired","Primary education","Second and third decile","Fourth and fifth decile","Sixth and seventh decile","Tertiary technical education","Unskilled workers","Secondary education","Skilled workers"],"Cla/Mod":[100,100,100,100,100,100,100,100,100,100,100,87.94,88.49,48.34,34.57,61.8,38.2,65.43,51.66,11.51,12.06,0,0,0,0,0,0,0,0,0,0,0],"Mod/Cla":[37.97,33.63,28.5,23.37,21.89,21.52,21.26,19.3,16.98,10.42,10.26,13.11,19.51,5.39,3.44,13.43,100,78.34,69.43,30.57,21.66,0,0,0,0,0,0,0,0,0,0,0],"Global":[35.06,31.05,26.32,21.58,20.21,19.87,19.63,17.82,15.67,9.62,9.47,13.77,20.36,10.3,9.18,20.07,20.07,9.18,10.3,20.36,13.77,9.47,9.62,15.67,17.82,19.63,19.87,20.21,21.58,26.32,31.05,35.06],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"v.test":[11.71,10.83,9.77,8.66,8.33,8.25,8.19,7.73,7.17,5.4,5.36,-2.81,-3.16,-19.22,-22.88,-23.54,23.54,22.88,19.22,3.16,2.81,-5.36,-5.4,-7.17,-7.73,-8.19,-8.25,-8.33,-8.66,-9.77,-10.83,-11.71]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"d6faacd946e8680d40533e34f6f2185b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="elsoc-2022" class="level2">
+<h2 class="anchored" data-anchor-id="elsoc-2022">ELSOC 2022</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">MCA</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Class 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Class 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Class 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false" href="">Class 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-6" role="tab" aria-controls="tabset-3-6" aria-selected="false" href="">Class 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-ba87750da1fec4db446f" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ba87750da1fec4db446f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","6","6","6","6","6","6","6","6","6","6","6","6","6","6","6","6"],"variable":["clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final"],"categoria":["Retired","First  decile","No formal education","Second and third decile","Primary education","Lower-grade service class","Fourth and fifth decile","Unskilled workers","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Sixth and seventh decile","Secondary education","Skilled workers","Unskilled workers","Secondary education","Second and third decile","Sixth and seventh decile","No formal education","Retired","First  decile","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary technical education","Eighth and ninth  decile","Tertiary universitary education","Skilled workers","Fourth and fifth decile","Primary education","Skilled workers","Retired","First  decile","Second and third decile","Unskilled workers","Sixth and seventh decile","No formal education","Higher-grade service class","Tenth decile","Lower-grade service class","Eighth and ninth  decile","Tertiary universitary education","Skilled workers","Eighth and ninth  decile","Secondary education","Tertiary technical education","Sixth and seventh decile","Second and third decile","No formal education","First  decile","Unskilled workers","Primary education","Higher-grade service class","Tenth decile","Lower-grade service class","Fourth and fifth decile","Retired","Tertiary universitary education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Tertiary technical education","Tenth decile","Unskilled workers","Fourth and fifth decile","Higher-grade service class","No formal education","First  decile","Secondary education","Second and third decile","Retired","Primary education","Skilled workers","Higher-grade service class","Tertiary universitary education","Tenth decile","Eighth and ninth  decile","Skilled workers","Fourth and fifth decile","Tertiary technical education","Retired","No formal education","First  decile","Sixth and seventh decile","Lower-grade service class","Unskilled workers","Primary education","Secondary education","Second and third decile"],"Cla/Mod":[61.72,76.62,63.7,31.52,28.62,5.53,7.41,7.18,5.13,0,0,2.18,1.88,3.85,2.37,59.31,35.09,39.09,26.33,27.41,12.46,5.84,0,1.51,0,1.52,0,0,1.09,53.09,42.11,31.51,10.09,7.14,8.79,7.45,6.58,0,0,0,0,0.62,0,49.18,49.53,36.51,32.22,28.21,14.85,8.15,8.44,11.17,6.25,0,0,0,2.47,2.08,0.85,92.96,36.18,34.17,29.48,25.61,12.23,11.42,3.31,0.74,1.3,8.11,5.76,5.64,2.3,3.1,96.69,57.83,74.39,28.04,12.75,9.57,8.51,8.01,0,0.65,2.82,0,2.66,1.32,3.65,0],"Mod/Cla":[80.31,45.56,33.2,40.15,33.59,4.25,9.27,10.42,6.95,0,0,2.7,2.32,7.34,5.02,81.39,63.14,47.08,30.66,13.5,15.33,3.28,0,1.09,0,1.82,0,0,2.19,73.19,54.47,73.62,14.47,4.68,12.34,11.91,8.94,0,0,0,0,0.85,0,84.64,49.84,56.43,33.23,28.21,15.36,3.45,4.08,13.17,5.96,0,0,0,2.51,2.19,0.94,68.01,46.69,40.07,35.66,15.44,16.91,13.6,1.84,0.37,0.74,14.71,6.99,6.99,2.57,6.25,57.71,80.24,48.22,35.57,27.67,12.25,11.07,10.67,0,0.4,3.56,0,3.95,1.58,7.11,0],"Global":[20.91,9.55,8.37,20.47,18.86,12.34,20.1,23.33,21.77,9.37,10.17,19.91,19.79,30.58,34.06,23.33,30.58,20.47,19.79,8.37,20.91,9.55,9.37,12.34,10.17,20.41,19.91,21.77,34.06,20.1,18.86,34.06,20.91,9.55,20.47,23.33,19.79,8.37,9.37,10.17,12.34,19.91,21.77,34.06,19.91,30.58,20.41,19.79,20.47,8.37,9.55,23.33,18.86,9.37,10.17,12.34,20.1,20.91,21.77,12.34,21.77,19.79,20.41,10.17,23.33,20.1,9.37,8.37,9.55,30.58,20.47,20.91,18.86,34.06,9.37,21.77,10.17,19.91,34.06,20.1,20.41,20.91,8.37,9.55,19.79,12.34,23.33,18.86,30.58,20.47],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0,0,0],"v.test":[23.29,18.03,13.28,8.01,6.22,-4.76,-5.07,-5.72,-6.93,-7.17,-7.51,-8.81,-9.03,-9.78,-12.1,23.12,12.32,11.07,4.74,3.17,-2.55,-4.26,-7.41,-7.44,-7.76,-9.91,-11.38,-12,-14.17,19.66,13.55,13.46,-2.7,-2.92,-3.48,-4.73,-4.84,-6.35,-6.77,-7.09,-7.92,-9.65,-10.99,21.07,13.81,10.79,6.06,4.08,-2.58,-3.83,-4,-5.01,-7.23,-8.1,-8.49,-9.46,-10.16,-10.73,-12.12,26.55,10.18,8.58,6.47,3,-2.81,-3.02,-5.37,-6.41,-6.54,-6.56,-6.61,-6.78,-8.76,-11.79,24.24,22.37,18.26,6.4,-2.36,-3.53,-4.23,-4.61,-6.64,-6.65,-8.09,-8.26,-9.07,-9.12,-9.76,-11.05]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"7f2e8babbd09cd800f9033f04f4e600f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 23.29</em>); <strong>First decile</strong> (<em>v_test = 18.03</em>) and <strong>No formal education</strong> (<em>v_test = 13.28</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Unskilled workers</strong> (<em>v_test = 23.12</em>); <strong>Secondary education</strong> (<em>v_test = 12.32</em>) and <strong>Second and third decile</strong> (<em>v_test = 11.07</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Fourth and fifth decile</strong> (<em>v_test = 19.66</em>); <strong>Primary education</strong> (<em>v_test = 13.55</em>) and <strong>Skilled workers</strong> (<em>v_test = 13.46</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 21.07</em>); <strong>Eighth and ninth decile</strong> (<em>v_test = 13.81</em>) and <strong>Secondary education</strong> (<em>v_test = 10.79</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Lower-grade service class</strong> (<em>v_test = 26.55</em>); <strong>Tertiary universitary education</strong> (<em>v_test = 10.18</em>) and <strong>Sixth and seventh decile</strong> (<em>v_test = 8.58</em>)</p></li>
+<li><p>Cluster 6 is characterized by an overrepresentation of: <strong>Higher-grade service class</strong> (<em>v_test = 24.24</em>); <strong>Tertiary universitary education</strong> (<em>v_test = 22.37</em>) and <strong>Tenth decile</strong> (<em>v_test = 18.26</em>)</p></li>
+</ul>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-fb9ef8620365342b5f87" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fb9ef8620365342b5f87">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5"],"variable":["clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final"],"categoria":["Retired","First  decile","No formal education","Second and third decile","Primary education","Lower-grade service class","Fourth and fifth decile","Unskilled workers","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Sixth and seventh decile","Secondary education","Skilled workers","Unskilled workers","Secondary education","Second and third decile","Sixth and seventh decile","No formal education","Retired","First  decile","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary technical education","Eighth and ninth  decile","Tertiary universitary education","Skilled workers","Skilled workers","Fourth and fifth decile","Secondary education","Eighth and ninth  decile","Primary education","Tertiary technical education","Second and third decile","First  decile","No formal education","Unskilled workers","Retired","Higher-grade service class","Tenth decile","Lower-grade service class","Tertiary universitary education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Tertiary technical education","Tenth decile","Unskilled workers","Fourth and fifth decile","Higher-grade service class","No formal education","First  decile","Secondary education","Second and third decile","Retired","Primary education","Skilled workers","Higher-grade service class","Tertiary universitary education","Tenth decile","Eighth and ninth  decile","Skilled workers","Fourth and fifth decile","Tertiary technical education","Retired","No formal education","First  decile","Sixth and seventh decile","Lower-grade service class","Unskilled workers","Primary education","Secondary education","Second and third decile"],"Cla/Mod":[61.72,76.62,63.7,31.52,28.62,5.53,7.41,7.18,5.13,0,0,2.18,1.88,3.85,2.37,59.31,35.09,39.09,26.33,27.41,12.46,5.84,0,1.51,0,1.52,0,0,1.09,80.69,55.56,49.29,50.16,48.36,45.59,23.64,15.58,8.15,18.62,12.17,0,0,0,0.85,92.96,36.18,34.17,29.48,25.61,12.23,11.42,3.31,0.74,1.3,8.11,5.76,5.64,2.3,3.1,96.69,57.83,74.39,28.04,12.75,9.57,8.51,8.01,0,0.65,2.82,0,2.66,1.32,3.65,0],"Mod/Cla":[80.31,45.56,33.2,40.15,33.59,4.25,9.27,10.42,6.95,0,0,2.7,2.32,7.34,5.02,81.39,63.14,47.08,30.66,13.5,15.33,3.28,0,1.09,0,1.82,0,0,2.19,79.96,32.49,43.86,29.06,26.53,27.08,14.08,4.33,1.99,12.64,7.4,0,0,0,0.54,68.01,46.69,40.07,35.66,15.44,16.91,13.6,1.84,0.37,0.74,14.71,6.99,6.99,2.57,6.25,57.71,80.24,48.22,35.57,27.67,12.25,11.07,10.67,0,0.4,3.56,0,3.95,1.58,7.11,0],"Global":[20.91,9.55,8.37,20.47,18.86,12.34,20.1,23.33,21.77,9.37,10.17,19.91,19.79,30.58,34.06,23.33,30.58,20.47,19.79,8.37,20.91,9.55,9.37,12.34,10.17,20.41,19.91,21.77,34.06,34.06,20.1,30.58,19.91,18.86,20.41,20.47,9.55,8.37,23.33,20.91,9.37,10.17,12.34,21.77,12.34,21.77,19.79,20.41,10.17,23.33,20.1,9.37,8.37,9.55,30.58,20.47,20.91,18.86,34.06,9.37,21.77,10.17,19.91,34.06,20.1,20.41,20.91,8.37,9.55,19.79,12.34,23.33,18.86,30.58,20.47],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0,0,0],"v.test":[23.29,18.03,13.28,8.01,6.22,-4.76,-5.07,-5.72,-6.93,-7.17,-7.51,-8.81,-9.03,-9.78,-12.1,23.12,12.32,11.07,4.74,3.17,-2.55,-4.26,-7.41,-7.44,-7.76,-9.91,-11.38,-12,-14.17,28.67,8.78,8.26,6.52,5.59,4.73,-4.7,-5.44,-7.38,-7.6,-10.28,-11.39,-11.92,-13.28,-17.56,26.55,10.18,8.58,6.47,3,-2.81,-3.02,-5.37,-6.41,-6.54,-6.56,-6.61,-6.78,-8.76,-11.79,24.24,22.37,18.26,6.4,-2.36,-3.53,-4.23,-4.61,-6.64,-6.65,-8.09,-8.26,-9.07,-9.12,-9.76,-11.05]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"a9c610816be5fa03965f27f073fdba5f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>Cluster 1 is characterized by an overrepresentation of: <strong>Retired</strong> (<em>v_test = 23.29</em>); <strong>First decile</strong> (<em>v_test = 18.03</em>) and <strong>No formal education</strong> (<em>v_test = 13.28</em>)</p></li>
+<li><p>Cluster 2 is characterized by an overrepresentation of: <strong>Unskilled workers</strong> (<em>v_test = 23.12</em>); <strong>Secondary education</strong> (<em>v_test = 12.32</em>) and <strong>Second and third decile</strong> (<em>v_test = 11.07</em>)</p></li>
+<li><p>Cluster 3 is characterized by an overrepresentation of: <strong>Fourth and fifth decile</strong> (<em>v_test = 19.66</em>); <strong>Primary education</strong> (<em>v_test = 13.55</em>) and <strong>Skilled workers</strong> (<em>v_test = 13.46</em>)</p></li>
+<li><p>Cluster 4 is characterized by an overrepresentation of: <strong>Skilled workers</strong> (<em>v_test = 21.07</em>); <strong>Eighth and ninth decile</strong> (<em>v_test = 13.81</em>) and <strong>Secondary education</strong> (<em>v_test = 10.79</em>)</p></li>
+<li><p>Cluster 5 is characterized by an overrepresentation of: <strong>Lower-grade service class</strong> (<em>v_test = 26.55</em>); <strong>Tertiary universitary education</strong> (<em>v_test = 10.18</em>) and <strong>Sixth and seventh decile</strong> (<em>v_test = 8.58</em>)</p></li>
+</ul>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-6f70fb6c7050d847181f" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6f70fb6c7050d847181f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3","4","4","4","4","4","4","4","4","4","4","4","4","4","4","4","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5"],"variable":["clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","clase_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","income_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final"],"categoria":["Retired","First  decile","No formal education","Second and third decile","Primary education","Lower-grade service class","Fourth and fifth decile","Unskilled workers","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Sixth and seventh decile","Secondary education","Skilled workers","Unskilled workers","Secondary education","Second and third decile","Sixth and seventh decile","No formal education","Retired","First  decile","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary technical education","Eighth and ninth  decile","Tertiary universitary education","Skilled workers","Skilled workers","Fourth and fifth decile","Secondary education","Eighth and ninth  decile","Primary education","Tertiary technical education","Second and third decile","First  decile","No formal education","Unskilled workers","Retired","Higher-grade service class","Tenth decile","Lower-grade service class","Tertiary universitary education","Lower-grade service class","Tertiary universitary education","Sixth and seventh decile","Tertiary technical education","Tenth decile","Unskilled workers","Fourth and fifth decile","Higher-grade service class","No formal education","First  decile","Secondary education","Second and third decile","Retired","Primary education","Skilled workers","Higher-grade service class","Tertiary universitary education","Tenth decile","Eighth and ninth  decile","Skilled workers","Fourth and fifth decile","Tertiary technical education","Retired","No formal education","First  decile","Sixth and seventh decile","Lower-grade service class","Unskilled workers","Primary education","Secondary education","Second and third decile"],"Cla/Mod":[61.72,76.62,63.7,31.52,28.62,5.53,7.41,7.18,5.13,0,0,2.18,1.88,3.85,2.37,59.31,35.09,39.09,26.33,27.41,12.46,5.84,0,1.51,0,1.52,0,0,1.09,80.69,55.56,49.29,50.16,48.36,45.59,23.64,15.58,8.15,18.62,12.17,0,0,0,0.85,92.96,36.18,34.17,29.48,25.61,12.23,11.42,3.31,0.74,1.3,8.11,5.76,5.64,2.3,3.1,96.69,57.83,74.39,28.04,12.75,9.57,8.51,8.01,0,0.65,2.82,0,2.66,1.32,3.65,0],"Mod/Cla":[80.31,45.56,33.2,40.15,33.59,4.25,9.27,10.42,6.95,0,0,2.7,2.32,7.34,5.02,81.39,63.14,47.08,30.66,13.5,15.33,3.28,0,1.09,0,1.82,0,0,2.19,79.96,32.49,43.86,29.06,26.53,27.08,14.08,4.33,1.99,12.64,7.4,0,0,0,0.54,68.01,46.69,40.07,35.66,15.44,16.91,13.6,1.84,0.37,0.74,14.71,6.99,6.99,2.57,6.25,57.71,80.24,48.22,35.57,27.67,12.25,11.07,10.67,0,0.4,3.56,0,3.95,1.58,7.11,0],"Global":[20.91,9.55,8.37,20.47,18.86,12.34,20.1,23.33,21.77,9.37,10.17,19.91,19.79,30.58,34.06,23.33,30.58,20.47,19.79,8.37,20.91,9.55,9.37,12.34,10.17,20.41,19.91,21.77,34.06,34.06,20.1,30.58,19.91,18.86,20.41,20.47,9.55,8.37,23.33,20.91,9.37,10.17,12.34,21.77,12.34,21.77,19.79,20.41,10.17,23.33,20.1,9.37,8.37,9.55,30.58,20.47,20.91,18.86,34.06,9.37,21.77,10.17,19.91,34.06,20.1,20.41,20.91,8.37,9.55,19.79,12.34,23.33,18.86,30.58,20.47],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0,0,0],"v.test":[23.29,18.03,13.28,8.01,6.22,-4.76,-5.07,-5.72,-6.93,-7.17,-7.51,-8.81,-9.03,-9.78,-12.1,23.12,12.32,11.07,4.74,3.17,-2.55,-4.26,-7.41,-7.44,-7.76,-9.91,-11.38,-12,-14.17,28.67,8.78,8.26,6.52,5.59,4.73,-4.7,-5.44,-7.38,-7.6,-10.28,-11.39,-11.92,-13.28,-17.56,26.55,10.18,8.58,6.47,3,-2.81,-3.02,-5.37,-6.41,-6.54,-6.56,-6.61,-6.78,-8.76,-11.79,24.24,22.37,18.26,6.4,-2.36,-3.53,-4.23,-4.61,-6.64,-6.65,-8.09,-8.26,-9.07,-9.12,-9.76,-11.05]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"a9c610816be5fa03965f27f073fdba5f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-3-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-5-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-fc2131f7ea52de0c2601" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fc2131f7ea52de0c2601">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3","3","3","3"],"variable":["clase_final","income_cat_final","educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","clase_final","educ_cat_final","clase_final","income_cat_final","income_cat_final","income_cat_final","educ_cat_final","clase_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","clase_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final"],"categoria":["Retired","First  decile","No formal education","Second and third decile","Primary education","Lower-grade service class","Fourth and fifth decile","Unskilled workers","Tertiary universitary education","Higher-grade service class","Tenth decile","Eighth and ninth  decile","Sixth and seventh decile","Secondary education","Skilled workers","Secondary education","Skilled workers","Unskilled workers","Fourth and fifth decile","Primary education","Second and third decile","Sixth and seventh decile","No formal education","First  decile","Retired","Higher-grade service class","Tenth decile","Lower-grade service class","Tertiary universitary education","Tertiary universitary education","Tenth decile","Lower-grade service class","Higher-grade service class","Eighth and ninth  decile","Tertiary technical education","Fourth and fifth decile","Unskilled workers","Retired","No formal education","First  decile","Skilled workers","Secondary education","Second and third decile","Primary education"],"Cla/Mod":[61.72,76.62,63.7,31.52,28.62,5.53,7.41,7.18,5.13,0,0,2.18,1.88,3.85,2.37,84.38,81.79,77.93,71.6,67.76,62.73,61.13,35.56,21.43,24.63,0,0,1.51,0.85,94.02,100,92.96,100,47.66,37.99,20.99,14.89,13.65,0.74,1.95,15.85,11.76,5.76,3.62],"Mod/Cla":[80.31,45.56,33.2,40.15,33.59,4.25,9.27,10.42,6.95,0,0,2.7,2.32,7.34,5.02,50.24,54.23,35.39,28.02,24.88,25,23.55,5.8,3.99,10.02,0,0,0.36,0.36,62.86,31.24,35.24,28.76,29.14,23.81,12.95,10.67,8.76,0.19,0.57,16.57,11.05,3.62,2.1],"Global":[20.91,9.55,8.37,20.47,18.86,12.34,20.1,23.33,21.77,9.37,10.17,19.91,19.79,30.58,34.06,30.58,34.06,23.33,20.1,18.86,20.47,19.79,8.37,9.55,20.91,9.37,10.17,12.34,21.77,21.77,10.17,12.34,9.37,19.91,20.41,20.1,23.33,20.91,8.37,9.55,34.06,30.58,20.47,18.86],"p.value":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0],"v.test":[23.29,18.03,13.28,8.01,6.22,-4.76,-5.07,-5.72,-6.93,-7.17,-7.51,-8.81,-9.03,-9.78,-12.1,18.24,18.07,12.04,8.26,6.4,4.64,3.9,-3.84,-7.98,-11.21,-15.11,-15.81,-16.74,-23.85,28.04,20.04,19.28,19.13,6.3,2.33,-5.11,-8.76,-8.81,-9.92,-10.03,-10.66,-12.5,-12.96,-13.61]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"ae3c9cc795466c3595b1c58d57305987"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-3-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-6-tab">
+<p><img src="class_mca_hcpc_analysis_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-7cf15d3f41b6fc94c396" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7cf15d3f41b6fc94c396">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cluster":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],"variable":["educ_cat_final","income_cat_final","educ_cat_final","clase_final","income_cat_final","educ_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","income_cat_final","educ_cat_final","income_cat_final","clase_final","clase_final","educ_cat_final","income_cat_final","clase_final","educ_cat_final","income_cat_final","educ_cat_final"],"categoria":["Primary education","Second and third decile","Secondary education","Skilled workers","First  decile","No formal education","Retired","Unskilled workers","Fourth and fifth decile","Tertiary technical education","Eighth and ninth  decile","Higher-grade service class","Lower-grade service class","Tenth decile","Tertiary universitary education","Tertiary universitary education","Tenth decile","Lower-grade service class","Higher-grade service class","Eighth and ninth  decile","Tertiary technical education","Fourth and fifth decile","Unskilled workers","Retired","No formal education","First  decile","Skilled workers","Secondary education","Second and third decile","Primary education"],"Cla/Mod":[96.38,94.24,88.24,84.15,98.05,99.26,86.35,85.11,79.01,62.01,52.34,0,7.04,0,5.98,94.02,100,92.96,100,47.66,37.99,20.99,14.89,13.65,0.74,1.95,15.85,11.76,5.76,3.62],"Mod/Cla":[26.95,28.61,40.02,42.5,13.89,12.33,26.77,29.44,23.55,18.77,15.46,0,1.29,0,1.93,62.86,31.24,35.24,28.76,29.14,23.81,12.95,10.67,8.76,0.19,0.57,16.57,11.05,3.62,2.1],"Global":[18.86,20.47,30.58,34.06,9.55,8.37,20.91,23.33,20.1,20.41,19.91,9.37,12.34,10.17,21.77,21.77,10.17,12.34,9.37,19.91,20.41,20.1,23.33,20.91,8.37,9.55,34.06,30.58,20.47,18.86],"p.value":[0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0,0,0.02,0,0,0,0,0,0,0,0,0],"v.test":[13.61,12.96,12.5,10.66,10.03,9.92,8.81,8.76,5.11,-2.33,-6.3,-19.13,-19.28,-20.04,-28.04,28.04,20.04,19.28,19.13,6.3,2.33,-5.11,-8.76,-8.81,-9.92,-10.03,-10.66,-12.5,-12.96,-13.61]},"columns":[{"id":"cluster","name":"Cluster","type":"character","filterable":true},{"id":"variable","name":"Variable","type":"character"},{"id":"categoria","name":"Categoría","type":"character"},{"id":"Cla/Mod","name":"Cla/Mod","type":"numeric"},{"id":"Mod/Cla","name":"Mod/Cla","type":"numeric"},{"id":"Global","name":"Global","type":"numeric"},{"id":"p.value","name":"p-valor","type":"numeric"},{"id":"v.test","name":"v-test","type":"numeric"}],"groupBy":["cluster"],"filterable":true,"searchable":true,"defaultPageSize":12,"highlight":true,"striped":true,"dataKey":"f01f2e1d1d37857342e162efaab5721a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="desc-comparisson-between-class-6-of-elsocs" class="level1">
+<h1>Desc comparisson between class 6 of elsocs</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>HCPC Desc comparison between waves (first five per cluster)</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cluster</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w06</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">25.75</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">26.39</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">23.29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">23.82</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">23.42</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">18.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">9.90</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">13.69</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">13.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">5.66</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">11.50</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">8.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">1</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Unskilled workers</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-3.59</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Fourth and fifth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.60</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Primary education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">6.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">22.75</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">19.13</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">23.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">16.88</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">18.18</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">12.32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">8.32</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">16.79</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">11.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">5.39</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">6.76</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">4.74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2.5px solid black;">2</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Lower-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.42</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Eighth and ninth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-4.07</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">No formal education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">3.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">24.05</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">21.71</td>
+<td style="text-align: left;">Fourth and fifth decile</td>
+<td style="text-align: right; color: darkblue !important;">19.66</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Fourth and fifth decile</td>
+<td style="text-align: right; color: darkblue !important;">12.95</td>
+<td style="text-align: left;">Fourth and fifth decile</td>
+<td style="text-align: right; color: darkblue !important;">16.80</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">13.55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">10.85</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">14.16</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">13.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">2.42</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: red !important;">-2.23</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: red !important;">-2.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">3</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">No formal education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.09</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Sixth and seventh decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-3.95</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">First decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">18.50</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">24.88</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">21.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">17.97</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">15.54</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">13.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">5.90</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">13.69</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">10.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">5.08</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">3.05</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">6.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2.5px solid black;">4</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Fourth and fifth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">2.32</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Eighth and ninth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.02</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Sixth and seventh decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">4.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">17.54</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">21.61</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">26.55</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">17.49</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">17.88</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">10.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">17.42</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">8.88</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">8.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: red !important;">-2.17</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">8.35</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">6.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">5</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Sixth and seventh decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-3.91</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Higher-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-4.08</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Tenth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">3.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">23.28</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">23.54</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">24.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">22.99</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">22.88</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">22.37</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">19.64</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">19.22</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">18.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: red !important;">-2.09</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">3.16</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">6.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2.5px solid black;">6</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Tertiary technical education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-4.80</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Lower-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">2.81</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Skilled workers</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.36</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</section>
+<section id="desc-comparisson-between-class-5-of-elsocs" class="level1">
+<h1>Desc comparisson between class 5 of elsocs</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>HCPC Desc comparison between waves (first five per cluster)</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cluster</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: 2.5px solid black;">cat_w06</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-bottom: 2.5px solid black;">vt_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">25.75</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">26.39</td>
+<td style="text-align: left;">Retired</td>
+<td style="text-align: right; color: darkblue !important;">23.29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">23.82</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">23.42</td>
+<td style="text-align: left;">First decile</td>
+<td style="text-align: right; color: darkblue !important;">18.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">9.90</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">13.69</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">13.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">5.66</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">11.50</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">8.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">1</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Unskilled workers</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-3.59</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Fourth and fifth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.60</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Primary education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">6.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">22.75</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">25.37</td>
+<td style="text-align: left;">Unskilled workers</td>
+<td style="text-align: right; color: darkblue !important;">23.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">16.88</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">16.85</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">12.32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">8.32</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">13.18</td>
+<td style="text-align: left;">Second and third decile</td>
+<td style="text-align: right; color: darkblue !important;">11.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">No formal education</td>
+<td style="text-align: right; color: darkblue !important;">5.39</td>
+<td style="text-align: left;">Primary education</td>
+<td style="text-align: right; color: darkblue !important;">11.77</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">4.74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2.5px solid black;">2</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Lower-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.42</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Fourth and fifth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">8.12</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">No formal education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">3.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">25.04</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">24.88</td>
+<td style="text-align: left;">Skilled workers</td>
+<td style="text-align: right; color: darkblue !important;">28.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">16.16</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">15.54</td>
+<td style="text-align: left;">Fourth and fifth decile</td>
+<td style="text-align: right; color: darkblue !important;">8.78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Fourth and fifth decile</td>
+<td style="text-align: right; color: darkblue !important;">12.79</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">13.69</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">8.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">10.20</td>
+<td style="text-align: left;">Secondary education</td>
+<td style="text-align: right; color: darkblue !important;">3.05</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">6.52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">3</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Tertiary technical education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.59</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Eighth and ninth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.02</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Primary education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">5.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">17.54</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">21.61</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">26.55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">17.49</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">17.88</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">10.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">17.42</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">8.88</td>
+<td style="text-align: left;">Sixth and seventh decile</td>
+<td style="text-align: right; color: darkblue !important;">8.58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: red !important;">-2.17</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">8.35</td>
+<td style="text-align: left;">Tertiary technical education</td>
+<td style="text-align: right; color: darkblue !important;">6.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 2.5px solid black;">4</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Sixth and seventh decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-3.91</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Higher-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-4.08</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Tenth decile</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">3.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">23.28</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">23.54</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">24.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">22.99</td>
+<td style="text-align: left;">Higher-grade service class</td>
+<td style="text-align: right; color: darkblue !important;">22.88</td>
+<td style="text-align: left;">Tertiary universitary education</td>
+<td style="text-align: right; color: darkblue !important;">22.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">19.64</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">19.22</td>
+<td style="text-align: left;">Tenth decile</td>
+<td style="text-align: right; color: darkblue !important;">18.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Lower-grade service class</td>
+<td style="text-align: right; color: red !important;">-2.09</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">3.16</td>
+<td style="text-align: left;">Eighth and ninth decile</td>
+<td style="text-align: right; color: darkblue !important;">6.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 2.5px solid black;">5</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Tertiary technical education</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-4.80</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Lower-grade service class</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: darkblue !important;">2.81</td>
+<td style="text-align: left; border-bottom: 2.5px solid black;">Skilled workers</td>
+<td style="text-align: right; border-bottom: 2.5px solid black; color: red !important;">-2.36</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</section>
+<section id="n-per-cluster" class="level1">
+<h1>N per cluster</h1>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Cluster 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Cluster 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Cluster 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">Cluster 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false" href="">Cluster 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Sample frequencies per cluster - Class 6</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">cluster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w01</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w04</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w06</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prc_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">1</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">16.57</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.84</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: right;">16.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">2</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">17.81</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">15.53</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">17.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">3</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">16.63</td>
+<td style="text-align: right;">322</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">15.72</td>
+<td style="text-align: right;">235</td>
+<td style="text-align: right;">14.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">4</td>
+<td style="text-align: right;">387</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">25.34</td>
+<td style="text-align: right;">760</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">37.11</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">19.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">5</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.90</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">11.13</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">16.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">6</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">10.74</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">7.67</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">15.69</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Sample frequencies per cluster - Class 5</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">cluster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w01</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w04</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w06</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prc_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">1</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">16.57</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.84</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: right;">16.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">2</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">17.81</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">31.25</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">17.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">3</td>
+<td style="text-align: right;">641</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">41.98</td>
+<td style="text-align: right;">760</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">37.11</td>
+<td style="text-align: right;">554</td>
+<td style="text-align: right;">34.37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">4</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.90</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">11.13</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">16.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">5</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">10.74</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">7.67</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">15.69</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Sample frequencies per cluster - Class 4</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">cluster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w01</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w04</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w06</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prc_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">1</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">16.57</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.84</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: right;">16.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">2</td>
+<td style="text-align: right;">913</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">59.79</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">31.25</td>
+<td style="text-align: right;">828</td>
+<td style="text-align: right;">51.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">3</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.90</td>
+<td style="text-align: right;">988</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">48.24</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">16.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">4</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">10.74</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">7.67</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">15.69</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Sample frequencies per cluster - Class 3</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">cluster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w01</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w04</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w06</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prc_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">1</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">16.57</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">12.84</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: right;">16.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">2</td>
+<td style="text-align: right;">1110</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">72.69</td>
+<td style="text-align: right;">1628</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">79.49</td>
+<td style="text-align: right;">828</td>
+<td style="text-align: right;">51.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">3</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">10.74</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">7.67</td>
+<td style="text-align: right;">525</td>
+<td style="text-align: right;">32.57</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</div>
+<div id="tabset-4-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-5-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Sample frequencies per cluster - Class 2</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">cluster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w01</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w01</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w04</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; border-right: 2px solid #726c6c54;">prc_w04</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">frq_w06</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prc_w06</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">1</td>
+<td style="text-align: right;">1363</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">89.26</td>
+<td style="text-align: right;">1891</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">92.33</td>
+<td style="text-align: right;">1087</td>
+<td style="text-align: right;">67.43</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-right: 2px solid #726c6c54;">2</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">10.74</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right; border-right: 2px solid #726c6c54;">7.67</td>
+<td style="text-align: right;">525</td>
+<td style="text-align: right;">32.57</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
