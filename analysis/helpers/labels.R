@@ -15,7 +15,7 @@ coef_labels <- c(
   "has_children" = "Has children",
   "pop_density" = "Population density",
   "pct_migrant" = "Inmigrants percentage",
-  "insecuryty" = "Insecurity at neighbourhood",
+  "insecurity" = "Insecurity at neighbourhood",
   
   # Neighborhood SES
   "nse_barrio_norm" = "Neighborhood SES",
