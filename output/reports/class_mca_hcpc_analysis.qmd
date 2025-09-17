@@ -3,8 +3,8 @@ title: |
   ![](https://coes.cl/wp-content/uploads/2025/03/COES_Logo_azul.png){width=25% height=25%}  
   Class MCA and HCPC analysis
 author: 
-  - Techinical assistant
-date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+  - Technical assistant
+date: "`r Sys.Date()`"
 output:
     bookdown::html_document2:
           theme: yeti
@@ -42,8 +42,8 @@ pacman::p_load(
 )
 
 # Data
-# load("output/models/250911_results_mca_hcpc.RData")
-load("../../output/models/250911b_results_mca_hcpc.RData")
+# load("output/models/results_mca_hcpc.RData")
+load("../../output/models/results_mca_hcpc.RData")
 ```
 
 
