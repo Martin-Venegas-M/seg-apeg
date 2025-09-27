@@ -18,11 +18,11 @@ coef_labels <- c(
   "insecurity" = "Insecurity at neighbourhood",
   
   # Neighborhood SES
-  "nse_barrio_norm" = "Neighborhood SES"#,
+  "nse_barrio_norm" = "Neighborhood SES",
   
   # Interactions
-  # "new_class1:nse_barrio_norm" = "Class 1 × Neighborhood SES",
-  # "new_class2:nse_barrio_norm" = "Class 2 × Neighborhood SES",
-  # "new_class4:nse_barrio_norm" = "Class 4 × Neighborhood SES",
-  # "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES"
+  "new_class1:nse_barrio_norm" = "Class 1 × Neighborhood SES",
+  "new_class2:nse_barrio_norm" = "Class 2 × Neighborhood SES",
+  "new_class4:nse_barrio_norm" = "Class 4 × Neighborhood SES",
+  "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES"
 )
