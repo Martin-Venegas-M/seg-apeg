@@ -192,3 +192,42 @@ plots_mm$elsoc_2016[[5]]$nse_barrio
 # 4. Save -------------------------------------------------------------------------------------------------------------------------------------------
 rm(list = ls()[!ls() %in% c("plots_mm")])
 save.image(glue("output/models/plots_mm.RData"))
+
+# Save plots
+
+# Class
+combs <- expand_grid(
+  data_year = c("elsoc_2016", "elsoc_2019", "elsoc_2022"),
+  model = c("individual", "full", "interaction")
+)
+
+map2(
+  combs$data_year,
+  combs$model,
+  \(data_year, model) {
+    ggsave(
+      filename = glue("output/plots/coefs_class/coefs_{data_year}_{model}_class.png"),
+      plot = plots_mm[[data_year]][[model]]$class,
+      width = 11, height = 11
+    )
+  }
+)
+
+# Nse barrio
+combs <- expand_grid(
+  data_year = c("elsoc_2016", "elsoc_2019", "elsoc_2022"),
+  model = c("contextual", "full", "interaction")
+)
+
+
+map2(
+  combs$data_year,
+  combs$model,
+  \(data_year, model) {
+    ggsave(
+      filename = glue("output/plots/coefs_nse_barrio/coefs_{data_year}_{model}_nse_barrio.png"),
+      plot = plots_mm[[data_year]][[model]]$nse_barrio,
+      width = 11, height = 11
+    )
+  }
+)
