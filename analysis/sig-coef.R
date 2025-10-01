@@ -129,6 +129,17 @@ sigcoef_tab <- map(
   \(x) eval_tidy(rlang::call2(sigcoef, !!!x)) # Iterate by every set of arguments, creating a call and evaluating it instantly
 ) %>% list_rbind()
 
+# ? # Alternative solution! :)
+# ? # I think this is a better solution because it doesn't need the args_list creation step that I did earlier
+# ? sigcoef_tab <- purrr::pmap(
+# ?   list(
+# ?     x = as.list(combs$data_year),
+# ?     y = as.list(combs$vardep),
+# ?     z = as.list(combs$model)
+# ?   ),
+# ?   \(x, y, z) sigcoef(data_year = x, vardep = y, model = z) # Iterate by every set of arguments, creating a call and evaluating it instantly
+# ? ) %>% list_rbind()
+
 # Separate long table
 sigcoef_list <- map(
   names(results_mm),
