@@ -28,18 +28,18 @@ coef_labels <- c(
 )
 
 vardep_labels <- c(
-  "Identification",
-  "Friends",
-  "Generalized trust",
-  "Trust in minorities",
-  "Institutional trust",
-  "Interest in politics",
-  "Satisfaction with democracy",
-  "Conventional participation",
-  "Unconventional participation",
-  "Egalitarianism",
-  "Altruistic behavior",
-  "Prosocial behavior ",
-  "Democracy support",
-  "Injustification of violence",
+  identification = "Identification",
+  friends = "Friends",
+  gen_trust = "Generalized trust",
+  trust_minorities = "Trust in minorities",
+  trust_inst = "Institutional trust",
+  interest_pol = "Interest in politics",
+  satisf_demo = "Satisfaction with democracy",
+  conv_particip = "Conventional participation",
+  unconv_particip = "Unconventional participation",
+  egalitarianism = "Egalitarianism",
+  altruistic = "Altruistic behavior",
+  prosoc_behave = "Prosocial behavior ",
+  democracy_support = "Democracy support",
+  justif_violence = "Injustification of violence"
 )
