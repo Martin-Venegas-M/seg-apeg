@@ -173,7 +173,8 @@ plotcoef2 <- function(
 plotcoef2(
     data.years = "elsoc_2016",
     vardep = "trust_inst",
-    models = c(2, 4, 5),
+    model.labels = c(`2` = "Ind.", `4` = "Full"),
+    models = c(2, 4),
     coefs.to.plot = c("Class 1", "Class 5"),
     view = "single",
     coefs.colors = c("Class 1" = "#2596be", "Class 5" = "#a12b92"),
@@ -183,7 +184,8 @@ plotcoef2(
 plotcoef2(
     data.years = c("elsoc_2016", "elsoc_2019", "elsoc_2022"),
     vardep = "trust_inst",
-    models = c(2, 4, 5),
+    models = c(2, 4),
+    model.labels = c(`2` = "Ind.", `4` = "Full"),
     coefs.to.plot = c("Class 1", "Class 5"),
     view = "by.year",
     coefs.colors = c("Class 1" = "#2596be", "Class 5" = "#a12b92"),
@@ -297,3 +299,12 @@ map2(
         device = ragg::agg_png
     )
 )
+
+# Save workspace
+
+coefs_class_grid <- final_plot(coefs$coefs_class)
+coefs_nse_barrio_grid <- final_plot(coefs$coefs_nse_barrio)
+
+rm(list = ls()[!ls() %in% c("coefs_class_grid", "coefs_nse_barrio_grid")])
+save.image("output/plots/coefs.RData")
+
