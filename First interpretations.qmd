@@ -1,0 +1,68 @@
+---
+title: "First interpretations"
+format: pdf
+editor: visual
+---
+
+# Introduction
+
+En el presente documento se entrega una primera interpretación de los resultados
+del análisis multivariado. Primero se revisan los efectos directos (coeficientes
+de los modelos), y luego se revisan los efectos de interacción.
+
+# Interpretations
+
+```{r}
+#| include: false
+load("output/plots/coefs.RData")
+```
+
+
+```{r}
+#| label: fig-coef-class
+#| echo: false
+#| fig-cap: Class coefficients of multilevel models by dependent variable and year
+#| fig-height: 12
+#| fig-width: 10
+
+coefs_class_grid
+
+```
+
+\newpage
+
+@fig-coef-class shows the regression coefficients for *Class 1* and *Class 5* (taking *Class 3* as a reference) for each proxy variable of attachment to society. Within each proxy variable, the coefficients are presented by year and by model. The individual model ("Ind") only considers class as the main predictor at level 1, plus the sociodemographic control variables at level 1 (*Age*, *Age Squared*, *Sex*, *Homeowner*, *Civil status*) and level 2 (*Population density*, *Percentage of immigrants* and *Insecurity in the neighborhood*). In contrast, the full model ("Full") considers all of the above variables plus the socioeconomic level of the neighborhood as the main level 2 predictor.
+
+As an overview, it can be seen that the coefficients for *Class 5* show statistically significant results for all years in the variables: *Friends*, *Generalized trust*, *Trust in minorities*, *Institutional trust*, *Interest in politics*, *Conventional participation*, and *Unconventional participation*. At first glance, this suggests a consistent relationship between social class and attachment to society, particularly in the relational and political dimensions.
+
+Each dependent variable is analyzed separately below.
+
+\newpage
+
+- **Identification:** For 2016, a negative and statistically significant relationship is observed for the individual model; however, when controlling for other variables, the effect is lost. For 2022, a negative and statistically significant relationship is observed that remains even when controlling for all variables. In other words, for the year 2022, people in *Class 5*, on average, identify more with society/Chile than people in *Class 3*, even when controlling for sociodemographic characteristics and the socioeconomic level of the neighborhood. On the other hand, no significant results are found for 2022.
+
+- **Friends:** In terms of the number of friends, the models show significant results for *Class 5* in the individual and full models for all years. In other words, for the three measurements, it can be seen that people in *Class 5* have, on average, a greater number of friends than those in *Class 3*, even when controlling for other variables. There is also a statistically significant negative relationship between *Class 1* (compared to *Class 3*) for the year 2022.
+
+- **Generalized trust:** Overall confidence shows positive and statistically significant results for both models in all years in the *Class 5* coefficient. However, there is a noticeable downward trend in the magnitude of the coefficient over time.
+
+- **Trust in minorities:** Trust in minorities also shows positive and statistically significant *Class 5* coefficients for all years. In substantive terms, this suggests that people from higher classes, on average, trust minorities more than middle classes, controlling for sociodemographic and neighborhood characteristics. Similarly, a significant result is observed for the coefficient of the lowest class in 2019: people from the lowest class tend to have less trust in minorities than people from the middle class.
+
+- **Institutional trust:** Institutional trust shows fairly consistent results both between years and between models. Greater institutional trust is observed among the upper classes compared to the middle classes, regardless of sociodemographic characteristics or neighborhood. Otherwise, there is a certain stability in the magnitudes of the coefficients between years.
+
+- **Interest in politics:** Interest in politics also shows a consistent relationship between models and years, with the upper class tending to have a higher average interest in politics than the middle classes. Otherwise, there are also significant coefficients for the lower classes in 2019, where they tend to have a lower average interest than the middle classes.
+
+- **Satisfaction with democracy:** Satisfaction with democracy shows significant results only for the upper classes and for the year 2022. In other words, in 2022, *Class 5* had, on average, greater satisfaction with democracy than *Class 3*, controlling for sociodemographic and neighborhood characteristics.
+
+- **Conventional participation:** The coefficients show a positive and significant relationship for *Class 5* in all years and models, indicating that upper-class individuals tend to participate more in conventional political activities (e.g., voting, joining parties). As with previous variables, a significant effect is observed for the *Class 1* coefficient in 2019.
+
+- **Unconventional participation:** Positive and statistically significant relationships are observed for *Class 5* in all years. This suggests that upper-class individuals also participate more in unconventional forms of political action (such as protests or demonstrations). Despite this, it is noteworthy that the magnitudes of the coefficients for 2022 are comparatively smaller than those for 2016 and especially those for 2016. No systematic effects are observed for *Class 1*.
+
+- **Egalitarianism:** The associations are generally small and not significant for all coefficients in all years. It is only noteworthy that for both the individual model and the full model for 2016, the coefficient for *Class 5* shows a negative and statistically significant effect. In other words, people from higher classes tend, on average, to adhere less to egalitarian principles than people from the middle class.
+
+- **Altruistic behavior:** In general, no significant differences are observed. The magnitudes of the coefficients are small and do not follow a clear pattern, suggesting that altruistic behavior does not vary substantially according to social class. There are some significant effects on both coefficients for 2019 and on the coefficient for *Class 5* for 2022, but these are controlled for by including the socioeconomic level of the neighborhood.
+
+- **Prosocial behavior:** In terms of prosocial behavior, it is noteworthy that for the years 2019 and 2022, the coefficients for both classes (*Class 1* and *Class 5*) are statistically significant. The upper classes exhibit greater prosocial behavior when compared to the middle classes. Meanwhile, the pattern for the lower classes is the opposite: less prosocial behavior than the middle classes.
+
+- **Democracy support:** Support for democracy shows statistically significant and positive results for *Class 5* in 2016 and 2019, but not for 2022. In fact, there is a downward trend in the magnitude of the coefficients over time.
+
+- **Injustification of violence:** The unjustification of violence shows significant results for the *Class 5* coefficient in the full model for all years. In other words, the upper classes tend to justify violence less (or justify it less) than the middle classes.
