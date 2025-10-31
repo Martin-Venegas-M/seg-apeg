@@ -239,7 +239,7 @@ map2(
   coefs,
   names(coefs),
   ~ ggsave(
-    filename = glue("output/plots/{.y}_z.png"),
+    filename = glue("output/plots/{.y}_z_same_scale.png"),
     plot = final_plot(.x),
     width = 12, height = 12, dpi = 300,
     device = ragg::agg_png
