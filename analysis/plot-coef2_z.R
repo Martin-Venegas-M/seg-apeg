@@ -207,7 +207,6 @@ coefs_class <- map2(
     model.labels = c(`2` = "Ind.", `4` = "Full"),
     coefs.to.plot = c("Class 1", "Class 5"),
     coefs.colors = c("Class 1" = "#2596be", "Class 5" = "#a12b92"),
-    coefs.scale.limits = c(-0.6, 1),
     view = "by.year"
   )
 )
@@ -224,7 +223,6 @@ coefs_nse_barrio <- map2(
     model.labels = c(`3` = "Cont.", `4` = "Full"),
     coefs.to.plot = c("Neighborhood SES"),
     coefs.colors = c("Neighborhood SES" = "#2596be"),
-    coefs.scale.limits = c(-1, 1.5),
     view = "by.year"
   )
 )
@@ -239,7 +237,7 @@ map2(
   coefs,
   names(coefs),
   ~ ggsave(
-    filename = glue("output/plots/{.y}_z_same_scale.png"),
+    filename = glue("output/plots/{.y}_z.png"),
     plot = final_plot(.x),
     width = 12, height = 12, dpi = 300,
     device = ragg::agg_png
