@@ -1,0 +1,406 @@
+---
+title: |
+  ![](https://coes.cl/wp-content/uploads/2025/03/COES_Logo_azul.png){width=25% height=25%}  
+  Multilevel Models Standardized
+author: 
+  - Technical assistant
+date: "`r Sys.Date()`"
+output:
+    bookdown::html_document2:
+          theme: yeti
+          toc: yes
+          toc_float: yes
+          toc_collapsed: yes
+          number_sections: yes
+          
+          
+    
+linkcolor: black
+urlcolor: blue
+execute:
+  echo: false
+  warning: false
+---
+
+```{r packages and data}
+
+# Packages
+pacman::p_load(
+    tidyverse,
+    haven,
+    tidylog,
+    texreg,
+    sjPlot,
+    glue,
+    ggeffects
+)
+
+# Data
+load("../../output/models/results_mm_z.RData")
+```
+
+```{r}
+# Create custom names
+
+model_labels <- c("Null", "Individual", "Contextual", "Full", "Interaction")
+
+source("../../analysis/helpers/labels.R")
+```
+
+```{r}
+# Create wrapper function
+
+tab_mm <- function(model, type = "texreg") {
+    if (type == "sjPlot") {
+        sjPlot::tab_model(
+            model,
+            show.ci = FALSE,
+            show.se = TRUE,
+            pred.labels = coef_labels,
+            dv.labels = model_labels
+        )
+    }
+
+    if (type == "texreg") {
+        texreg::htmlreg(
+            model,
+            custom.coef.names = coef_labels,
+            custom.model.names = model_labels,
+            bold = 0.05 # p < 0.05 en negrita
+        )
+    }
+}
+
+plot_int_mm <- function(model, vardep) {
+    marginales <- ggpredict(model, terms = c("nse_barrio_norm", "new_class"))
+
+    # grafico
+    ggplot(marginales, aes(x = x, y = predicted, color = group)) +
+        geom_line(size = 1.2) +
+        geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.15, color = NA) +
+        labs(
+            x = "Neighborhood socioeconomic status (standardized)",
+            y = paste0("Predicted ", vardep),
+            color = "Class",
+            fill = "Class"
+        ) +
+        theme_minimal(base_size = 14) +
+        theme(
+            legend.position = "top",
+            panel.grid.minor = element_blank()
+        )
+}
+
+```
+
+# Introduction
+
+This document...
+
+## ELSOC 2016
+
+::: panel-tabset
+# Identification
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_identification)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_identification[[5]], "Identification")
+```
+
+# Friends
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_friends)
+```
+
+# Generalized trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_gen_trust)
+```
+
+# Trust in minorities
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_trust_minorities)
+```
+
+# Institutional trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_trust_inst)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_trust_inst[[5]], "Institutional trust")
+```
+
+# Interest in politics
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_interest_pol)
+
+```
+
+# Satisfaction with democracy
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_satisf_demo)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_satisf_demo[[5]], "Satisfaction with democracy")
+```
+
+# Conventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_conv_particip)
+```
+
+# Unconventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_unconv_particip)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_unconv_particip[[5]], "Unconventional participation")
+```
+
+# Egalitarianism
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_egalitarianism)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_egalitarianism[[5]], "Egalitarianism")
+```
+
+# Altruistic behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_altruistic)
+```
+
+# Prosocial behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_prosoc_behave)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2016$z_prosoc_behave[[5]], "Prosocial behavior")
+```
+
+# Democracy support
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_democracy_support)
+```
+
+# Injustification of violence
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2016$z_justif_violence)
+```
+
+:::
+
+## ELSOC 2019
+
+::: panel-tabset
+# Identification
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_identification)
+```
+
+# Friends
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_friends)
+```
+
+# Generalized trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_gen_trust)
+```
+
+# Trust in minorities
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_trust_minorities)
+```
+
+# Institutional trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_trust_inst)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2019$z_trust_inst[[5]], "Institutional trust")
+```
+
+# Interest in politics
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_interest_pol)
+
+```
+
+# Satisfaction with democracy
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_satisf_demo)
+```
+
+# Conventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_conv_particip)
+```
+
+# Unconventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_unconv_particip)
+```
+
+# Egalitarianism
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_egalitarianism)
+```
+
+# Altruistic behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_altruistic)
+```
+
+# Prosocial behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_prosoc_behave)
+```
+
+# Democracy support
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_democracy_support)
+```
+
+# Injustification of violence
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2019$z_justif_violence)
+```
+:::
+
+## ELSOC 2022
+
+::: panel-tabset
+# Identification
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_identification)
+```
+
+# Friends
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_friends)
+```
+
+# Generalized trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_gen_trust)
+```
+
+# Trust in minorities
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_trust_minorities)
+```
+
+# Institutional trust
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_trust_inst)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2022$z_trust_inst[[5]], "Institutional trust")
+```
+
+# Interest in politics
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_interest_pol)
+
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2022$z_interest_pol[[5]], "Interest in politics")
+```
+
+# Satisfaction with democracy
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_satisf_demo)
+```
+
+# Conventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_conv_particip)
+```
+
+# Unconventional participation
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_unconv_particip)
+```
+
+```{r}
+plot_int_mm(results_mm$elsoc_2022$z_unconv_particip[[5]], "Unconventional participation")
+```
+
+# Egalitarianism
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_egalitarianism)
+```
+
+# Altruistic behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_altruistic)
+```
+
+# Prosocial behavior
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_prosoc_behave)
+```
+
+# Democracy support
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_democracy_support)
+```
+
+# Injustification of violence
+
+```{r results='asis'}
+tab_mm(results_mm$elsoc_2022$z_justif_violence)
+```
+:::
