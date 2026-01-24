@@ -5,6 +5,8 @@
 # Responsable: Technical assistant
 #******************************************************************************************************************************************************
 
+#! [THIS SCRIPT IS MEANT TO BE RUN VIA THE run_processing.R SCRIPT]
+
 # 2.1 Transform ocupation for w01 ---------------------------------------------------------------------------------------------------------------------
 
 #* NOTE: In w01 we don't have ciuo08; instead, we have ciuo88. In this scenario, we need to convert from the older version of CIUO to the newer one.
@@ -91,8 +93,6 @@ elsoc <- elsoc %>%
 
 # 2.2 Manual imputation of values for occupation --------------------------------------------------------------------------------------------------------------------
 
-# ! NOTA: Me gustaría incluir estas imputaciones manuales al flujo automatico, pero eso implicaría no imputar por ciuo08_m22
-# ! (o al menos no hacerlo con una jerarquía intermitente con ciuo08_m03)
 elsoc <- elsoc %>%
     # Imputation for WAVE 1
     mutate(
@@ -187,9 +187,9 @@ impute_m29 <- function(data) {
     data %>%
         mutate(across(starts_with("m29_"), ~ if_else(. %in% 0, NA_real_, .))) %>%
         mutate(
-            numerador = rowSums(select(., starts_with("m29_")), na.rm = TRUE), # Suma todos m29 validos de la fila
-            denominador = rowSums(!is.na(select(., starts_with("m29_")))), # Suma la cantidad de olas para los que la fila tiene valores validos
-            # ! OJO: El código se aprovecha de que el !is.na() convierte los valores a logical y luego se suman logicals (TRUE = 1 y FALSE = 0)
+            numerador = rowSums(select(., starts_with("m29_")), na.rm = TRUE), # Sums every valid m29 of the row
+            denominador = rowSums(!is.na(select(., starts_with("m29_")))), # Sums the wave quantity where the row has valid values
+            #? NOTE: Here the code is taking advantage that !is.na() transforms values to logical and then sums the logicals (assuming TRUE = 1 and FALSE = 0)
             income_to_impute = numerador / denominador
         )
 }

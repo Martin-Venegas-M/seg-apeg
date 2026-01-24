@@ -1,3 +1,12 @@
+#******************************************************************************************************************************************************
+# 0. Identification -------------------------------------------------------
+# Title: Creating final variables for main analysis
+# Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
+# Responsable: Technical assistant
+#******************************************************************************************************************************************************
+
+#! [THIS SCRIPT IS MEANT TO BE RUN VIA THE run_processing.R SCRIPT]
+
 # 4.1 Create dependent variables --------------------------------------------------------------------------------------------------------------------------
 
 # Create function with the code
@@ -72,7 +81,7 @@ create_socioec_vars <- function(data) {
                 m20 %in% c(7, 8) ~ 4,
                 m20 %in% c(9, 10) ~ 5,
                 TRUE ~ NA
-            ) %>% replace_na(0), # ! PARCHE PARA LUEGO CREAR EDUC_CAT_FINAL
+            ) %>% replace_na(0), # ! PATCH FOR THEN CREATING EDUC_CAT_FINAL
             across(c(educ, educ_sost), ~ set_labels(.,
                 labels = c(
                     "No formal education" = 1,
@@ -90,7 +99,7 @@ create_socioec_vars <- function(data) {
     data <- data %>%
         rename(isco = ciuo08_m03) %>%
         mutate(
-            # Manual imputation #! PREGUNTAR
+            # Manual imputation!
             isco = case_when(
                 idencuesta == "13131014" ~ 2151,
                 idencuesta == "13201011" ~ 3313,
@@ -163,7 +172,7 @@ create_socioec_vars <- function(data) {
                 class_sost %in% c(8, 12, 16) ~ 5,
                 class_sost %in% c(17) ~ 6,
                 class_sost %in% c(18) ~ 7
-            ) %>% replace_na(100) # ! PARCHE PARA LUEGO CREAR CLASE_FINAL
+            ) %>% replace_na(100) # ! PATCH FOR THEN CREATIN CLASE_FINAL
         )
 
     return(data)
