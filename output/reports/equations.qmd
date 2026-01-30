@@ -1,0 +1,57 @@
+---
+title: |
+  Multilevel Models Standardized
+author: 
+  - Technical assistant
+date: "`r Sys.Date()`"
+format: pdf
+linkcolor: black
+urlcolor: blue
+execute:
+  echo: false
+  warning: false
+---
+
+```{r packages and data}
+
+# Packages
+pacman::p_load(
+    tidyverse,
+    haven,
+    tidylog,
+    texreg,
+    sjPlot,
+    glue,
+    ggeffects,
+    equatiomatic
+)
+
+# Data
+load("../../output/models/results_mm.RData")
+# load("output/models/results_mm.RData")
+```
+
+# Modelo 0: Nulo
+```{r}
+equatiomatic::extract_eq(results_mm$elsoc_2016$identification[[1]], wrap = TRUE, terms_per_line = 3)
+```
+
+# Modelo 1: Individual
+```{r}
+equatiomatic::extract_eq(results_mm$elsoc_2016$identification[[2]], wrap = TRUE, terms_per_line = 3)
+```
+
+# Modelo 2: Contextual
+```{r}
+equatiomatic::extract_eq(results_mm$elsoc_2016$identification[[3]], wrap = TRUE, terms_per_line = 3)
+```
+
+# Modelo 3: Full
+```{r}
+equatiomatic::extract_eq(results_mm$elsoc_2016$identification[[4]], wrap = TRUE, terms_per_line = 3)
+```
+
+# Modelo 4: Interacción
+```{r}
+equatiomatic::extract_eq(results_mm$elsoc_2016$identification[[5]], wrap = TRUE, terms_per_line = 3)
+```
