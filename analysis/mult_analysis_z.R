@@ -3,7 +3,7 @@
 # Title: Multivariate analysis code for a research paper on Residential segregation ans Attachment to society
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
-# Executive Summary: This script contains the code to generate descriptive tables
+# Executive Summary: This script contains the code to generate models
 # Date: August 25, 2025
 #******************************************************************************************************************************************************
 
