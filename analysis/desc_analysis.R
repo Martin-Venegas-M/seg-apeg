@@ -30,23 +30,15 @@ user <- tolower(Sys.info()["user"])
 
 # 3. Execute code -----------------------------------------------------------------------------------------------------------------------------------
 
-quantile(1:10)[[2]]
-
-# Create vector with dependent variables to estimate
-varsdep <- c(
-    "identification", "friends",
-    "gen_trust", "trust_minorities", "trust_inst", "interest_pol",
-    "satisf_demo", "conv_particip", "unconv_particip", "egalitarianism",
-    "altruistic", "prosoc_behave", "democracy_support", "justif_violence"
-)
-
-
+# Creates summary tab for dependent variables per year
 create_tab <- function(df, year) {
-    map(
-        varsdep,
-        \(x) df |>
+    map2(
+        names(vardep_labels),
+        vardep_labels,
+        \(x, y) df |>
             summarise(
                 variable = x,
+                variable_label = y,
                 "Mean {year}" := mean(.data[[x]]),
                 "SD {year}" := sd(.data[[x]])
             )
@@ -54,19 +46,21 @@ create_tab <- function(df, year) {
         list_rbind()
 }
 
-
+# Create the tab list!
 tabs <- map(
     c("2016", "2019", "2022"),
     \(x) elsocs[[glue("elsoc_{x}")]] |> create_tab(x)
-) |> 
-set_names(c("elsoc_2016", "elsoc_2019", "elsoc_2022"))
+) |>
+    set_names(c("elsoc_2016", "elsoc_2019", "elsoc_2022"))
 
+# Delete repeated variable name
 tab <- list(
     tabs$elsoc_2016,
-    tabs$elsoc_2019 |> select(-variable),
-    tabs$elsoc_2022 |> select(-variable)
-) |> 
-list_cbind() |> 
-relocate(variable, starts_with("Mean"), starts_with("SD"))
-
-
+    tabs$elsoc_2019 |> select(-variable, -variable_label),
+    tabs$elsoc_2022 |> select(-variable, -variable_label)
+) |>
+    list_cbind() |>
+    select(variable_label, starts_with("Mean"), starts_with("SD"))  |> 
+    mutate(
+        across(where(is.numeric), ~ round(., 2))
+    )
