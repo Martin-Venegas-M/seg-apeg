@@ -28,10 +28,25 @@ source("analysis/helpers/labels.R")
 date <- format(Sys.Date(), "%y%m%d")
 user <- tolower(Sys.info()["user"])
 
-# 3. Execute code -----------------------------------------------------------------------------------------------------------------------------------
+# 3. Execute code -------------------------------------------------------------------------------------------------------------------------------------
+
+names_elsocs <- c("elsoc_2016", "elsoc_2019", "elsoc_2022")
+
+# 3.1 Pre-processing ----------------------------------------------------------------------------------------------------------------------------------
+
+elsocs <- map(
+    names_elsocs,
+    \(x) {
+        elsocs[[x]] |> mutate(
+            tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3)
+        )
+    }
+) |> set_names(names_elsocs)
+
+# 3.2 Create univariate description table for dependent variables -------------------------------------------------------------------------------------
 
 # Creates summary tab for dependent variables per year
-create_tab <- function(df, year) {
+create_unitab <- function(df, year) {
     map2(
         names(vardep_labels),
         vardep_labels,
@@ -49,7 +64,7 @@ create_tab <- function(df, year) {
 # Create the tab list!
 tabs <- map(
     c("2016", "2019", "2022"),
-    \(x) elsocs[[glue("elsoc_{x}")]] |> create_tab(x)
+    \(x) elsocs[[glue("elsoc_{x}")]] |> create_unitab(x)
 ) |>
     set_names(c("elsoc_2016", "elsoc_2019", "elsoc_2022"))
 
@@ -60,7 +75,20 @@ tab <- list(
     tabs$elsoc_2022 |> select(-variable, -variable_label)
 ) |>
     list_cbind() |>
-    select(variable_label, starts_with("Mean"), starts_with("SD"))  |> 
-    mutate(
-        across(where(is.numeric), ~ round(., 2))
-    )
+    select(variable_label, starts_with("Mean"), starts_with("SD")) |>
+    mutate(across(where(is.numeric), ~ round(., 2)))
+
+# 3.3 Create bivariate table (considering years) -------------------------------------------------------------------------------------------------------
+
+bitab_2016 <- elsocs[[glue("elsoc_{'2016'}")]] |>
+    group_by(tercile_nse_barrio_norm) |>
+    summarise(
+        variable = "identification",
+        Mean = mean(identification),
+        SD = sd(identification)
+    ) |>
+    mutate(group_var = "tercile_nse_barrio_norm") |>
+    rename(group_cats = tercile_nse_barrio_norm) |>
+    relocate(variable, group_var, group_cats, Mean, SD) |>
+    rename_with(~ glue("{.x}_{'2016'}"), .cols = c("Mean", "SD")) |>
+    mutate(across(where(is.numeric), ~ round(., 2)))
