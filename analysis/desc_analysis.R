@@ -30,17 +30,15 @@ user <- tolower(Sys.info()["user"])
 
 # 3. Execute code -------------------------------------------------------------------------------------------------------------------------------------
 
+# Utility vectors
 names_elsocs <- c("elsoc_2016", "elsoc_2019", "elsoc_2022")
+years <- c("2016", "2019", "2022")
 
 # 3.1 Pre-processing ----------------------------------------------------------------------------------------------------------------------------------
 
 elsocs <- map(
     names_elsocs,
-    \(x) {
-        elsocs[[x]] |> mutate(
-            tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3)
-        )
-    }
+    \(x) elsocs[[x]] |> mutate(tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3))
 ) |> set_names(names_elsocs)
 
 # 3.2 Create univariate description table for dependent variables -------------------------------------------------------------------------------------
@@ -61,20 +59,13 @@ create_unitab <- function(df, year) {
         list_rbind()
 }
 
-# Create the tab list!
-tabs <- map(
-    c("2016", "2019", "2022"),
+# Create tab!
+unitab <- map(
+    years,
     \(x) elsocs[[glue("elsoc_{x}")]] |> create_unitab(x)
 ) |>
-    set_names(c("elsoc_2016", "elsoc_2019", "elsoc_2022"))
-
-# Delete repeated variable name
-tab <- list(
-    tabs$elsoc_2016,
-    tabs$elsoc_2019 |> select(-variable, -variable_label),
-    tabs$elsoc_2022 |> select(-variable, -variable_label)
-) |>
-    list_cbind() |>
+    set_names(names_elsocs) |>
+    reduce(.f = left_join) |>
     select(variable_label, starts_with("Mean"), starts_with("SD")) |>
     mutate(across(where(is.numeric), ~ round(., 2)))
 
@@ -98,31 +89,45 @@ create_bitab <- function(df, year, variable, variable_label, group_var, group_va
 }
 
 # Test!
-elsocs[["elsoc_2016"]] |>
-    create_bitab(
-        year = "2016",
-        variable = "identification",
-        variable_label = "Identification",
-        group_var = "tercile_nse_barrio_norm",
-        group_var_label = "Terciles NSE Neighbourhood"
-    )
+# elsocs[["elsoc_2016"]] |>
+#     create_bitab(
+#         year = "2016",
+#         variable = "identification",
+#         variable_label = "Identification",
+#         group_var = "tercile_nse_barrio_norm",
+#         group_var_label = "Terciles NSE Neighbourhood"
+#     )
 
-# Anidar en un maps con las variables dependientes
-create_bitab_vardeps <- function(year) {
+# Anidar en un map2 con las variables dependientes
+create_bitab_vardeps <- function(year, group_var, group_var_label) {
     map2(
         names(vardep_labels),
         vardep_labels,
-        \(x, y, year) {
+        \(x, y) {
             create_bitab(
                 df = elsocs[[glue("elsoc_{year}")]],
                 year = year,
                 variable = x,
                 variable_label = y,
-                group_var = "tercile_nse_barrio_norm",
-                group_var_label = "Terciles NSE Neighbourhood"
+                group_var = group_var,
+                group_var_label = group_var_label
             )
         }
-    )
+    ) |> list_rbind()
 }
 
-create_bitab(year = "2016")
+# Anidar en un map con los años
+create_bitab_vardeps_years <- function(group_var, group_var_label) {
+    map(
+        years,
+        \(x) create_bitab_vardeps(
+            year = x,
+            group_var = group_var,
+            group_var_label = group_var_label
+        )
+    ) |> reduce(.f = full_join)
+}
+
+# Create tables!
+bitab1 <- create_bitab_vardeps_years("tercile_nse_barrio_norm", "Terciles NSE Neighbourhood")
+bitab2 <- create_bitab_vardeps_years("new_class", "Social class")
