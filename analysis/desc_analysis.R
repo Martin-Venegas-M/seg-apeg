@@ -80,15 +80,49 @@ tab <- list(
 
 # 3.3 Create bivariate table (considering years) -------------------------------------------------------------------------------------------------------
 
-bitab_2016 <- elsocs[[glue("elsoc_{'2016'}")]] |>
-    group_by(tercile_nse_barrio_norm) |>
-    summarise(
+create_bitab <- function(df, year, variable, variable_label, group_var, group_var_label) {
+    df |>
+        group_by(.data[[group_var]]) |>
+        summarise(
+            group_var_label = group_var_label,
+            variable = as_string(ensym(variable)),
+            variable_label = variable_label,
+            Mean = mean(.data[[variable]]),
+            SD = sd(.data[[variable]])
+        ) |>
+        mutate(group_var = rlang::as_string(ensym(group_var))) |>
+        rename(group_cats = .data[[group_var]]) |>
+        select(variable_label, group_var_label, group_cats, Mean, SD) |>
+        rename_with(~ glue("{.x}_{year}"), .cols = c("Mean", "SD")) |>
+        mutate(across(where(is.numeric), ~ round(., 2)))
+}
+
+# Test!
+elsocs[["elsoc_2016"]] |>
+    create_bitab(
+        year = "2016",
         variable = "identification",
-        Mean = mean(identification),
-        SD = sd(identification)
-    ) |>
-    mutate(group_var = "tercile_nse_barrio_norm") |>
-    rename(group_cats = tercile_nse_barrio_norm) |>
-    relocate(variable, group_var, group_cats, Mean, SD) |>
-    rename_with(~ glue("{.x}_{'2016'}"), .cols = c("Mean", "SD")) |>
-    mutate(across(where(is.numeric), ~ round(., 2)))
+        variable_label = "Identification",
+        group_var = "tercile_nse_barrio_norm",
+        group_var_label = "Terciles NSE Neighbourhood"
+    )
+
+# Anidar en un maps con las variables dependientes
+create_bitab_vardeps <- function(year) {
+    map2(
+        names(vardep_labels),
+        vardep_labels,
+        \(x, y, year) {
+            create_bitab(
+                df = elsocs[[glue("elsoc_{year}")]],
+                year = year,
+                variable = x,
+                variable_label = y,
+                group_var = "tercile_nse_barrio_norm",
+                group_var_label = "Terciles NSE Neighbourhood"
+            )
+        }
+    )
+}
+
+create_bitab(year = "2016")
