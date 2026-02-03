@@ -42,7 +42,7 @@ elsocs <- map(
         mutate(
             tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3),
             tercile_nse_barrio_norm = factor(tercile_nse_barrio_norm, levels = c(1:3), labels = c("First tercile", "Second tercile", "Third tercile")),
-            new_class = factor(new_class, levels = c(1:5), labels = c("Low class", "Middle-low class", "Middle class", "Middle-upper class", "Upper class"))
+            new_class = factor(new_class, levels = c(1:5), labels = c("Lower class", "Middle-low class", "Middle class", "Middle-upper class", "Upper class"))
         )
 ) |> set_names(names_elsocs)
 
@@ -130,9 +130,9 @@ create_bitab_vardeps_years <- function(group_var, group_var_label) {
             group_var = group_var,
             group_var_label = group_var_label
         )
-    ) |> 
-    reduce(.f = full_join) |> 
-    select(variable_label, group_var_label, group_cats, starts_with("Mean"), starts_with("SD"))
+    ) |>
+        reduce(.f = full_join) |>
+        select(variable_label, group_var_label, group_cats, starts_with("Mean"), starts_with("SD"))
 }
 
 # Create tables!
@@ -141,6 +141,6 @@ bitab2 <- create_bitab_vardeps_years("tercile_nse_barrio_norm", "Terciles NSE Ne
 
 # 4. Save objects --------------------------------------------------------------------------------------------------------------------------------------
 
-writexl::write_xlsx(unitab, "output/tables/unitab.xlsx")
-writexl::write_xlsx(bitab1, "output/tables/bitab1.xlsx")
-writexl::write_xlsx(bitab2, "output/tables/bitab2.xlsx")
+# writexl::write_xlsx(unitab, "output/tables/unitab.xlsx")
+# writexl::write_xlsx(bitab1, "output/tables/bitab1.xlsx")
+# writexl::write_xlsx(bitab2, "output/tables/bitab2.xlsx")
