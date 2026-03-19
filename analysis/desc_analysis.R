@@ -10,7 +10,9 @@
 rm(list = ls())
 
 # 1. Load packages ------------------------------------------------------------------------------------------------------------------------------------
-if (!require("pacman")) install.packages("pacman") # if pacman es missing, install
+if (!require("pacman")) {
+    install.packages("pacman")
+} # if pacman es missing, install
 
 pacman::p_load(
     tidyverse,
@@ -38,13 +40,34 @@ years <- c("2016", "2019", "2022")
 
 elsocs <- map(
     names_elsocs,
-    \(x) elsocs[[x]] |>
-        mutate(
-            tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3),
-            tercile_nse_barrio_norm = factor(tercile_nse_barrio_norm, levels = c(1:3), labels = c("First tercile", "Second tercile", "Third tercile")),
-            new_class = factor(new_class, levels = c(1:5), labels = c("Lower class", "Middle-low class", "Middle class", "Middle-upper class", "Upper class"))
-        )
-) |> set_names(names_elsocs)
+    \(x) {
+        elsocs[[x]] |>
+            mutate(
+                tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3),
+                tercile_nse_barrio_norm = factor(
+                    tercile_nse_barrio_norm,
+                    levels = c(1:3),
+                    labels = c(
+                        "First tercile",
+                        "Second tercile",
+                        "Third tercile"
+                    )
+                ),
+                new_class = factor(
+                    new_class,
+                    levels = c(1:5),
+                    labels = c(
+                        "Lower class",
+                        "Middle-low class",
+                        "Middle class",
+                        "Middle-upper class",
+                        "Upper class"
+                    )
+                )
+            )
+    }
+) |>
+    set_names(names_elsocs)
 
 # 3.2 Create univariate description table for dependent variables -------------------------------------------------------------------------------------
 
@@ -53,13 +76,15 @@ create_unitab <- function(df, year) {
     map2(
         names(vardep_labels),
         vardep_labels,
-        \(x, y) df |>
-            summarise(
-                variable = x,
-                variable_label = y,
-                "Mean {year}" := mean(.data[[x]]),
-                "SD {year}" := sd(.data[[x]])
-            )
+        \(x, y) {
+            df |>
+                summarise(
+                    variable = x,
+                    variable_label = y,
+                    "Mean {year}" := mean(.data[[x]]),
+                    "SD {year}" := sd(.data[[x]])
+                )
+        }
     ) |>
         list_rbind()
 }
@@ -76,7 +101,14 @@ unitab <- map(
 
 # 3.3 Create bivariate table (considering years) -------------------------------------------------------------------------------------------------------
 
-create_bitab <- function(df, year, variable, variable_label, group_var, group_var_label) {
+create_bitab <- function(
+    df,
+    year,
+    variable,
+    variable_label,
+    group_var,
+    group_var_label
+) {
     df |>
         group_by(.data[[group_var]]) |>
         summarise(
@@ -118,26 +150,38 @@ create_bitab_vardeps <- function(year, group_var, group_var_label) {
                 group_var_label = group_var_label
             )
         }
-    ) |> list_rbind()
+    ) |>
+        list_rbind()
 }
 
 # Anidar en un map con los años
 create_bitab_vardeps_years <- function(group_var, group_var_label) {
     map(
         years,
-        \(x) create_bitab_vardeps(
-            year = x,
-            group_var = group_var,
-            group_var_label = group_var_label
-        )
+        \(x) {
+            create_bitab_vardeps(
+                year = x,
+                group_var = group_var,
+                group_var_label = group_var_label
+            )
+        }
     ) |>
         reduce(.f = full_join) |>
-        select(variable_label, group_var_label, group_cats, starts_with("Mean"), starts_with("SD"))
+        select(
+            variable_label,
+            group_var_label,
+            group_cats,
+            starts_with("Mean"),
+            starts_with("SD")
+        )
 }
 
 # Create tables!
 bitab1 <- create_bitab_vardeps_years("new_class", "Social class")
-bitab2 <- create_bitab_vardeps_years("tercile_nse_barrio_norm", "Terciles NSE Neighbourhood")
+bitab2 <- create_bitab_vardeps_years(
+    "tercile_nse_barrio_norm",
+    "Terciles NSE Neighbourhood"
+)
 
 # 4. Save objects --------------------------------------------------------------------------------------------------------------------------------------
 
