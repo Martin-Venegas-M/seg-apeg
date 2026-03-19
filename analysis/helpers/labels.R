@@ -27,6 +27,23 @@ coef_labels <- c(
   "new_class5:nse_barrio_norm" = "Class 5 × Neighborhood SES"
 )
 
+controls_labels <- c(
+  age = "Age",
+  age_sq = "Age squared",
+  sex = "Gender",
+  homeowner = "Homeowner",
+  married = "Married",
+  has_children = "Has children",
+  pop_density = "Population density",
+  pct_migrant = "Inmigrants percentage",
+  insecurity = "Insecurity at neighbourhood"
+)
+
+varindep_labels <- c(
+  new_class = "Social Class",
+  tercile_nse_barrio_norm = "Neighborhood SES (terciles)"
+)
+
 vardep_labels <- c(
   identification = "Identification",
   friends = "Friends",

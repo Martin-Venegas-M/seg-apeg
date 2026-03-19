@@ -19,7 +19,8 @@ pacman::p_load(
     haven,
     tidylog,
     rlang,
-    glue
+    glue,
+    sjlabelled
 )
 
 # 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
@@ -99,7 +100,108 @@ unitab <- map(
     select(variable_label, starts_with("Mean"), starts_with("SD")) |>
     mutate(across(where(is.numeric), ~ round(., 2)))
 
-# 3.3 Create bivariate table (considering years) -------------------------------------------------------------------------------------------------------
+# 3.3 Create univariate description table considering whole sample -------------------------------------------------------------------------------------
+
+# Select only variables needed
+elsocs <- map2(
+    names_elsocs,
+    years,
+    \(x, y) {
+        to_select <- c(
+            "idencuesta",
+            names(controls_labels),
+            names(varindep_labels),
+            names(vardep_labels)
+        )
+
+        elsocs[[x]] |>
+            select(all_of(to_select)) |>
+            mutate(
+                sex = set_labels(
+                    remove_all_labels(sex),
+                    labels = c(
+                        "Male" = 1,
+                        "Female" = 2
+                    )
+                ),
+                homeowner = set_labels(
+                    homeowner,
+                    labels = c(
+                        "Yes" = 1,
+                        "No" = 0
+                    )
+                ),
+                married = set_labels(
+                    married,
+                    labels = c(
+                        "Yes" = 1,
+                        "No" = 0
+                    )
+                ),
+                has_children = set_labels(
+                    has_children,
+                    labels = c(
+                        "Yes" = 1,
+                        "No" = 0
+                    )
+                ),
+                across(c(sex, homeowner, married, has_children), to_label),
+                idencuesta = glue("{idencuesta}-{y}")
+            )
+    }
+) |>
+    set_names(names_elsocs) |> 
+    list_rbind()
+
+# 3.3.1 Create unified descriptive table for all variables (whole sample) ----------------------------------------------------------------------------
+
+create_desc_tab <- function(df, var_name, var_label) {
+    col <- df[[var_name]]
+
+    if (is.numeric(col)) {
+        tibble(
+            variable_label = var_label,
+            type = "Numeric",
+            category = NA_character_,
+            mean_pct = round(mean(col, na.rm = TRUE), 2),
+            sd = round(sd(col, na.rm = TRUE), 2),
+            n = NA_real_
+        )
+    } else {
+        tab <- df |>
+            count(.data[[var_name]]) |>
+            mutate(pct = round(n / sum(n) * 100, 1)) |>
+            rename(category = 1)
+
+        tibble(
+            variable_label = c(var_label, rep(NA_character_, nrow(tab) - 1)),
+            type = c("Categorical", rep(NA_character_, nrow(tab) - 1)),
+            category = as.character(tab$category),
+            mean_pct = tab$pct,
+            sd = NA_real_,
+            n = as.numeric(tab$n)
+        )
+    }
+}
+
+all_vars_labels <- c(controls_labels, varindep_labels, vardep_labels)
+
+desc_tab <- map2(
+    names(all_vars_labels),
+    all_vars_labels,
+    \(x, y) create_desc_tab(elsocs, x, y)
+) |>
+    list_rbind() |>
+    rename(
+        "Variable" = variable_label,
+        "Type" = type,
+        "Category" = category,
+        "Mean / %" = mean_pct,
+        "SD" = sd,
+        "N" = n
+    )
+
+# 3.4 Create bivariate table (considering years) -------------------------------------------------------------------------------------------------------
 
 create_bitab <- function(
     df,
@@ -186,5 +288,6 @@ bitab2 <- create_bitab_vardeps_years(
 # 4. Save objects --------------------------------------------------------------------------------------------------------------------------------------
 
 # writexl::write_xlsx(unitab, "output/tables/unitab.xlsx")
+writexl::write_xlsx(desc_tab, "output/tables/desc_tab.xlsx")
 # writexl::write_xlsx(bitab1, "output/tables/bitab1.xlsx")
 # writexl::write_xlsx(bitab2, "output/tables/bitab2.xlsx")
