@@ -206,48 +206,7 @@ create_socioec_vars <- function(data) {
 elsocs <- map(elsocs, ~ create_socioec_vars(.x))
 rm(create_socioec_vars, insumo_oesch)
 
-# Save intermediate datasets for stata
-haven::write_dta(
-  elsocs[["elsoc_2016"]],
-  "input/data/pre-proc/elsoc_2016_created_variables_BEFORE_ISEI.dta"
-)
-haven::write_dta(
-  elsocs[["elsoc_2019"]],
-  "input/data/pre-proc/elsoc_2019_created_variables_BEFORE_ISEI.dta"
-)
-haven::write_dta(
-  elsocs[["elsoc_2022"]],
-  "input/data/pre-proc/elsoc_2022_created_variables_BEFORE_ISEI.dta"
-)
-
-# 4.4 Create ISEI from Stata --------------------------------------------------
-
-stata_path <- glue::glue(
-  "\"C:\\Users\\{tolower(Sys.info()['user'])}\\Desktop\\Stata15\\Stata15\\Stata-64\""
-)
-options("RStata.StataPath" = stata_path)
-options("RStata.StataVersion" = 15)
-
-suppressWarnings(stata("C:/Work/Github/seg-apeg/processing/helpers/iscogen.do"))
-
-rm(list = ls()[!ls() %in% c("insumo_oesch")])
-
-# 4.5 Load data again ---------------------------------------------------------
-
-elsocs <- list(
-  elsoc_2016 = read_dta(
-    "input/data/pre-proc/elsoc_2016_created_variables_AFTER_ISEI.dta"
-  ),
-  elsoc_2019 = read_dta(
-    "input/data/pre-proc/elsoc_2019_created_variables_AFTER_ISEI.dta"
-  ),
-  elsoc_2022 = read_dta(
-    "input/data/pre-proc/elsoc_2022_created_variables_AFTER_ISEI.dta"
-  )
-)
-
-# 4.6 Label class variables ---------------------------------------------------
-#* NOTE: This is necessary because if I do this before using iscogen in stata, labels are removed.
+# 4.4 Label class variables ---------------------------------------------------
 
 label_class_vars <- function(data) {
   # Create grouped categories of social class
@@ -321,7 +280,7 @@ label_class_vars <- function(data) {
 elsocs <- map(elsocs, ~ label_class_vars(.x))
 rm(label_class_vars)
 
-# 4.7 Create covariates -------------------------------------------------------
+# 4.5 Create covariates -------------------------------------------------------
 create_covariates <- function(data) {
   data |>
     # Rename
@@ -355,7 +314,7 @@ create_covariates <- function(data) {
         aux %in% c(8:9) ~ 5,
         aux %in% c(10) ~ 6
       ),
-      # If the education of sustainer y higher than the interviwe education, 
+      # If the education of sustainer y higher than the interviwe education,
       # keep that, if not keep the interviewe education
       educ_cat_final = if_else(educ_sost > educ, educ_sost, educ),
       clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
@@ -401,7 +360,7 @@ create_covariates <- function(data) {
 elsocs <- map(elsocs, ~ create_covariates(.x))
 rm(create_covariates)
 
-# 4.8 Drop variables ----------------------------------------------------------
+# 4.6 Drop variables ----------------------------------------------------------
 elsocs <- map(elsocs, .f = function(x) {
   x |>
     select(
@@ -421,7 +380,6 @@ elsocs <- map(elsocs, .f = function(x) {
       ln_income,
       quint_inc,
       isco,
-      isei,
       pct_desempleo:nse_barrio_norm,
       quint_nse_barrio,
       age,
