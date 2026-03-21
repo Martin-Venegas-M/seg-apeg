@@ -11,7 +11,7 @@
 
 # Create function with the code
 create_dep_vars <- function(data) {
-  data %>%
+  data |>
     mutate(
       #***** Cultural dimension
       identification = (c32_01 + c32_02) / 2,
@@ -64,12 +64,12 @@ standardize_dep_vars <- function(data) {
     "justif_violence"
   )
 
-  data %>%
+  data |>
     mutate(across(
       all_of(vars_to_standardize),
       ~ as.numeric(scale(.x)),
       .names = "z_{.col}"
-    )) %>%
+    )) |>
     ungroup()
 }
 
@@ -79,7 +79,7 @@ rm(standardize_dep_vars)
 # 4.3 Create socioeconomic variables ------------------------------------------
 
 create_socioec_vars <- function(data) {
-  data <- data %>%
+  data <- data |>
     mutate(
       # Collapse education level in 5 categories
       educ = case_when(
@@ -97,7 +97,7 @@ create_socioec_vars <- function(data) {
         m20 %in% c(7, 8) ~ 4,
         m20 %in% c(9, 10) ~ 5,
         TRUE ~ NA
-      ) %>%
+      ) |>
         replace_na(0), # ! PATCH FOR THEN CREATING EDUC_CAT_FINAL
       across(
         c(educ, educ_sost),
@@ -117,8 +117,8 @@ create_socioec_vars <- function(data) {
     )
 
   # Join social class (Oesch Scheme based on Isco 08)
-  data <- data %>%
-    rename(isco = ciuo08_m03) %>%
+  data <- data |>
+    rename(isco = ciuo08_m03) |>
     mutate(
       # Manual imputation!
       isco = case_when(
@@ -129,8 +129,8 @@ create_socioec_vars <- function(data) {
         idencuesta == "13110111" ~ 5221,
         TRUE ~ isco
       )
-    ) %>%
-    left_join(insumo_oesch, by = "isco") %>%
+    ) |>
+    left_join(insumo_oesch, by = "isco") |>
     mutate(
       class = as.numeric(class),
       class = case_when(
@@ -141,15 +141,15 @@ create_socioec_vars <- function(data) {
     )
 
   # Join social class for household sostainer
-  data <- data %>%
-    rename(isco_sost = ciuo08_m22) %>%
+  data <- data |>
+    rename(isco_sost = ciuo08_m22) |>
     left_join(
-      insumo_oesch %>% rename(class_sost = class),
+      insumo_oesch |> rename(class_sost = class),
       by = c("isco_sost" = "isco")
     )
 
   # Create grouped categories of social class
-  data <- data %>%
+  data <- data |>
     mutate(
       # Create class with eight categories + retired and unemployed categories
       class_8 = case_when(
@@ -174,7 +174,7 @@ create_socioec_vars <- function(data) {
         class %in% c(17) ~ 6,
         class %in% c(18) ~ 7
       )
-    ) %>%
+    ) |>
     mutate(
       class_8_sost = case_when(
         class_sost %in% c(1, 2) ~ 1,
@@ -196,7 +196,7 @@ create_socioec_vars <- function(data) {
         class_sost %in% c(8, 12, 16) ~ 5,
         class_sost %in% c(17) ~ 6,
         class_sost %in% c(18) ~ 7
-      ) %>%
+      ) |>
         replace_na(100) # ! PATCH FOR THEN CREATIN CLASE_FINAL
     )
 
@@ -251,7 +251,7 @@ elsocs <- list(
 
 label_class_vars <- function(data) {
   # Create grouped categories of social class
-  data <- data %>%
+  data <- data |>
     mutate(
       across(
         c(class, class_sost),
@@ -323,7 +323,7 @@ rm(label_class_vars)
 
 # 4.7 Create covariates -------------------------------------------------------
 create_covariates <- function(data) {
-  data %>%
+  data |>
     # Rename
     rename(
       age = m0_edad,
@@ -332,7 +332,7 @@ create_covariates <- function(data) {
       yr_address = m34_03,
       marital_status = m36,
       children = m37
-    ) %>%
+    ) |>
     mutate(
       # Generate age square
       age_sq = age^2,
@@ -342,8 +342,8 @@ create_covariates <- function(data) {
       has_children = if_else(children >= 1, 1, 0),
       # Quntiles of nse neighbourhood
       quint_nse_barrio = ntile(nse_barrio_norm, 5)
-    ) %>%
-    select(-c(tenure, marital_status, children)) %>%
+    ) |>
+    select(-c(tenure, marital_status, children)) |>
     #* AUXILIAR VARIABLES FOR CONSTRUCTING NEW SOCIAL CLASS
     mutate(
       aux = ntile(m29, 10),
@@ -359,7 +359,7 @@ create_covariates <- function(data) {
       # keep that, if not keep the interviewe education
       educ_cat_final = if_else(educ_sost > educ, educ_sost, educ),
       clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
-    ) %>%
+    ) |>
     # Label variables for MCA
     mutate(
       income_cat_final = set_labels(
@@ -403,7 +403,7 @@ rm(create_covariates)
 
 # 4.8 Drop variables ----------------------------------------------------------
 elsocs <- map(elsocs, .f = function(x) {
-  x %>%
+  x |>
     select(
       idencuesta,
       ola,

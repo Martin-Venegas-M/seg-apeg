@@ -8,9 +8,9 @@
 #! [THIS SCRIPT IS MEANT TO BE RUN VIA THE run_processing.R SCRIPT]
 
 # 3.1 Drop variables ----------------------------------------------------------
-elsoc <- elsoc %>%
+elsoc <- elsoc |>
   # Drop useless variables from waves 2, 3 and 5
-  select(-matches("_w02$|-w02$|_w03$|-w03$|_w05$|-w05$")) %>%
+  select(-matches("_w02$|-w02$|_w03$|-w03$|_w05$|-w05$")) |>
   # Drop other useless variables
   select(
     -m19_w01,
@@ -29,9 +29,9 @@ elsoc <- elsoc %>%
 
 # Create function for separating elsoc
 separate_elsoc <- function(data, suffix_wave) {
-  results <- data %>%
-    select(idencuesta, muestra, ends_with(suffix_wave)) %>% # Select essential variables
-    rename_with(~ (str_replace_all(., suffix_wave, ""))) %>% # Remove suffix of wave
+  results <- data |>
+    select(idencuesta, muestra, ends_with(suffix_wave)) |> # Select essential variables
+    rename_with(~ (str_replace_all(., suffix_wave, ""))) |> # Remove suffix of wave
     filter(estrato %in% c(1:4)) # ! IMPORTANT: FILTER SAMPLE BY MAIN CITIES
 
   print(NROW(results))
@@ -50,12 +50,12 @@ rm(separate_elsoc)
 
 join_vars_barrio <- function(data, n_wave) {
   # Filter insumo_barrio by wave
-  insumo_barrio_wave <- insumo_barrio %>%
-    filter(ola == n_wave) %>%
+  insumo_barrio_wave <- insumo_barrio |>
+    filter(ola == n_wave) |>
     select(-c(ola, estrato))
 
   # Join insumo barrio
-  results <- data %>% inner_join(insumo_barrio_wave, by = "idencuesta")
+  results <- data |> inner_join(insumo_barrio_wave, by = "idencuesta")
 
   # Print differences
   dif <- NROW(results) - NROW(data)

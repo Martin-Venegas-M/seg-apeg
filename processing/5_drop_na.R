@@ -20,7 +20,7 @@
 # ggsave("output/plots/miss_elsoc_2022.png")
 
 # Drop na's!
-elsocs <- map(elsocs, \(x) x %>% drop_na())
+elsocs <- map(elsocs, \(x) x |> drop_na())
 
 #* When droping NA:
 #* elsoc_2016 removed 275 rows (15%), 1,613 rows remaining
@@ -29,7 +29,7 @@ elsocs <- map(elsocs, \(x) x %>% drop_na())
 
 # 5.2 Remove unemployed -------------------------------------------------------
 
-elsocs <- map(elsocs, \(x) x %>% filter(class_5 != 7))
+elsocs <- map(elsocs, \(x) x |> filter(class_5 != 7))
 
 #* When removing Unemployed
 #* filter: removed 92 rows (6%), 1,521 rows remaining
