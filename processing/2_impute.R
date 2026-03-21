@@ -232,8 +232,8 @@ rm(vars_to_impute, insumo_ciuo, insumo_ciuo_reduced)
 
 # Run new imputation method
 impute_m29 <- function(data) {
-  data |>
-    mutate(across(starts_with("m29_"), ~ if_else(. %in% 0, NA_real_, .))) |>
+  data %>%
+    mutate(across(starts_with("m29_"), ~ if_else(. %in% 0, NA_real_, .))) %>%
     mutate(
       numerador = rowSums(select(., starts_with("m29_")), na.rm = TRUE), # Sums every valid m29 of the row
       denominador = rowSums(!is.na(select(., starts_with("m29_")))), # Sums the wave quantity where the row has valid values
