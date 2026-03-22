@@ -7,6 +7,52 @@
 
 #! [THIS SCRIPT IS MEANT TO BE RUN VIA THE run_processing.R SCRIPT]
 
+# Label constants -------------------------------------------------------------
+lbl_educ <- c(
+  "No formal education" = 1,
+  "Primary education" = 2,
+  "Secondary education" = 3,
+  "Tertiary technical education" = 4,
+  "Tertiary universitary education" = 5
+)
+
+lbl_class5 <- c(
+  "Higher-grade service class" = 1,
+  "Lower-grade service class" = 2,
+  "Small business owners" = 3,
+  "Skilled workers" = 4,
+  "Unskilled workers" = 5,
+  "Retired" = 6,
+  "Unemployed" = 7
+)
+# Utility functions -----------------------------------------------------------
+collapse_class8 <- \(x) {
+  case_when(
+    x %in% c(1, 2) ~ 1,
+    x %in% c(3, 4) ~ 2,
+    x %in% c(5, 6) ~ 3,
+    x %in% c(7, 8) ~ 4,
+    x %in% c(9, 10) ~ 5,
+    x %in% c(11, 12) ~ 6,
+    x %in% c(13, 14) ~ 7,
+    x %in% c(15, 16) ~ 8,
+    x %in% c(17) ~ 9,
+    x %in% c(18) ~ 10
+  )
+}
+
+collapse_class5 <- \(x) {
+  case_when(
+    x %in% c(1, 2, 5, 9, 13) ~ 1,
+    x %in% c(6, 10, 14) ~ 2,
+    x %in% c(3, 4) ~ 3,
+    x %in% c(7, 11, 15) ~ 4,
+    x %in% c(8, 12, 16) ~ 5,
+    x %in% c(17) ~ 6,
+    x %in% c(18) ~ 7
+  )
+}
+
 # 4.1 Create dependent variables ----------------------------------------------
 elsocs <- map(elsocs, \(data) {
   data |>
@@ -69,7 +115,7 @@ elsocs <- map(elsocs, \(data) {
 
 # 4.3 Create socioeconomic variables ------------------------------------------
 elsocs <- map(elsocs, \(data) {
-  data <- data |>
+  data |>
     mutate(
       # Collapse education level in 5 categories
       educ = case_when(
@@ -89,25 +135,11 @@ elsocs <- map(elsocs, \(data) {
         TRUE ~ NA
       ) |>
         replace_na(0), # ! PATCH FOR THEN CREATING EDUC_CAT_FINAL
-      across(
-        c(educ, educ_sost),
-        ~ set_labels(
-          .,
-          labels = c(
-            "No formal education" = 1,
-            "Primary education" = 2,
-            "Secondary education" = 3,
-            "Tertiary technical education" = 4,
-            "Tertiary universitary education" = 5
-          )
-        )
-      ),
+      across(c(educ, educ_sost), ~ set_labels(., labels = lbl_educ)),
       ln_income = log(m29), # Generate natural logaritm of household income
       quint_inc = ntile(ln_income, 5) # Generate discrete variable of househols income (quintiles)
-    )
-
-  # Join social class (Oesch Scheme based on Isco 08)
-  data <- data |>
+    ) |>
+    # Join social class (Oesch Scheme based on Isco 08)
     rename(isco = ciuo08_m03) |>
     mutate(
       # Manual imputation!
@@ -128,69 +160,20 @@ elsocs <- map(elsocs, \(data) {
         isco == 16000 ~ 18, # unemployed
         TRUE ~ class
       )
-    )
-
-  # Join social class for household sostainer
-  data <- data |>
+    ) |>
+    # Join social class for household sostainer
     rename(isco_sost = ciuo08_m22) |>
     left_join(
       insumo_oesch |> rename(class_sost = class),
       by = c("isco_sost" = "isco")
-    )
-
-  # Create grouped categories of social class
-  data <- data |>
-    mutate(
-      # Create class with eight categories + retired and unemployed categories
-      class_8 = case_when(
-        class %in% c(1, 2) ~ 1,
-        class %in% c(3, 4) ~ 2,
-        class %in% c(5, 6) ~ 3,
-        class %in% c(7, 8) ~ 4,
-        class %in% c(9, 10) ~ 5,
-        class %in% c(11, 12) ~ 6,
-        class %in% c(13, 14) ~ 7,
-        class %in% c(15, 16) ~ 8,
-        class %in% c(17) ~ 9,
-        class %in% c(18) ~ 10
-      ),
-      # Create class with five categories + retired and unemployed categories
-      class_5 = case_when(
-        class %in% c(1, 2, 5, 9, 13) ~ 1,
-        class %in% c(6, 10, 14) ~ 2,
-        class %in% c(3, 4) ~ 3,
-        class %in% c(7, 11, 15) ~ 4,
-        class %in% c(8, 12, 16) ~ 5,
-        class %in% c(17) ~ 6,
-        class %in% c(18) ~ 7
-      )
     ) |>
+    # Create grouped categories of social class
     mutate(
-      class_8_sost = case_when(
-        class_sost %in% c(1, 2) ~ 1,
-        class_sost %in% c(3, 4) ~ 2,
-        class_sost %in% c(5, 6) ~ 3,
-        class_sost %in% c(7, 8) ~ 4,
-        class_sost %in% c(9, 10) ~ 5,
-        class_sost %in% c(11, 12) ~ 6,
-        class_sost %in% c(13, 14) ~ 7,
-        class_sost %in% c(15, 16) ~ 8,
-        class_sost %in% c(17) ~ 9,
-        class_sost %in% c(18) ~ 10
-      ),
-      class_5_sost = case_when(
-        class_sost %in% c(1, 2, 5, 9, 13) ~ 1,
-        class_sost %in% c(6, 10, 14) ~ 2,
-        class_sost %in% c(3, 4) ~ 3,
-        class_sost %in% c(7, 11, 15) ~ 4,
-        class_sost %in% c(8, 12, 16) ~ 5,
-        class_sost %in% c(17) ~ 6,
-        class_sost %in% c(18) ~ 7
-      ) |>
-        replace_na(100) # ! PATCH FOR THEN CREATING CLASE_FINAL
+      class_8 = collapse_class8(class),
+      class_5 = collapse_class5(class),
+      class_8_sost = collapse_class8(class_sost),
+      class_5_sost = collapse_class5(class_sost) |> replace_na(100) # ! PATCH FOR THEN CREATING CLASE_FINAL
     )
-
-  return(data)
 })
 
 # 4.4 Label class variables ---------------------------------------------------
@@ -244,21 +227,7 @@ elsocs <- map(elsocs, \(data) {
         )
       ),
       # Set labels for the five categories version of class
-      across(
-        c(class_5, class_5_sost),
-        ~ set_labels(
-          .,
-          labels = c(
-            "Higher-grade service class" = 1,
-            "Lower-grade service class" = 2,
-            "Small business owners" = 3,
-            "Skilled workers" = 4,
-            "Unskilled workers" = 5,
-            "Retired" = 6,
-            "Unemployed" = 7
-          )
-        )
-      )
+      across(c(class_5, class_5_sost), ~ set_labels(., labels = lbl_class5))
     )
 })
 
@@ -299,47 +268,23 @@ elsocs <- map(elsocs, \(data) {
         aux %in% c(6:7) ~ 4,
         aux %in% c(8:9) ~ 5,
         aux %in% c(10) ~ 6
-      ),
-      # If the education of sustainer y higher than the interviwe education,
+      ) |>
+        set_labels(
+          labels = c(
+            "First  decile" = 1,
+            "Second and third decile" = 2,
+            "Fourth and fifth decile" = 3,
+            "Sixth and seventh decile" = 4,
+            "Eighth and ninth  decile" = 5,
+            "Tenth decile" = 6
+          )
+        ),
+      # If the education of sustainer is higher than the interviewe education,
       # keep that, if not keep the interviewe education
-      educ_cat_final = if_else(educ_sost > educ, educ_sost, educ),
-      clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5)
-    ) |>
-    # Label variables for MCA
-    mutate(
-      income_cat_final = set_labels(
-        income_cat_final,
-        labels = c(
-          "First  decile" = 1,
-          "Second and third decile" = 2,
-          "Fourth and fifth decile" = 3,
-          "Sixth and seventh decile" = 4,
-          "Eighth and ninth  decile" = 5,
-          "Tenth decile" = 6
-        )
-      ),
-      educ_cat_final = set_labels(
-        educ_cat_final,
-        labels = c(
-          "No formal education" = 1,
-          "Primary education" = 2,
-          "Secondary education" = 3,
-          "Tertiary technical education" = 4,
-          "Tertiary universitary education" = 5
-        )
-      ),
-      clase_final = set_labels(
-        clase_final,
-        labels = c(
-          "Higher-grade service class" = 1,
-          "Lower-grade service class" = 2,
-          "Small business owners" = 3,
-          "Skilled workers" = 4,
-          "Unskilled workers" = 5,
-          "Retired" = 6,
-          "Unemployed" = 7
-        )
-      )
+      educ_cat_final = if_else(educ_sost > educ, educ_sost, educ) |>
+        set_labels(labels = lbl_educ),
+      clase_final = if_else(class_5_sost < class_5, class_5_sost, class_5) |>
+        set_labels(labels = lbl_class5)
     )
 })
 
