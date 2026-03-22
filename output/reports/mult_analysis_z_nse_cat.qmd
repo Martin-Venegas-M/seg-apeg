@@ -76,13 +76,16 @@ plot_int_mm <- function(model, vardep) {
 
     # grafico
     ggplot(marginales, aes(x = x, y = predicted, color = group)) +
-        geom_line(size = 1.2) +
-        geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.15, color = NA) +
+        geom_pointrange(
+            aes(ymin = conf.low, ymax = conf.high),
+            position = position_dodge(width = 0.4),
+            size = 0.7
+        ) +
+        geom_line(aes(group = group), position = position_dodge(width = 0.4), linewidth = 0.8) +
         labs(
-            x = "Neighborhood socioeconomic status (standardized)",
+            x = "Neighborhood SES (terciles)",
             y = paste0("Predicted ", vardep),
-            color = "Class",
-            fill = "Class"
+            color = "Class"
         ) +
         theme_minimal(base_size = 14) +
         theme(
