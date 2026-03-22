@@ -1,8 +1,55 @@
+#******************************************************************************
+# 0. Identification -----------------------------------------------------------
+# Title: Plot predictions from multilevel models
+# Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
+# Responsable: Technical assistant
+# Executive Summary: This script contains the code to generate prediction plots
+#  with neighborhood SES interaction (second version)
+# Date: March 22, 2026
+#******************************************************************************
+
+rm(list = ls())
+
+# 1. Load packages ------------------------------------------------------------
+if (!require("pacman")) {
+  install.packages("pacman")
+} # if pacman es missing, installÍ
+
+pacman::p_load(
+  tidyverse,
+  haven,
+  tidylog,
+  rlang,
+  sjlabelled,
+  texreg,
+  glue,
+  parameters,
+  see,
+  cowplot,
+  ggeffects
+)
+
+# 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
+
+load("output/models/results_mm_z_nse_cat.RData")
+load("input/data/proc/elsoc_proc.RData")
+
+# Declate date and user
+date <- format(Sys.Date(), "%y%m%d")
+user <- tolower(Sys.info()["user"])
+
+# Load labels
+source("analysis/helpers/labels.R")
+labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
+
+# 3. Execute code --------------------------------------------------------------------------------------------------------------------------------------
+# 3.1 Create function ----------------------------------------------------------------------------------------------------------------------------------
+
 plotpreds2 <- function(year, vardep, label.vardep, title) {
   # Make preds
   preds <- ggpredict(
-    results_mm[[year]][[vardep]][[5]],
-    terms = c("new_class", "nse_barrio_norm")
+    results_mm[[year]][[glue("z_{vardep}")]][[5]],
+    terms = c("new_class", "tercile_nse_barrio_norm")
   )
 
   # Gráfico ajustado
