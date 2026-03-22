@@ -29,7 +29,7 @@ pacman::p_load(
   ggeffects
 )
 
-# 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
+# 2. Load data ----------------------------------------------------------------
 
 load("output/models/results_mm_z_nse_cat.RData")
 load("input/data/proc/elsoc_proc.RData")
@@ -42,8 +42,8 @@ user <- tolower(Sys.info()["user"])
 source("analysis/helpers/labels.R")
 labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
 
-# 3. Execute code --------------------------------------------------------------------------------------------------------------------------------------
-# 3.1 Create function ----------------------------------------------------------------------------------------------------------------------------------
+# 3. Execute code -------------------------------------------------------------
+# 3.1 Create function ---------------------------------------------------------
 
 plotpreds2 <- function(year, vardep, label.vardep, title) {
   # Make preds
@@ -62,7 +62,7 @@ plotpreds2 <- function(year, vardep, label.vardep, title) {
     ) +
     scale_color_manual(
       values = c("red", "blue", "darkgreen"),
-      labels = c("Mean - SD", "Mean", "Mean + SD")
+      labels = c("First Tercile", "Second Tercile", "Third Tercile")
     ) +
     theme_minimal(base_size = 13) +
     theme(
@@ -72,8 +72,40 @@ plotpreds2 <- function(year, vardep, label.vardep, title) {
     )
 }
 
+# 3.2 Create plots ------------------------------------------------------------
+# Institutional trust - 2016
 ggsave(
-  filename = glue("output/plots/preds_trust_inst_2022.png"),
+  filename = glue("output/plots/main/preds_trust_inst_2016.png"),
+  plot = plotpreds2(
+    "elsoc_2016",
+    "trust_inst",
+    "Institutional trust",
+    "Predicted institutional trust by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
+
+# Institutional trust - 2019
+ggsave(
+  filename = glue("output/plots/main/preds_trust_inst_2019.png"),
+  plot = plotpreds2(
+    "elsoc_2019",
+    "trust_inst",
+    "Institutional trust",
+    "Predicted institutional trust by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
+
+# Institutional trust - 2022
+ggsave(
+  filename = glue("output/plots/main/preds_trust_inst_2022.png"),
   plot = plotpreds2(
     "elsoc_2022",
     "trust_inst",
@@ -86,12 +118,13 @@ ggsave(
   device = ragg::agg_png
 )
 
+# Unconventional participation - 2016
 ggsave(
-  filename = glue("output/plots/preds_unconv_particip_2022.png"),
+  filename = glue("output/plots/main/preds_unconv_particip_2016.png"),
   plot = plotpreds2(
-    "elsoc_2022",
+    "elsoc_2016",
     "unconv_particip",
-    "Unconventional paticipation",
+    "Unconventional participation",
     "Predicted unconventional participation by social class and neighborhood SES"
   ),
   width = 10,
@@ -100,18 +133,77 @@ ggsave(
   device = ragg::agg_png
 )
 
+# Unconventional participation - 2022
+ggsave(
+  filename = glue("output/plots/main/preds_unconv_particip_2022.png"),
+  plot = plotpreds2(
+    "elsoc_2022",
+    "unconv_particip",
+    "Unconventional participation",
+    "Predicted unconventional participation by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
 
-# tests
-install.packages("emmeans")
-library(emmeans)
+# Interest in politics - 2016
+ggsave(
+  filename = glue("output/plots/main/preds_interest_pol_2016.png"),
+  plot = plotpreds2(
+    "elsoc_2016",
+    "interest_pol",
+    "Interest in politics",
+    "Predicted interest in politics by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
 
-emm <- emmeans(
-  results_mm[["elsoc_2022"]][["trust_inst"]][[5]],
-  ~ new_class | nse_barrio_norm,
-  at = list(nse_barrio_norm = c(0.26, 0.46, 0.67))
-) # -1SD, media, +1SD
+# Interest in politics - 2022
+ggsave(
+  filename = glue("output/plots/main/preds_interest_pol_2022.png"),
+  plot = plotpreds2(
+    "elsoc_2022",
+    "interest_pol",
+    "Interest in politics",
+    "Predicted interest in politics by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
 
+# Identification - 2016
+ggsave(
+  filename = glue("output/plots/main/preds_identification_2016.png"),
+  plot = plotpreds2(
+    "elsoc_2016",
+    "identification",
+    "Identification",
+    "Predicted identification by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
 
-pairs(emm, by = "nse_barrio_norm")
-
-plot(emm, comparisons = TRUE, by = "nse_barrio_norm")
+# Satisfaction with democracy - 2016
+ggsave(
+  filename = glue("output/plots/main/preds_satisf_demo_2016.png"),
+  plot = plotpreds2(
+    "elsoc_2016",
+    "satisf_demo",
+    "Satisfaction with democracy",
+    "Predicted satisfaction with democracy by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
+  device = ragg::agg_png
+)
