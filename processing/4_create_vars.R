@@ -251,7 +251,13 @@ elsocs <- map(elsocs, \(data) {
       married = if_else(marital_status %in% c(1, 3), 1, 0),
       has_children = if_else(children >= 1, 1, 0),
       # Quntiles of nse neighbourhood
-      quint_nse_barrio = ntile(nse_barrio_norm, 5)
+      quint_nse_barrio = ntile(nse_barrio_norm, 5),
+      tercile_nse_barrio_norm = ntile(nse_barrio_norm, 3),
+      tercile_nse_barrio_norm = factor(
+        tercile_nse_barrio_norm,
+        levels = c(1:3),
+        labels = c("First tercile", "Second tercile", "Third tercile")
+      )
     ) |>
     select(-c(tenure, marital_status, children))
 })
@@ -310,6 +316,7 @@ elsocs <- map(elsocs, \(data) {
       isco,
       pct_desempleo:nse_barrio_norm,
       quint_nse_barrio,
+      tercile_nse_barrio_norm,
       age,
       age_sq,
       sex,
