@@ -11,7 +11,7 @@
 source("processing/run_processing.R", encoding = "UTF-8")
 
 # 2. Multivariate analysis ----------------------------------------------------
-source("analysis/mult_analysis_z.R", encoding = "UTF-8")
+source("analysis/main/mult_analysis_z.R", encoding = "UTF-8")
 
 # 3. Render report ------------------------------------------------------------
 quarto::quarto_render("output/reports/mult_analysis_z.qmd")
