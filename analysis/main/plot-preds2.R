@@ -1,9 +1,10 @@
-
-plotpreds2 <- function(year, vardep, label.vardep, title){
-  
+plotpreds2 <- function(year, vardep, label.vardep, title) {
   # Make preds
-  preds <- ggpredict(results_mm[[year]][[vardep]][[5]], terms = c("new_class", "nse_barrio_norm"))
-  
+  preds <- ggpredict(
+    results_mm[[year]][[vardep]][[5]],
+    terms = c("new_class", "nse_barrio_norm")
+  )
+
   # Gráfico ajustado
   plot(preds) +
     labs(
@@ -24,19 +25,31 @@ plotpreds2 <- function(year, vardep, label.vardep, title){
     )
 }
 
-
-
 ggsave(
   filename = glue("output/plots/preds_trust_inst_2022.png"),
-  plot = plotpreds2("elsoc_2022", "trust_inst", "Institutional trust", "Predicted institutional trust by social class and neighborhood SES"),
-  width = 10, height = 10, dpi = 300,
+  plot = plotpreds2(
+    "elsoc_2022",
+    "trust_inst",
+    "Institutional trust",
+    "Predicted institutional trust by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
   device = ragg::agg_png
 )
 
 ggsave(
   filename = glue("output/plots/preds_unconv_particip_2022.png"),
-  plot = plotpreds2("elsoc_2022", "unconv_particip", "Unconventional paticipation", "Predicted unconventional participation by social class and neighborhood SES"),
-  width = 10, height = 10, dpi = 300,
+  plot = plotpreds2(
+    "elsoc_2022",
+    "unconv_particip",
+    "Unconventional paticipation",
+    "Predicted unconventional participation by social class and neighborhood SES"
+  ),
+  width = 10,
+  height = 10,
+  dpi = 300,
   device = ragg::agg_png
 )
 
@@ -45,9 +58,11 @@ ggsave(
 install.packages("emmeans")
 library(emmeans)
 
-emm <- emmeans(results_mm[["elsoc_2022"]][["trust_inst"]][[5]], ~ new_class | nse_barrio_norm,
-               at = list(nse_barrio_norm = c(0.26, 0.46, 0.67)))  # -1SD, media, +1SD
-
+emm <- emmeans(
+  results_mm[["elsoc_2022"]][["trust_inst"]][[5]],
+  ~ new_class | nse_barrio_norm,
+  at = list(nse_barrio_norm = c(0.26, 0.46, 0.67))
+) # -1SD, media, +1SD
 
 
 pairs(emm, by = "nse_barrio_norm")
