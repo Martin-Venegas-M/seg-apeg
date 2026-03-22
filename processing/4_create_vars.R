@@ -8,9 +8,7 @@
 #! [THIS SCRIPT IS MEANT TO BE RUN VIA THE run_processing.R SCRIPT]
 
 # 4.1 Create dependent variables ----------------------------------------------
-
-# Create function with the code
-create_dep_vars <- function(data) {
+elsocs <- map(elsocs, \(data) {
   data |>
     mutate(
       #***** Cultural dimension
@@ -37,14 +35,10 @@ create_dep_vars <- function(data) {
       democracy_support = c25,
       justif_violence = (f05_01 + f05_02 + f05_03) / 3
     )
-}
-
-# Apply the code
-elsocs <- map(elsocs, ~ create_dep_vars(.x))
-rm(create_dep_vars)
+})
 
 # 4.2 Standardisation of dependent variables ----------------------------------
-standardize_dep_vars <- function(data) {
+elsocs <- map(elsocs, \(data) {
   vars_to_standardize <- c(
     "identification",
     "friends",
@@ -71,14 +65,10 @@ standardize_dep_vars <- function(data) {
       .names = "z_{.col}"
     )) |>
     ungroup()
-}
-
-elsocs <- map(elsocs, ~ standardize_dep_vars(.x))
-rm(standardize_dep_vars)
+})
 
 # 4.3 Create socioeconomic variables ------------------------------------------
-
-create_socioec_vars <- function(data) {
+elsocs <- map(elsocs, \(data) {
   data <- data |>
     mutate(
       # Collapse education level in 5 categories
@@ -197,20 +187,16 @@ create_socioec_vars <- function(data) {
         class_sost %in% c(17) ~ 6,
         class_sost %in% c(18) ~ 7
       ) |>
-        replace_na(100) # ! PATCH FOR THEN CREATIN CLASE_FINAL
+        replace_na(100) # ! PATCH FOR THEN CREATING CLASE_FINAL
     )
 
   return(data)
-}
-
-elsocs <- map(elsocs, ~ create_socioec_vars(.x))
-rm(create_socioec_vars, insumo_oesch)
+})
 
 # 4.4 Label class variables ---------------------------------------------------
-
-label_class_vars <- function(data) {
+elsocs <- map(elsocs, \(data) {
   # Create grouped categories of social class
-  data <- data |>
+  data |>
     mutate(
       across(
         c(class, class_sost),
@@ -274,14 +260,10 @@ label_class_vars <- function(data) {
         )
       )
     )
-  return(data)
-}
-
-elsocs <- map(elsocs, ~ label_class_vars(.x))
-rm(label_class_vars)
+})
 
 # 4.5 Create covariates -------------------------------------------------------
-create_covariates <- function(data) {
+elsocs <- map(elsocs, \(data) {
   data |>
     # Rename
     rename(
@@ -302,8 +284,12 @@ create_covariates <- function(data) {
       # Quntiles of nse neighbourhood
       quint_nse_barrio = ntile(nse_barrio_norm, 5)
     ) |>
-    select(-c(tenure, marital_status, children)) |>
-    #* AUXILIAR VARIABLES FOR CONSTRUCTING NEW SOCIAL CLASS
+    select(-c(tenure, marital_status, children))
+})
+
+# 4.6 Create auxiliary variables for MCA --------------------------------------
+elsocs <- map(elsocs, \(data) {
+  data |>
     mutate(
       aux = ntile(m29, 10),
       income_cat_final = case_when(
@@ -355,14 +341,11 @@ create_covariates <- function(data) {
         )
       )
     )
-}
+})
 
-elsocs <- map(elsocs, ~ create_covariates(.x))
-rm(create_covariates)
-
-# 4.6 Drop variables ----------------------------------------------------------
-elsocs <- map(elsocs, .f = function(x) {
-  x |>
+# 4.7 Drop variables ----------------------------------------------------------
+elsocs <- map(elsocs, \(data) {
+  data |>
     select(
       idencuesta,
       ola,

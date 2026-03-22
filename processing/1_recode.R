@@ -82,8 +82,8 @@ elsoc <- elsoc |>
       )
     ),
 
-    # Justification of violence: invert the scale (
-    # +justif_violence -> +atachment to society)
+    # Justification of violence: invert the scale 
+    # (+justif_violence -> +atachment to society)
     across(starts_with("f05"), ~ invert_scale(.)),
     across(
       starts_with("f05"),
