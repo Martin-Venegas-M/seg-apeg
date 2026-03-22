@@ -257,7 +257,7 @@ elsocs <- map(elsocs, \(data) {
         tercile_nse_barrio_norm,
         levels = c(1:3),
         labels = c("First tercile", "Second tercile", "Third tercile")
-      )
+      ) |> relevel(ref = "Second tercile")
     ) |>
     select(-c(tenure, marital_status, children))
 })

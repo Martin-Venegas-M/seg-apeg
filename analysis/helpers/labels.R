@@ -36,8 +36,8 @@ coef_labels_nse_cat <- c(
   "new_class4" = "Class 4",
   "new_class5" = "Class 5",
   
-  # Neighborhood SES
-  "tercile_nse_barrio_normSecond tercile" = "Neighborhood SES - Second tercile",
+  # Neighborhood SES (ref: Second tercile)
+  "tercile_nse_barrio_normFirst tercile" = "Neighborhood SES - First tercile",
   "tercile_nse_barrio_normThird tercile" = "Neighborhood SES - Third tercile",
 
   # Controls
@@ -52,15 +52,15 @@ coef_labels_nse_cat <- c(
   "insecurity" = "Insecurity at neighbourhood",
 
   # Interactions
-  "new_class1:tercile_nse_barrio_normSecond tercile" = "Class 1 x Neighborhood SES - Second tercile",   
-  "new_class2:tercile_nse_barrio_normSecond tercile" = "Class 2 x Neighborhood SES - Second tercile",   
-  "new_class4:tercile_nse_barrio_normSecond tercile" = "Class 4 x Neighborhood SES - Second tercile",   
-  "new_class5:tercile_nse_barrio_normSecond tercile" = "Class 5 x Neighborhood SES - Second tercile", 
+  "new_class1:tercile_nse_barrio_normFirst tercile" = "Class 1 x Neighborhood SES - First tercile",
+  "new_class2:tercile_nse_barrio_normFirst tercile" = "Class 2 x Neighborhood SES - First tercile",
+  "new_class4:tercile_nse_barrio_normFirst tercile" = "Class 4 x Neighborhood SES - First tercile",
+  "new_class5:tercile_nse_barrio_normFirst tercile" = "Class 5 x Neighborhood SES - First tercile",
 
-  "new_class1:tercile_nse_barrio_normThird tercile" = "Class 1 x Neighborhood SES - Third tercile"  ,
-  "new_class2:tercile_nse_barrio_normThird tercile" = "Class 2 x Neighborhood SES - Third tercile"  ,  
-  "new_class4:tercile_nse_barrio_normThird tercile" = "Class 4 x Neighborhood SES - Third tercile"  , 
-  "new_class5:tercile_nse_barrio_normThird tercile" = "Class 5 x Neighborhood SES - Third tercile"  
+  "new_class1:tercile_nse_barrio_normThird tercile" = "Class 1 x Neighborhood SES - Third tercile",
+  "new_class2:tercile_nse_barrio_normThird tercile" = "Class 2 x Neighborhood SES - Third tercile",
+  "new_class4:tercile_nse_barrio_normThird tercile" = "Class 4 x Neighborhood SES - Third tercile",
+  "new_class5:tercile_nse_barrio_normThird tercile" = "Class 5 x Neighborhood SES - Third tercile"
 )
 
 controls_labels <- c(
