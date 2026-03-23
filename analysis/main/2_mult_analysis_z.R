@@ -103,7 +103,7 @@ varsdep <- c(
 )
 
 # Create list with results
-results_mm <- list(
+results_mm_z <- list(
   elsoc_2016 = map(
     varsdep,
     ~ estimate_mm(.x, datos = elsocs[[1]]),
@@ -124,7 +124,7 @@ results_mm <- list(
     set_names(varsdep)
 )
 
-rm(list = ls()[!ls() %in% c("results_mm", "date")])
+rm(list = ls()[!ls() %in% c("results_mm_z", "date")])
 
 # 5. Save ---------------------------------------------------------------------
 save.image(glue("output/models/results_mm_z.RData"))

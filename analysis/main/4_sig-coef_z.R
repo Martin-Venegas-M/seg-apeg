@@ -28,7 +28,7 @@ pacman::p_load(
 
 # 2. Load data ----------------------------------------------------------------
 
-load("output/models/results_mm.RData")
+load("output/models/results_mm_z.RData")
 
 # Declate date and user
 date <- format(Sys.Date(), "%y%m%d")
@@ -100,7 +100,7 @@ sigcoef <- function(data_year, vardep, model) {
 }
 
 # Test!
-sigcoef("elsoc_2016", "identification", 5)
+sigcoef("elsoc_2016", "z_identification", 5)
 
 # 3.2 Prepare intermediate objects to create the table (by iterations) -----
 
@@ -193,4 +193,4 @@ sigcoef_wb <- reduce2(
 )
 
 # Save!
-saveWorkbook(sigcoef_wb, glue("output/tables/250916_sigcoef_tabs.xlsx"))
+saveWorkbook(sigcoef_wb, glue("output/tables/{date}_sigcoef_tabs_z.xlsx"))
