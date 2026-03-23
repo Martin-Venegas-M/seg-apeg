@@ -43,7 +43,7 @@ pacman::p_load(
 
 # Data
 # load("output/models/results_mca_hcpc.RData")
-load("../../output/models/main/results_mca_hcpc.RData")
+load("../../../output/models/main/results_mca_hcpc.RData")
 ```
 
 

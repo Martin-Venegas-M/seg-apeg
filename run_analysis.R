@@ -21,6 +21,7 @@ source("analysis/main/6_plot-coef2_z.R", encoding = "UTF-8")
 source("analysis/main/7_plot-preds2_z_nse_cat.R", encoding = "UTF-8")
 
 # 3. Render reports -----------------------------------------------------------
+library(quarto)
 quarto::quarto_render("output/reports/main/class_mca_hcpc_analysis.qmd")
 quarto::quarto_render("output/reports/main/mult_analysis_z.qmd")
 quarto::quarto_render("output/reports/main/mult_analysis_z_nse_cat.qmd")
