@@ -100,8 +100,9 @@ elsocs <- map2(names_elsocs, years, \(x, y) {
       idencuesta = glue("{idencuesta}-{y}")
     )
 }) |>
-  set_names(names_elsocs) |>
-  list_rbind()
+  set_names(names_elsocs)
+
+elsocs_stack <- list_rbind(elsocs)
 
 # 3.3.1 Create unified descriptive table for all variables (whole sample) -----
 
@@ -137,7 +138,7 @@ create_desc_tab <- function(df, var_name, var_label) {
 all_vars_labels <- c(controls_labels, varindep_labels, vardep_labels)
 
 desc_tab <- map2(names(all_vars_labels), all_vars_labels, \(x, y) {
-  create_desc_tab(elsocs, x, y)
+  create_desc_tab(elsocs_stack, x, y)
 }) |>
   list_rbind() |>
   rename(
@@ -219,7 +220,7 @@ create_bitab_vardeps_years <- function(group_var, group_var_label) {
     )
 }
 
-# Create tables! #! FIXXX!
+# Create tables!
 bitab1 <- create_bitab_vardeps_years("new_class", "Social class")
 bitab2 <- create_bitab_vardeps_years(
   "tercile_nse_barrio_norm",
@@ -230,5 +231,5 @@ bitab2 <- create_bitab_vardeps_years(
 
 writexl::write_xlsx(unitab, "output/tables/main/unitab.xlsx")
 writexl::write_xlsx(desc_tab, "output/tables/main/desc_tab.xlsx")
-#writexl::write_xlsx(bitab1, "output/tables/main/bitab1.xlsx")
-#writexl::write_xlsx(bitab2, "output/tables/main/bitab2.xlsx")
+writexl::write_xlsx(bitab1, "output/tables/main/bitab1.xlsx")
+writexl::write_xlsx(bitab2, "output/tables/main/bitab2.xlsx")
