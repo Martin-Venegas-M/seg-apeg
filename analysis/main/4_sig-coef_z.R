@@ -49,7 +49,7 @@ source("analysis/helpers/functions.R")
 # Generate a tibble with significant predictors by model, vardep and dataset year
 sigcoef <- function(data_year, vardep, model) {
   # Save the specific model that we want
-  spec_model <- results_mm[[data_year]][[vardep]][[model]]
+  spec_model <- results_mm_z[[data_year]][[vardep]][[model]]
   # Extract de statistical information of that model
   extracted <- texreg::extract(spec_model)
 
@@ -106,8 +106,8 @@ sigcoef("elsoc_2016", "z_identification", 5)
 
 # All combinations of data_year, vardep and model
 combs <- expand_grid(
-  data_year = names(results_mm),
-  vardep = names(results_mm$elsoc_2016),
+  data_year = names(results_mm_z),
+  vardep = names(results_mm_z$elsoc_2016),
   model = 2:5
 )
 
@@ -158,10 +158,10 @@ sigcoef_tab <- map(
 # ? ) %>% list_rbind()
 
 # Separate long table
-sigcoef_list <- map(names(results_mm), \(x) {
+sigcoef_list <- map(names(results_mm_z), \(x) {
   sigcoef_tab %>% filter(data_year == x)
 }) %>%
-  set_names(names(results_mm))
+  set_names(names(results_mm_z))
 
 # 3.4 Format and save tables --------------------------------------------------
 
@@ -169,7 +169,7 @@ sigcoef_list <- map(names(results_mm), \(x) {
 #   seq_along(sigcoef_list),
 # #! OJO! Por alguna razón no me funcionó el seq_along(),
 # #! pero si la solución de abajo... INVESTIGAR
-#   names(results_mm),
+#   names(results_mm_z),
 #   \(acc, data, sheets) {
 #     format_tab_excel(
 #       df = data,
@@ -185,7 +185,7 @@ sigcoef_wb <- reduce2(
   1:3,
   #* Pero sí me funcionó planteando explicitamente los indices e
   #* incorporando el sigcoef_list dentro de la función anónima.
-  names(results_mm),
+  names(results_mm_z),
   \(acc, i, sheets) {
     format_tab_excel(df = sigcoef_list[[i]], wb = acc, sheet = sheets)
   },
@@ -193,4 +193,4 @@ sigcoef_wb <- reduce2(
 )
 
 # Save!
-saveWorkbook(sigcoef_wb, glue("output/tables/main/{date}_sigcoef_tabs_z.xlsx"))
+saveWorkbook(sigcoef_wb, glue("output/tables/main/sigcoef_tabs_z.xlsx"))

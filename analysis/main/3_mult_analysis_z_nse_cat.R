@@ -103,7 +103,7 @@ varsdep <- c(
 )
 
 # Create list with results
-results_mm <- list(
+results_mm_z_nse_cat <- list(
   elsoc_2016 = map(
     varsdep,
     ~ estimate_mm(.x, datos = elsocs[[1]]),
