@@ -31,7 +31,7 @@ pacman::p_load(
 
 # 2. Load data ----------------------------------------------------------------
 
-load("output/models/results_mm_z_nse_cat.RData")
+load("output/models/main/results_mm_z_nse_cat.RData")
 load("input/data/proc/elsoc_proc.RData")
 
 # Declate date and user

@@ -28,7 +28,7 @@ pacman::p_load(
 
 # 2. Load data ----------------------------------------------------------------
 
-load("output/models/results_mm_z.RData")
+load("output/models/main/results_mm_z.RData")
 
 # Declate date and user
 date <- format(Sys.Date(), "%y%m%d")
@@ -193,4 +193,4 @@ sigcoef_wb <- reduce2(
 )
 
 # Save!
-saveWorkbook(sigcoef_wb, glue("output/tables/{date}_sigcoef_tabs_z.xlsx"))
+saveWorkbook(sigcoef_wb, glue("output/tables/main/{date}_sigcoef_tabs_z.xlsx"))

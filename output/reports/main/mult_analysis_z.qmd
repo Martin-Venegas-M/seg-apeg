@@ -36,7 +36,7 @@ pacman::p_load(
 )
 
 # Data
-load("../../output/models/results_mm_z.RData")
+load("../../output/models/main/results_mm_z.RData")
 ```
 
 ```{r}

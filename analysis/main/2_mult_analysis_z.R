@@ -127,4 +127,4 @@ results_mm_z <- list(
 rm(list = ls()[!ls() %in% c("results_mm_z", "date")])
 
 # 5. Save ---------------------------------------------------------------------
-save.image(glue("output/models/results_mm_z.RData"))
+save.image(glue("output/models/main/results_mm_z.RData"))

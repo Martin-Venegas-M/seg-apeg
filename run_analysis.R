@@ -15,7 +15,7 @@ source("processing/run_processing.R", encoding = "UTF-8")
 # 2. Analysis -----------------------------------------------------------------
 source("analysis/main/2_mult_analysis_z.R", encoding = "UTF-8")
 source("analysis/main/3_mult_analysis_z_nse_cat.R", encoding = "UTF-8")
-source("analysis/main/4_sig-coef.R", encoding = "UTF-8")
+source("analysis/main/4_sig-coef_z.R", encoding = "UTF-8")
 source("analysis/main/5_desc_analysis.R", encoding = "UTF-8")
 source("analysis/main/6_plot-coef2_z.R", encoding = "UTF-8")
 source("analysis/main/7_plot-preds2_z_nse_cat.R", encoding = "UTF-8")

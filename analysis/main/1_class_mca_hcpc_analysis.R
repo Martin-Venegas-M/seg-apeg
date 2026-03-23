@@ -83,4 +83,4 @@ results_all <- map(elsocs, function(df) {
 
 # 4. Save ---------------------------------------------------------------------
 rm(list = ls()[!ls() %in% c("date", "results_all")])
-save.image(glue("output/models/results_mca_hcpc.RData"))
+save.image(glue("output/models/main/results_mca_hcpc.RData"))

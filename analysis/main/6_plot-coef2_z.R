@@ -30,7 +30,7 @@ pacman::p_load(
 
 # 2. Load data ----------------------------------------------------------------
 
-load("output/models/results_mm_z.RData")
+load("output/models/main/results_mm_z.RData")
 load("input/data/proc/elsoc_proc.RData")
 
 # Declate date and user
@@ -269,7 +269,7 @@ map2(
   coefs,
   names(coefs),
   ~ ggsave(
-    filename = glue("output/plots/{.y}_z.png"),
+    filename = glue("output/plots/main/{.y}_z.png"),
     plot = final_plot(.x),
     width = 12,
     height = 12,
