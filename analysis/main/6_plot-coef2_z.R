@@ -49,7 +49,7 @@ labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
 # Extract parameters
 get_tab <- function(yr, m, vardep, labs) {
   tab <- parameters::model_parameters(
-    results_mm[[yr]][[vardep]][[m]],
+    results_mm_z[[yr]][[vardep]][[m]],
     effects = "fixed"
   ) %>%
     left_join(labs, by = "Parameter") %>%
@@ -81,6 +81,7 @@ plotcoef2 <- function(
   model.labels,
   coefs.to.plot,
   coefs.colors = NULL,
+  coefs.labels = NULL,
   coefs.scale.limits = NULL,
   dodge.width = 0.45,
   view = c("single", "by.year"),
@@ -185,7 +186,10 @@ plotcoef2 <- function(
 
   # General plot style
   if (!is.null(coefs.colors)) {
-    plot <- plot + scale_color_manual(values = coefs.colors)
+    plot <- plot + scale_color_manual(
+      values = coefs.colors,
+      labels = if (!is.null(coefs.labels)) coefs.labels else waiver()
+    )
   }
   if (!is.null(coefs.scale.limits)) {
     plot <- plot + coord_cartesian(ylim = coefs.scale.limits)
@@ -237,8 +241,10 @@ coefs_class <- map2(
     vardep.label = .y,
     models = c(2, 4),
     model.labels = c(`2` = "Ind.", `4` = "Full"),
+    coefs.scale.limits = c(-0.5, 1),
     coefs.to.plot = c("Class 1", "Class 5"),
     coefs.colors = c("Class 1" = "#2596be", "Class 5" = "#a12b92"),
+    coefs.labels = c("Class 1" = "Poor people", "Class 5" = "Upper class"),
     view = "by.year"
   )
 )
@@ -253,6 +259,7 @@ coefs_nse_barrio <- map2(
     vardep.label = .y,
     models = c(3, 4),
     model.labels = c(`3` = "Cont.", `4` = "Full"),
+    coefs.scale.limits = c(-1, 1.5),
     coefs.to.plot = c("Neighborhood SES"),
     coefs.colors = c("Neighborhood SES" = "#2596be"),
     view = "by.year"

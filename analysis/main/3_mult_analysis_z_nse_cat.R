@@ -124,7 +124,7 @@ results_mm_z_nse_cat <- list(
     set_names(varsdep)
 )
 
-rm(list = ls()[!ls() %in% c("results_mm", "date")])
+rm(list = ls()[!ls() %in% c("results_mm_z_nse_cat", "date")])
 
 # 5. Save ---------------------------------------------------------------------
 save.image(glue("output/models/main/results_mm_z_nse_cat.RData"))

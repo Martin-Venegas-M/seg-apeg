@@ -48,7 +48,7 @@ labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
 plotpreds2 <- function(year, vardep, label.vardep, title) {
   # Make preds
   preds <- ggpredict(
-    results_mm[[year]][[glue("z_{vardep}")]][[5]],
+    results_mm_z_nse_cat[[year]][[glue("z_{vardep}")]][[5]],
     terms = c("new_class", "tercile_nse_barrio_norm")
   )
 

@@ -219,7 +219,7 @@ create_bitab_vardeps_years <- function(group_var, group_var_label) {
     )
 }
 
-# Create tables!
+# Create tables! #! FIXXX!
 bitab1 <- create_bitab_vardeps_years("new_class", "Social class")
 bitab2 <- create_bitab_vardeps_years(
   "tercile_nse_barrio_norm",
@@ -228,7 +228,7 @@ bitab2 <- create_bitab_vardeps_years(
 
 # 4. Save objects -------------------------------------------------------------
 
-# writexl::write_xlsx(unitab, "output/tables/main/unitab.xlsx")
+writexl::write_xlsx(unitab, "output/tables/main/unitab.xlsx")
 writexl::write_xlsx(desc_tab, "output/tables/main/desc_tab.xlsx")
-# writexl::write_xlsx(bitab1, "output/tables/main/bitab1.xlsx")
-# writexl::write_xlsx(bitab2, "output/tables/main/bitab2.xlsx")
+#writexl::write_xlsx(bitab1, "output/tables/main/bitab1.xlsx")
+#writexl::write_xlsx(bitab2, "output/tables/main/bitab2.xlsx")
