@@ -1,15 +1,16 @@
-#******************************************************************************************************************************************************
+#******************************************************************************
 # 0. Identification -------------------------------------------------------
 # Title: Plot with significant coefficients
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
-# Executive Summary: This script contains the code to generate plots for the paper (second version)
+# Executive Summary: This script contains the code to generate plots for
+#  the paper (second version)
 # Date: October 3, 2025
-#******************************************************************************************************************************************************
+#******************************************************************************
 
 rm(list = ls())
 
-# 1. Load packages ------------------------------------------------------------------------------------------------------------------------------------
+# 1. Load packages ------------------------------------------------------------
 if (!require("pacman")) {
   install.packages("pacman")
 } # if pacman es missing, install
@@ -27,7 +28,7 @@ pacman::p_load(
   cowplot
 )
 
-# 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
+# 2. Load data ----------------------------------------------------------------
 
 load("output/models/results_mm_z.RData")
 load("input/data/proc/elsoc_proc.RData")
@@ -39,14 +40,11 @@ user <- tolower(Sys.info()["user"])
 # Load labels
 source("analysis/helpers/labels.R")
 
-labs <- tibble(
-  Parameter = names(coef_labels),
-  label = unname(coef_labels)
-)
+labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
 
-# 3. Execute code -------------------------------------------------------------------------------------------------------------------------------------
+# 3. Execute code -------------------------------------------------------------
 
-# 3.1 Create functions --------------------------------------------------------------------------------------------------------------------------------
+# 3.1 Create functions --------------------------------------------------------
 
 # Extract parameters
 get_tab <- function(yr, m, vardep, labs) {
@@ -61,38 +59,47 @@ get_tab <- function(yr, m, vardep, labs) {
       year_id = yr
     ) %>%
     select(
-      year_id, model_num, Parameter, Coefficient, CI_low, CI_high, any_of("p")
+      year_id,
+      model_num,
+      Parameter,
+      Coefficient,
+      CI_low,
+      CI_high,
+      any_of("p")
     )
-  
+
   return(tab)
 }
 
 # Generate plot
 plotcoef2 <- function(
-    data.years,
-    year.labels = NULL,
-    vardep,
-    vardep.label = NULL,
-    models,
-    model.labels,
-    coefs.to.plot,
-    coefs.colors = NULL,
-    coefs.scale.limits = NULL,
-    dodge.width = 0.45,
-    view = c("single", "by.year"),
-    output = c("plot", "tab", "tab.plot")) {
+  data.years,
+  year.labels = NULL,
+  vardep,
+  vardep.label = NULL,
+  models,
+  model.labels,
+  coefs.to.plot,
+  coefs.colors = NULL,
+  coefs.scale.limits = NULL,
+  dodge.width = 0.45,
+  view = c("single", "by.year"),
+  output = c("plot", "tab", "tab.plot")
+) {
   # Match args!
   view <- match.arg(view)
   output <- match.arg(output)
-  
+
   # Common elements for plots (bot single and by year)
-  if (is.null(vardep.label)) vardep.label <- elsocs[[data.years[[1]]]][vardep] %>% names() # ! IMPORTANT: uses elsocs as an external object
+  if (is.null(vardep.label)) {
+    vardep.label <- elsocs[[data.years[[1]]]][vardep] %>% names()
+  } # ! IMPORTANT: uses elsocs as an external object
   pd <- position_dodge(width = dodge.width)
-  
+
   # First option: User wants the model coefficients by only one year !
   if (view == "single") {
     yr <- data.years[[1]] # If user uses a vector > 1 and single == TRUE, we catch the first element
-    
+
     # Create table with extracted parameters
     tab <- map(
       models,
@@ -107,27 +114,37 @@ plotcoef2 <- function(
           labels = unname(model.labels[as.character(models)])
         )
       )
-    
+
     # Create title lab with vardep - year
-    vardep.label.year <- glue("{vardep.label} – {stringr::str_extract(yr, '\\\\d{4}')}")
-    
+    vardep.label.year <- glue(
+      "{vardep.label} – {stringr::str_extract(yr, '\\\\d{4}')}"
+    )
+
     # Create model plot
-    plot <- ggplot(tab, aes(x = model, y = Coefficient, color = Parameter, group = Parameter)) + # Main layer!
+    plot <- ggplot(
+      tab,
+      aes(x = model, y = Coefficient, color = Parameter, group = Parameter)
+    ) + # Main layer!
       geom_hline(yintercept = 0, linetype = "dashed") + # Horizontal line for 0
       geom_point(position = pd, size = 2) + # Point for the coefficient
-      geom_linerange(aes(ymin = CI_low, ymax = CI_high), position = pd, linewidth = 0.8) + # Line for the confidence interval
+      geom_linerange(
+        aes(ymin = CI_low, ymax = CI_high),
+        position = pd,
+        linewidth = 0.8
+      ) + # Line for the confidence interval
       labs(x = NULL, y = NULL, color = NULL, title = vardep.label.year) +
       theme_classic(base_size = 12)
   }
-  
+
   # Second option: User wants the model coefficients by all years!
   if (view == "by.year") {
     # Create combinations by year and model
     combs <- expand_grid(year_id = data.years, model_num = models)
-    
+
     # Create table with extracted parameters
     tab <- map2(
-      combs$year_id, combs$model_num,
+      combs$year_id,
+      combs$model_num,
       ~ get_tab(.x, .y, vardep, labs) # ! IMPORTANT: labs is an external object
     ) %>%
       list_rbind() %>%
@@ -141,24 +158,39 @@ plotcoef2 <- function(
         year = factor(
           year_id,
           levels = data.years,
-          labels = if (is.null(year.labels)) stringr::str_extract(data.years, "\\d{4}") else year.labels
+          labels = if (is.null(year.labels)) {
+            stringr::str_extract(data.years, "\\d{4}")
+          } else {
+            year.labels
+          }
         )
       )
-    
+
     # Create models plot
-    plot <- ggplot(tab, aes(x = model, y = Coefficient, color = Parameter, group = Parameter)) +
+    plot <- ggplot(
+      tab,
+      aes(x = model, y = Coefficient, color = Parameter, group = Parameter)
+    ) +
       geom_hline(yintercept = 0, linetype = "dashed") +
       geom_point(position = pd, size = 2) +
-      geom_linerange(aes(ymin = CI_low, ymax = CI_high), position = pd, linewidth = 0.8) +
+      geom_linerange(
+        aes(ymin = CI_low, ymax = CI_high),
+        position = pd,
+        linewidth = 0.8
+      ) +
       facet_wrap(~year, nrow = 1, scales = "fixed") +
       labs(x = NULL, y = NULL, color = NULL, title = vardep.label) +
       theme_classic(base_size = 12)
   }
-  
+
   # General plot style
-  if (!is.null(coefs.colors)) plot <- plot + scale_color_manual(values = coefs.colors)
-  if (!is.null(coefs.scale.limits)) plot <- plot + coord_cartesian(ylim = coefs.scale.limits)
-  
+  if (!is.null(coefs.colors)) {
+    plot <- plot + scale_color_manual(values = coefs.colors)
+  }
+  if (!is.null(coefs.scale.limits)) {
+    plot <- plot + coord_cartesian(ylim = coefs.scale.limits)
+  }
+
   # Returns!
   if (output == "plot") {
     return(plot)
@@ -176,21 +208,21 @@ final_plot <- function(plot_list) {
     plotlist = map(plot_list, \(p) p + theme(legend.position = "none")),
     ncol = 2
   )
-  
+
   # Save leyend
   legend <- get_legend(
     plot_list[[1]] +
       guides(color = guide_legend(nrow = 1)) +
       theme(legend.position = "bottom")
   )
-  
+
   # Manually add legend
   plots <- plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
-  
+
   return(plots)
 }
 
-# 3.2 Create plot lists ---------------------------------------------------------------------------------------------------------------------------------
+# 3.2 Create plot lists -------------------------------------------------------
 
 names(vardep_labels) <- paste0("z_", names(vardep_labels))
 
@@ -230,7 +262,7 @@ coefs_nse_barrio <- map2(
 # Save both
 coefs <- list(coefs_class = coefs_class, coefs_nse_barrio = coefs_nse_barrio)
 
-# 4. Save plots ------------------------------------------------------------------------------------------------------------------------------------------
+# 4. Save plots ---------------------------------------------------------------
 
 # Save by.year plots
 map2(
@@ -239,16 +271,17 @@ map2(
   ~ ggsave(
     filename = glue("output/plots/{.y}_z.png"),
     plot = final_plot(.x),
-    width = 12, height = 12, dpi = 300,
+    width = 12,
+    height = 12,
+    dpi = 300,
     device = ragg::agg_png
   )
 )
 
 # # Save workspace
-# 
+#
 # coefs_class_grid <- final_plot(coefs$coefs_class)
 # coefs_nse_barrio_grid <- final_plot(coefs$coefs_nse_barrio)
-# 
+#
 # rm(list = ls()[!ls() %in% c("coefs_class_grid", "coefs_nse_barrio_grid")])
 # save.image("output/plots/coefs.RData")
-

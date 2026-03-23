@@ -3,7 +3,8 @@
 # Title: MCA analysis for class variable
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
-# Executive Summary: This script contains the code to generate descriptive tables
+# Executive Summary: This script contains the code to generate descriptive
+# tables
 # Date: September 05, 2025
 #******************************************************************************
 

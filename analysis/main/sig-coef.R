@@ -1,16 +1,19 @@
-#******************************************************************************************************************************************************
+#******************************************************************************
 # 0. Identification -------------------------------------------------------
 # Title: Tables with significant coefficients
 # Institution: Centro de Estudios de Conflicto y Cohesión Social (COES)
 # Responsable: Technical assistant
-# Executive Summary: This script contains the code to generate significant coefficient tables
+# Executive Summary: This script contains the code to generate significant
+#  coefficient tables
 # Date: September 16, 2025
-#******************************************************************************************************************************************************
+#******************************************************************************
 
 rm(list = ls())
 
-# 1. Load packages ------------------------------------------------------------------------------------------------------------------------------------
-if (!require("pacman")) install.packages("pacman") # if pacman es missing, install
+# 1. Load packages ------------------------------------------------------------
+if (!require("pacman")) {
+  install.packages("pacman")
+} # if pacman es missing, install
 
 pacman::p_load(
   tidyverse,
@@ -23,7 +26,7 @@ pacman::p_load(
   openxlsx
 )
 
-# 2. Load data ----------------------------------------------------------------------------------------------------------------------------------------
+# 2. Load data ----------------------------------------------------------------
 
 load("output/models/results_mm.RData")
 
@@ -34,22 +37,21 @@ user <- tolower(Sys.info()["user"])
 # Load labels
 source("analysis/helpers/labels.R")
 
-labs <- tibble(
-  predictor = names(coef_labels),
-  label = unname(coef_labels)
-)
+labs <- tibble(predictor = names(coef_labels), label = unname(coef_labels))
 
 # Load functions
 source("analysis/helpers/functions.R")
 
-# 3. Execute code -------------------------------------------------------------------------------------------------------------------------------------
+# 3. Execute code -------------------------------------------------------------
 
-# 3.1 Create function ---------------------------------------------------------------------------------------------------------------------------------
+# 3.1 Create function ---------------------------------------------------------
 
 # Generate a tibble with significant predictors by model, vardep and dataset year
 sigcoef <- function(data_year, vardep, model) {
-  spec_model <- results_mm[[data_year]][[vardep]][[model]] # Save the specific model that we want
-  extracted <- texreg::extract(spec_model) # Extract de statistical information of that model
+  # Save the specific model that we want
+  spec_model <- results_mm[[data_year]][[vardep]][[model]]
+  # Extract de statistical information of that model
+  extracted <- texreg::extract(spec_model)
 
   # Create table with the required information
   tab <- tibble(
@@ -80,7 +82,16 @@ sigcoef <- function(data_year, vardep, model) {
     # Join predictor labels
     left_join(labs, by = "predictor") %>%
     # Reorder the data!
-    relocate(data_year, model, vardep, predictor, label, coef, pvalue, starts_with("sig")) %>%
+    relocate(
+      data_year,
+      model,
+      vardep,
+      predictor,
+      label,
+      coef,
+      pvalue,
+      starts_with("sig")
+    ) %>%
     # Filter by significant coefficients and removing intercept row
     filter(if_any(sig95:sig99, ~ . == 1)) %>%
     filter(predictor != "(Intercept)")
@@ -91,7 +102,7 @@ sigcoef <- function(data_year, vardep, model) {
 # Test!
 sigcoef("elsoc_2016", "identification", 5)
 
-# 3.2 Prepare intermediate objects to create the table (by iterations) -------------------------------------------------------------------------------
+# 3.2 Prepare intermediate objects to create the table (by iterations) -----
 
 # All combinations of data_year, vardep and model
 combs <- expand_grid(
@@ -104,7 +115,8 @@ combs <- expand_grid(
 args_list <- reduce(
   1:nrow(combs),
   \(acc, i) {
-    # Create a list with the ith combination of the arguments. i.e first combination ( combs[1, ] ) will be:
+    # Create a list with the ith combination of the arguments.
+    # i.e first combination ( combs[1, ] ) will be:
     # list(data_year = "elsoc_2016", vardep = "identification", model = 2)
     args <- list(
       data_year = combs$data_year[[i]],
@@ -121,36 +133,42 @@ args_list <- reduce(
   .init = list() # The acumulator is an empty list :)
 )
 
-# 3.3 Create the tables --------------------------------------------------------------------------------------------------------------------------------
+# 3.3 Create the tables -------------------------------------------------------
 
 # Long table
 sigcoef_tab <- map(
   args_list, # Sets of arguments
-  \(x) eval_tidy(rlang::call2(sigcoef, !!!x)) # Iterate by every set of arguments, creating a call and evaluating it instantly
-) %>% list_rbind()
+  # Iterate by every set of arguments, creating a call and evaluating it instantly
+  \(x) eval_tidy(rlang::call2(sigcoef, !!!x))
+) %>%
+  list_rbind()
 
 # ? # Alternative solution! :)
-# ? # I think this is a better solution because it doesn't need the args_list creation step that I did earlier
+# ? # I think this is a better solution because it doesn't need the args_list
+# ? creation step that I did earlier
+# ?
 # ? sigcoef_tab <- purrr::pmap(
 # ?   list(
 # ?     x = as.list(combs$data_year),
 # ?     y = as.list(combs$vardep),
 # ?     z = as.list(combs$model)
 # ?   ),
-# ?   \(x, y, z) sigcoef(data_year = x, vardep = y, model = z) # Iterate by every set of arguments, creating a call and evaluating it instantly
+# ?   # Iterate by every set of arguments, creating a call and evaluating it instantly
+# ?   \(x, y, z) sigcoef(data_year = x, vardep = y, model = z)
 # ? ) %>% list_rbind()
 
 # Separate long table
-sigcoef_list <- map(
-  names(results_mm),
-  \(x) sigcoef_tab %>% filter(data_year == x)
-) %>%
+sigcoef_list <- map(names(results_mm), \(x) {
+  sigcoef_tab %>% filter(data_year == x)
+}) %>%
   set_names(names(results_mm))
 
-# 3.4 Format and save tables ----------------------------------------------------------------------------------------------------------------------------
+# 3.4 Format and save tables --------------------------------------------------
 
 # sigcoef_wb <- reduce2(
-#   seq_along(sigcoef_list), #! OJO! Por alguna razón no me funcionó el seq_along(), pero si la solución de abajo... INVESTIGAR
+#   seq_along(sigcoef_list),
+# #! OJO! Por alguna razón no me funcionó el seq_along(),
+# #! pero si la solución de abajo... INVESTIGAR
 #   names(results_mm),
 #   \(acc, data, sheets) {
 #     format_tab_excel(
@@ -164,14 +182,12 @@ sigcoef_list <- map(
 # )
 
 sigcoef_wb <- reduce2(
-  1:3, #* Pero sí me funcionó planteando explicitamente los indices e incorporando el sigcoef_list dentro de la función anónima.
+  1:3,
+  #* Pero sí me funcionó planteando explicitamente los indices e
+  #* incorporando el sigcoef_list dentro de la función anónima.
   names(results_mm),
   \(acc, i, sheets) {
-    format_tab_excel(
-      df = sigcoef_list[[i]],
-      wb = acc,
-      sheet = sheets
-    )
+    format_tab_excel(df = sigcoef_list[[i]], wb = acc, sheet = sheets)
   },
   .init = openxlsx::createWorkbook()
 )
