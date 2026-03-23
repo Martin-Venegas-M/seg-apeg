@@ -1,0 +1,83 @@
+DISEÑO MUESTRAL ELSOC 2016-2022
+================================
+Fuente: https://manual-metodologico-elsoc.netlify.app/dis_muest_original
+
+Diseño probabilístico, estratificado y multietápico con selección final de
+individuos dentro del hogar mediante tabla de Kish.
+
+
+DIAGRAMA DE ETAPAS DE SELECCIÓN
+=================================
+
+  +------------------------------------------+
+  |  UNIVERSO: 120.857 bloques / 122 ciudades |
+  +------------------------------------------+
+                        |
+                        | ETAPA 1: Muestreo estratificado por
+                        | tamaño (grande/mediana/pequeña) y zona
+                        | (norte/sur). 3 ciudades con certeza.
+                        v
+  +------------------------------------------+
+  |       40 CIUDADES SELECCIONADAS           |
+  +------------------------------------------+
+                        |
+                        | ETAPA 2: Muestreo proporcional al
+                        | tamaño (PPT), selección sistemática.
+                        v
+  +------------------------------------------+
+  |        1.080 BLOQUES SELECCIONADOS        |
+  +------------------------------------------+
+                        |
+                        | ETAPA 3: Muestreo aleatorio simple.
+                        | 5 viviendas (ciudades grandes) /
+                        | 3 viviendas (ciudades medianas-pequeñas).
+                        v
+  +------------------------------------------+
+  |       4.001 VIVIENDAS SELECCIONADAS       |
+  |     (+1.082 aumento muestral, Etapa 5)    |
+  +------------------------------------------+
+                        |
+                        | ETAPA 4: Tabla de Kish
+                        | (si hay >1 adulto en el hogar).
+                        v
+  +------------------------------------------+
+  |    1 PERSONA SELECCIONADA POR HOGAR       |
+  |           (adultos 18-74 años)            |
+  +------------------------------------------+
+
+
+ETAPA 1 — SELECCIÓN DE CIUDADES
+---------------------------------
+Los ~120.857 bloques censales se agruparon en 122 ciudades. Las 3 más grandes
+(Gran Santiago, Viña del Mar-Valparaíso, Concepción-Talcahuano) se
+seleccionaron con certeza. Las restantes se estratificaron por tamaño
+poblacional (grandes >100k hab., medianas >30k, pequeñas >10k) y por zona
+geográfica (norte/sur) para asegurar representación nacional.
+
+
+ETAPA 2 — SELECCIÓN DE BLOQUES
+--------------------------------
+Se seleccionaron 1.080 bloques de las 40 ciudades escogidas mediante muestreo
+proporcional al tamaño (PPT). La selección fue sistemática, ordenando los
+bloques por sub-distrito censal y número de bloque para garantizar cobertura
+geográfica completa. Los bloques muy grandes fueron subdivididos.
+
+
+ETAPA 3 — SELECCIÓN DE VIVIENDAS
+----------------------------------
+Se seleccionaron 4.001 viviendas mediante muestreo aleatorio simple dentro de
+cada bloque. El número de viviendas varía por estrato: 5 viviendas en ciudades
+grandes y 3 en ciudades medianas y pequeñas.
+
+
+ETAPA 4 — SELECCIÓN DE PERSONAS
+---------------------------------
+En viviendas con más de un adulto (18-74 años), se usó la tabla de Kish para
+seleccionar aleatoriamente al entrevistado.
+
+
+ETAPA 5 — AUMENTO MUESTRAL
+----------------------------
+Durante el trabajo de campo de 2016 se agregaron 1.082 viviendas adicionales
+en regiones con bajas tasas de respuesta, concentradas en Coquimbo, O'Higgins,
+Metropolitana y Biobío.
