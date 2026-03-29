@@ -53,7 +53,7 @@ tab_mm <- function(model_list) {
     stars = c(`*` = 0.05, `**` = 0.01, `***` = 0.001),
     bold_signif = 0.05,
     number_format = "%.2f"
-  )
+  ) |> huxtable::set_font_size(9)
 }
 
 # Wrapper para modelos con NSE categórico
@@ -64,7 +64,7 @@ tab_mm_cat <- function(model_list) {
     stars = c(`*` = 0.05, `**` = 0.01, `***` = 0.001),
     bold_signif = 0.05,
     number_format = "%.2f"
-  )
+  ) |> huxtable::set_font_size(9)
 }
 ```
 
