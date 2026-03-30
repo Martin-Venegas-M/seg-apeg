@@ -55,4 +55,16 @@ source("analysis/main/1_class_mca_hcpc_analysis.R", encoding = "UTF-8")
 source("processing/6_join_new_class.R", encoding = "UTF-8")
 
 # 4. Save data ----------------------------------------------------------------
+
+# Save :)
+rm(list = setdiff(ls(), "elsocs"))
 save.image("input/data/proc/elsoc_proc.RData") # Saving whole workspace
+
+# Save data without gran santiago
+elsocs_sin_stgo <- map(elsocs, \(x) {
+  x |> filter(estrato != 1)
+}) |>
+  purrr::set_names(names(elsocs))
+
+rm(list = setdiff(ls(), "elsocs_sin_stgo"))
+save.image("input/data/proc/elsoc_proc_sin_stgo.RData") # Saving whole workspace

@@ -301,6 +301,7 @@ elsocs <- map(elsocs, \(data) {
       idencuesta,
       ola,
       geocodigo,
+      estrato,
       fact_exp02,
       segmento,
       region,

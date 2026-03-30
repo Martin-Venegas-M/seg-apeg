@@ -46,7 +46,7 @@ elsoc <- elsoc_original |>
     starts_with(c("m0_sexo", "m0_edad", "m01", "m02")),
     starts_with(c("ciuo88_m03", "ciuo08_m03", "ciuo88_m22", "ciuo08_m22")),
     starts_with(c("m19", "m20", "m21", "m29", "m33", "m34", "m36", "m37")),
-    starts_with(c("fact_exp02", "segmento", "region"))
+    starts_with(c("estrato", "fact_exp02", "segmento", "region"))
   ) |>
   select(
     -starts_with("m33_otro"),
