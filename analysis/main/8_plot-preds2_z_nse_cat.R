@@ -46,6 +46,8 @@ labs <- tibble(Parameter = names(coef_labels), label = unname(coef_labels))
 # 3.1 Create function ---------------------------------------------------------
 
 plotpreds2 <- function(year, vardep, label.vardep, title) {
+  yr <- stringr::str_extract(year, "\\d{4}")
+
   # Make preds
   preds <- ggpredict(
     results_mm_z_nse_cat[[year]][[glue("z_{vardep}")]][[5]],
@@ -55,7 +57,7 @@ plotpreds2 <- function(year, vardep, label.vardep, title) {
   # Gráfico ajustado
   plot(preds) +
     labs(
-      title = title,
+      title = glue("{title} ({yr})"),
       x = "Social class",
       y = label.vardep,
       color = "Neighborhood SES"
